@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { Button, Carousel } from 'react-bootstrap'
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import slide_img from '../assets/slide.jpg'
+
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import {  ChevronLeft, ChevronRight } from 'lucide-react';
 
 
 const ImageSlider = () => {
@@ -23,31 +26,8 @@ const ImageSlider = () => {
     "https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&q=80&w=1200",
   ];
 
-  const titles = [
-    "Luxury Sports Car",
-    "Classic Vintage",
-    "Modern SUV",
-    "Electric Future",
-    "Performance Beast",
-    "Luxury Sedan",
-    "Off-Road Adventure",
-    "Supercar Excellence",
-    "Urban Explorer",
-    "Racing Heritage",
-  ];
+ 
 
-  const descriptions = [
-    "Experience unmatched performance and style",
-    "Timeless elegance and character",
-    "Perfect blend of comfort and capability",
-    "Sustainable driving without compromise",
-    "Pure power meets precision engineering",
-    "Where comfort meets sophistication",
-    "Conquer any terrain with confidence",
-    "Pushing the boundaries of speed",
-    "Navigate city streets with style",
-    "Born from motorsport excellence",
-  ];
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
@@ -65,83 +45,46 @@ const ImageSlider = () => {
 
     
   return (
-    // <div style={{ backgroundColor: '#DCEDEF', padding: '20px' }}>
-    //     <Carousel data-bs-theme="dark">
-    //   <Carousel.Item>
-    //     <img className="d-block" style={{ width: '70%', margin: '0 auto' }} src={slide_img} alt="First slide"/> 
-    //   </Carousel.Item>
-    //   <Carousel.Item>
-    //     <img className="d-block" style={{ width: '70%', margin: '0 auto' }} src={slide_img} alt="Second slide"/>
-    //   </Carousel.Item>
-    //   <Carousel.Item>
-    //     <img className="d-block" style={{ width: '70%', margin: '0 auto' }} src={slide_img} alt="Third slide"/>  
-    //   </Carousel.Item>
-    // </Carousel>
-    // </div>
+   <>
+       
+      {/* Main Content */}
+      <main className="pt-5 pb-5" style={{ backgroundColor: '#DCEDEF'}}>
+        <div className="container">
+        {/* Carousel */}
+        <Carousel activeIndex={currentIndex} onSelect={(selectedIndex) => setCurrentIndex(selectedIndex)} controls={false} indicators={false}>
+          {images.map((image, index) => (
+            <Carousel.Item key={index}>
+              <img src={image} alt="" className="d-block w-100 rounded" style={{ height: "500px", objectFit: "cover" }}/>
+             
 
+            {/* side buttons */}
+              <button onClick={prevSlide} className="position-absolute top-50 start-0 translate-middle-y bg-dark bg-opacity-50 text-white p-3 rounded-circle transition-colors"
+                  aria-label="Previous slide">
+                  <ChevronLeft size={24} />
+                </button>
+                <button onClick={nextSlide} className="position-absolute top-50 end-0 translate-middle-y bg-dark bg-opacity-50 text-white p-3 rounded-circle transition-colors"
+                  aria-label="Next slide" >
+                  <ChevronRight size={24} />
+                </button>
 
+              
+                {/* Bottom round slide bars */}
 
-    <main className="pt-4">
-    <div className="container">
-      <h1 className="text-center mb-4">Featured Vehicles</h1>
+           <div className="d-flex justify-content-center gap-2 mt-4">
+             {images.map((_, index) => (
+             <Button key={index} onClick={() => setCurrentIndex(index)} aria-label={`Go to slide ${index + 1}`} className={`rounded-circle p-0 transition-all ${
+              currentIndex === index ? "bg-grey" : "bg-secondary opacity-50" }`}
+              style={{ width: currentIndex === index ? "14px" : "12px", height: currentIndex === index ? "14px" : "12px", transition: "all 0.3s ease",
+               }}/>
+              ))}
+           </div>
+        </Carousel.Item>
+          ))}
+        </Carousel>
 
-      {/* Carousel */}
-      <Carousel
-        activeIndex={currentIndex}
-        onSelect={(selectedIndex) => setCurrentIndex(selectedIndex)}
-        controls={false}
-        indicators={false}
-      >
-        {images.map((image, index) => (
-          <Carousel.Item key={index}>
-            <img
-              src={image}
-              alt={titles[index]}
-              className="d-block w-100 rounded"
-              style={{ height: "500px", objectFit: "cover" }}
-            />
-            <Carousel.Caption>
-              <h3>{titles[index]}</h3>
-              <p>{descriptions[index]}</p>
-            </Carousel.Caption>
-          </Carousel.Item>
-        ))}
-      </Carousel>
-
-      {/* Navigation Buttons */}
-      <div className="d-flex justify-content-between align-items-center my-3">
-        <Button variant="dark" onClick={prevSlide}>
-          Previous
-        </Button>
-        <Button variant="dark" onClick={nextSlide}>
-          Next
-        </Button>
       </div>
-
-
-
-      {/* Thumbnails */}
-      <div className="d-flex justify-content-center gap-2 overflow-auto">
-        {images.map((image, index) => (
-          <div
-            key={index}
-            onClick={() => setCurrentIndex(index)}
-            className={`border rounded overflow-hidden ${
-              currentIndex === index ? "border-primary" : "border-secondary"
-            }`}
-            style={{ cursor: "pointer", width: "100px", height: "60px" }}
-          >
-            <img
-              src={image}
-              alt={titles[index]}
-              className="w-100 h-100"
-              style={{ objectFit: "cover" }}
-            />
-          </div>
-        ))}
-      </div>
-    </div>
-  </main>
+    </main>
+   </>
   )
 }
 
