@@ -22,7 +22,6 @@ const ImageSlider = () => {
     "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=1200",
     "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&q=80&w=1200",
     "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&q=80&w=1200",
-    "https://images.unsplash.com/photo-1570733117311-d990c3816c47?auto=format&fit=crop&q=80&w=1200",
     "https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&q=80&w=1200",
   ];
 
