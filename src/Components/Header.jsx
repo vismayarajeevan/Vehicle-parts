@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import logo from '../assets/logo.png'
 import user from '../assets/user.svg'
 import notification from '../assets/notification.png'
-import { Container, Navbar,Form, Nav,Button,InputGroup, Modal } from 'react-bootstrap'
+import { Container, Navbar,Form, Nav,Button,InputGroup, Modal, Offcanvas, Badge } from 'react-bootstrap'
 import google_img from '../assets/google.png'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import { Bell } from 'lucide-react'
 
 
 
@@ -14,6 +15,8 @@ const Header = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   // state for signup modal 
   const [showSignupModal, setShowSignupModal] = useState(false);
+
+ 
 
   // function to display login modal
   const handleLoginClick = () => {
@@ -35,14 +38,23 @@ const Header = () => {
     setShowPassword(!showPassword);
   }
 
+   // state for show notifications
+   const [showNotifications, setShowNotifications] = useState(false)
+
+  //  function for notification
+  const handleNotificationClick =()=>{
+    setShowNotifications(!showNotifications)
+  }
+
   return (
     <>
-          <Navbar expand="lg" className="bg-body-light">
-      <Container>
-        <img src={logo}  className='img-fluid me-5' width="50px" alt="" />
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-        <Form className='me-5'>
+      {/* *******************************navbar****************************** */}
+      <Navbar expand="lg" className="bg-body-light">
+       <Container>
+          <img src={logo}  className='img-fluid me-5' width="50px" alt="" />
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+          <Form className='me-5'>
             <Form.Control type="search" placeholder="Search here..." style={{ width:'300px', border:'none', background:'#F0F0F0' }}  aria-label="Search" />
           </Form>
           <Nav className="me-auto">
@@ -52,12 +64,20 @@ const Header = () => {
           </Nav>
           <div>
            <button onClick={handleLoginClick} className='btn'> <img src={user} className='img-fluid' width={'40px'} alt="" /></button>
-            <img src={notification} className='img-fluid ms-5' width={'20px'} alt="" />
+
+           <button onClick={handleNotificationClick} className='btn position-relative ' style={{ border: 'none', background: 'transparent' }}>
+            <img src={notification} className='img-fluid ms-5' width={'20px'} alt=""  style={{ display: 'block' }}/>
+            <Badge  bg="danger"
+              className="position-absolute top-5 end-0 translate-middle rounded-circle"   style={{ width: '18px', height: '18px',  }}
+            >3</Badge>
+            </button>
+
           </div>
         </Navbar.Collapse>
       </Container>
     </Navbar>
 
+   {/* ***************************login modal***************************** */}
    {showLoginModal && (
       <Modal show={showLoginModal} onHide={() => setShowLoginModal(false)}  centered>
         <Modal.Header closeButton style={{ borderBottom: 'none' }}>
@@ -77,16 +97,13 @@ const Header = () => {
               <InputGroup onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
              </InputGroup>
           </Form.Group>
-           
-          
 
-
-         {/* forgot */}
+         {/* forgot password */}
          <div className='d-flex justify-content-end align-items-center mb-3'>
           <Button variant='link' size='sm' className='p-0 text-decoration-none'>Forgot password?</Button>
          </div>
 
-         {/* login */}
+         {/* login button */}
          <Button className='w-100 mb-3 p-2' style={{ background: "linear-gradient(90deg, #008E8E 100%, #00B8BB 100%)", border: "none",color: "white",}}>Login</Button>
 
          {/* or */}
@@ -104,11 +121,12 @@ const Header = () => {
         </p>
 
       </Form>
-    </Modal.Body>
-  
+    </Modal.Body> 
   </Modal>
   )}
 
+
+   {/* ***************************signup modal***************************** */}
   {showSignupModal && (
     <Modal show={showSignupModal} onHide={() => setShowSignupModal(false)}  centered>
        <Modal.Header closeButton style={{ borderBottom: 'none' }}>
@@ -142,8 +160,6 @@ const Header = () => {
           </InputGroup>
           </Form.Group>
 
-    
-
        {/* login */}
        <Button className='w-100 mb-3 p-2' style={{ background: "linear-gradient(90deg, #008E8E 100%, #00B8BB 100%)", border: "none",color: "white",}}>Sign up</Button>
 
@@ -163,9 +179,44 @@ const Header = () => {
 
      </Form>
    </Modal.Body>
-
 </Modal>
   )}
+
+     {/* ***************************notifications***************************** */}
+     
+     <Offcanvas show={showNotifications} onHide={()=>setShowNotifications(false)} placement='end'>
+      <Offcanvas.Header closeButton>
+        <Offcanvas.Title>Notifications</Offcanvas.Title>
+      </Offcanvas.Header>
+      <Offcanvas.Body>
+        {/* 1st notifications */}
+        <div className="p-3 border-bottom bg-light" style={{ cursor: 'pointer' }}>
+          <div className='d-flex gap-3'>
+           <Bell className='text-primary' size={20} />
+           <div className='flex-grow-1'>
+            <h6 className='mb-1'>New Arrival</h6>
+            <p className='mb-1 text-muted'>Check out our new brake pads collection!</p>
+            <small className='text-muted'>2 hours ago</small>
+            </div>
+            <div className="bg-primary rounded-circle" style={{ width: '10px', height: '10px' }} />
+        </div>
+        </div>
+
+          {/* 2nd notifications */}
+          <div className="p-3 border-bottom bg-light" style={{ cursor: 'pointer' }}>
+          <div className='d-flex gap-3'>
+           <Bell className='text-primary' size={20} />
+           <div className='flex-grow-1'>
+            <h6 className='mb-1'>Special Offer</h6>
+            <p className='mb-1 text-muted'>Get 20% off on all engine parts this week</p>
+            <small className='text-muted'>5 hours ago</small>
+            </div>
+            <div className="bg-primary rounded-circle" style={{ width: '10px', height: '10px' }} />
+        </div>
+        </div>
+      </Offcanvas.Body>
+
+     </Offcanvas>
     
     </>
   )
