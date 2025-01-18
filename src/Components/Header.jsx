@@ -67,9 +67,10 @@ const Header = () => {
 
            <button onClick={handleNotificationClick} className='btn position-relative ' style={{ border: 'none', background: 'transparent' }}>
             <img src={notification} className='img-fluid ms-5' width={'20px'} alt=""  style={{ display: 'block' }}/>
-            <Badge  bg="danger"
+            {/* notification badge */}
+            {/* <Badge  bg="danger"
               className="position-absolute top-5 end-0 translate-middle rounded-circle"   style={{ width: '18px', height: '18px',  }}
-            >3</Badge>
+            >3</Badge> */}
             </button>
 
           </div>
@@ -185,7 +186,7 @@ const Header = () => {
      {/* ***************************notifications***************************** */}
      
      <Offcanvas show={showNotifications} onHide={()=>setShowNotifications(false)} placement='end'>
-      <Offcanvas.Header closeButton>
+      <Offcanvas.Header closeButton className="border-bottom">
         <Offcanvas.Title>Notifications</Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
@@ -198,7 +199,7 @@ const Header = () => {
             <p className='mb-1 text-muted'>Check out our new brake pads collection!</p>
             <small className='text-muted'>2 hours ago</small>
             </div>
-            <div className="bg-primary rounded-circle" style={{ width: '10px', height: '10px' }} />
+            
         </div>
         </div>
 
@@ -211,7 +212,7 @@ const Header = () => {
             <p className='mb-1 text-muted'>Get 20% off on all engine parts this week</p>
             <small className='text-muted'>5 hours ago</small>
             </div>
-            <div className="bg-primary rounded-circle" style={{ width: '10px', height: '10px' }} />
+            
         </div>
         </div>
       </Offcanvas.Body>

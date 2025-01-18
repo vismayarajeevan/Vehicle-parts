@@ -63,6 +63,7 @@ const CategorySlider = () => {
       </Col>
      ))}
     </Row>
+    <hr />
 
    </Container>
   )
