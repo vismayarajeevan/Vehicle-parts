@@ -147,7 +147,7 @@ const Header = () => {
           <Form.Control type='email' placeholder='Enter your email' />
           </InputGroup>
         </Form.Group>
-        <Form.Group className='mb-1' controlId='formPassword'>
+        <Form.Group className='mb-3' controlId='formPassword'>
              <Form.Label>Password</Form.Label>
              <Form.Control type={showPassword ? 'text' : 'password'} placeholder='Enter your password' />
               <InputGroup onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
