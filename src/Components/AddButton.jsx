@@ -1,6 +1,8 @@
 import { Icon } from '@iconify-icon/react/dist/iconify.js';
 import React, { useState } from 'react'
 import { Button, Form, InputGroup, Offcanvas } from 'react-bootstrap'
+import { globalStyles } from '../globalStyles';
+import ToggleCategoryBtn from '../reusablecomponents/ToggleCategoryBtn';
 
 
 const AddButton = () => {
@@ -14,6 +16,15 @@ const AddButton = () => {
 
     // state for button active
     const [activeButton, setActiveButton] =useState(1)
+
+    const categories = [
+        { label: 'Car', value: 1 },
+        { label: 'Bike', value: 2 },
+        { label: 'Bus', value: 3 },
+        { label: 'Cycle', value: 4 }
+      ];
+
+    
 
     const [actionCondition, setActiveCondition] =useState(1)
 
@@ -36,6 +47,12 @@ const handleImageChange =(e)=>{
     }
 }
 
+// const handleFormSubmit = (e) => {
+//     e.preventDefault(); // Prevent page reload on form submission
+//     // Handle form data submission logic here (e.g., send data to server)
+//     console.log('Form submitted');
+//   };
+
   return (
    <>
    <Button onClick={handleAddProducts} className="btn position-fixed bottom-0 end-0 m-4 ps-3 pe-3 shadow-lg"
@@ -50,7 +67,7 @@ const handleImageChange =(e)=>{
         <Offcanvas.Title>Add Parts</Offcanvas.Title>
     </Offcanvas.Header>
     <Offcanvas.Body>
-    <Form>
+    <Form >
         {/* input field */}
            <Form.Group className='mb-3' controlId='formPartName'>
              <Form.Label className='AddFontSize'>Part Name</Form.Label>
@@ -63,24 +80,12 @@ const handleImageChange =(e)=>{
              <Form.Group className='mb-3'>
              <Form.Label className='AddFontSize'>Category</Form.Label>
                 <div className='d-flex flex-wrap gap-2 mt-2'>
-                    <Button onClick={()=>setActiveButton(1)} style={{ width: '65px', height: '35px',borderRadius:'20px',border:'none',backgroundColor: activeButton ===1? '#008E8E':'grey' }}>
-                        Car
-                    </Button>
-                    <Button onClick={()=>setActiveButton(2)} style={{ width: '65px', height: '35px',borderRadius:'20px',border:'none',backgroundColor: activeButton ===2? '#008E8E':'grey' }}>
-                        Bike
-                    </Button>
-                    <Button onClick={()=>setActiveButton(3)} style={{ width: '65px', height: '35px',borderRadius:'20px',border:'none',backgroundColor: activeButton ===3? '#008E8E':'grey' }}>
-                        Bus
-                    </Button>
-                    <Button onClick={()=>setActiveButton(4)} style={{ width: '65px', height: '35px',borderRadius:'20px',border:'none',backgroundColor: activeButton ===4? '#008E8E':'grey' }}>
-                        Cycle
-                    </Button>
-                    <Button onClick={()=>setActiveButton(5)} style={{ width: '70px', height: '35px',borderRadius:'20px',border:'none',backgroundColor: activeButton ===5? '#008E8E':'grey' }}>
-                        Scooty
-                    </Button>
-                    <Button onClick={()=>setActiveButton(6)} style={{ width: '70px', height: '35px',borderRadius:'20px',border:'none',backgroundColor: activeButton ===6? '#008E8E':'grey' }}>
-                        Others
-                    </Button>
+                    {
+                        categories.map((category)=>(
+                            <ToggleCategoryBtn key={category.value} label={category.label} value={category.value} activeButton={activeButton} setActiveButton={setActiveButton}/>
+                        ))
+                    }
+                                                      
                 </div>
                 </Form.Group>
 
@@ -120,7 +125,7 @@ const handleImageChange =(e)=>{
              <Form.Group className='mb-3'>
                 <Form.Label className='AddFontSize'>Images</Form.Label>
                 <div className='d-flex align-items-center justify-content-center'>
-                    <button className='btn d-flex align-items-center justify-content-center' style={{backgroundColor:'#E1E1E1'}}><Icon icon="solar:upload-bold" style={{ fontSize: '24px', color: '#000' }}></Icon> Upload</button>
+                    <button className='btn d-flex align-items-center justify-content-center' style={globalStyles.AddPageButtonColr}><Icon icon="solar:upload-bold" style={{ fontSize: '24px', color: '#000' }}></Icon> Upload</button>
                 </div>
                 <Form.Control type="file"  accept="image/*"  onChange={handleImageChange}  ></Form.Control>  
              </Form.Group>
