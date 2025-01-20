@@ -2,7 +2,14 @@ import React from 'react'
 
 import { colors } from '../colors'
 
-const ToggleCategoryBtn = ({label,value,activeButton,setActiveButton}) => {
+
+const ToggleCategoryBtn = ({label,value,activeButton,setActiveButton,type}) => {
+  const getBackgroundColor = () => {
+    if (activeButton === value) {
+      return type === 'category' ? colors.CategoryActiveButton : colors.ConditionActiveButton;
+    }
+    return colors.AddPageButtonColr;
+  }
   return (
     <button
     type="button"
@@ -12,7 +19,7 @@ const ToggleCategoryBtn = ({label,value,activeButton,setActiveButton}) => {
       height: '35px',
       borderRadius: '20px',
       border: 'none',
-      backgroundColor: activeButton === value ? colors.CategoryActiveButton : colors.AddPageButtonColr,
+      backgroundColor: getBackgroundColor(),
       color:activeButton === value ? colors.White :colors.Black,
       fontWeight:activeButton === value ? '700':'400'
     }}
