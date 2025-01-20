@@ -4,7 +4,16 @@ import { Button, Form, InputGroup, Offcanvas } from "react-bootstrap";
 import { globalStyles } from "../globalStyles";
 import ToggleCategoryBtn from "../reusablecomponents/ToggleCategoryBtn";
 import { useDispatch, useSelector } from "react-redux";
-import {setActiveButton,setActiveCondition,setAvailability,setCategory, setContactNumber,setDescription,setImage,setPartName,} from "../redux/slices/ProductSlice";
+import {
+  setActiveButton,
+  setActiveCondition,
+  setAvailability,
+  setCategory,
+  setContactNumber,
+  setDescription,
+  setImage,
+  setPartName,
+} from "../redux/slices/ProductSlice";
 
 const AddButton = () => {
   const dispatch = useDispatch();
@@ -27,7 +36,7 @@ const AddButton = () => {
     setIsAddProductSidebarOpen(!isAddProductSidebarOpen);
   };
 
-//   array for categories
+  //   array for categories
   const categories = [
     { label: "Car", value: 1 },
     { label: "Bike", value: 2 },
@@ -37,35 +46,82 @@ const AddButton = () => {
     { label: "Others", value: 6 },
   ];
 
-//   array for condition
+  //   array for condition
   const conditions = [
     { label: "New", value: 1 },
     { label: "Used", value: 2 },
   ];
 
+
+ const [imageArray, setImageArray] = useState([])
+
   // function to take input image
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imgURL = URL.createObjectURL(file);
-      dispatch(setImage(imgURL));
+    const files = e.target.files;
+    const newImageArray =[]
+
+    if(files.length <1 || files.length >3){
+      alert("Please select between 1 and 3")
+      return
     }
+
+    for(let i=0;i<files.length;i++){
+      const file =files[i]
+      const imageURL = URL.createObjectURL(file)
+      newImageArray.push(imageURL)
+
+    }
+     // Update the imageArray by appending new images to the existing ones
+  setImageArray((prevImageArray) => {
+    const combinedArray = [...prevImageArray, ...newImageArray];
+    
+    // Limit the array size to 3 images
+    if (combinedArray.length > 3) {
+      combinedArray.splice(0, combinedArray.length - 3); // Keep only the last 3 images
+    }
+
+    return combinedArray;
+  });
+    console.log(newImageArray);
+    
+    
+    dispatch(setImage([...imageArray, ...newImageArray]));
+    
   };
 
-//   function to change the availabilty radio button
+  //   function to change the availabilty radio button
   const handleAvailabilityChange = (e) => {
     dispatch(setAvailability(e.target.value));
   };
 
   return (
     <>
-      <Button onClick={handleAddProducts} className="btn position-fixed bottom-0 end-0 m-4 ps-3 pe-3 shadow-lg" style={{display: "flex",
-          alignItems: "center",justifyContent: "center",zIndex: 1, backgroundColor: "#008E8E", borderRadius: "50px", border: "none",}}>
-        Add{" "}<i class="fa-solid fa-square-plus ms-2" style={{ color: "#ffffff" }} ></i>
+      <Button
+        onClick={handleAddProducts}
+        className="btn position-fixed bottom-0 end-0 m-4 ps-3 pe-3 shadow-lg"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 1,
+          backgroundColor: "#008E8E",
+          borderRadius: "50px",
+          border: "none",
+        }}
+      >
+        Add{" "}
+        <i
+          class="fa-solid fa-square-plus ms-2"
+          style={{ color: "#ffffff" }}
+        ></i>
       </Button>
 
       {/* *************************side bar****************************** */}
-      <Offcanvas show={isAddProductSidebarOpen} onHide={() => setIsAddProductSidebarOpen(false)} placement="end" >
+      <Offcanvas
+        show={isAddProductSidebarOpen}
+        onHide={() => setIsAddProductSidebarOpen(false)}
+        placement="end"
+      >
         <Offcanvas.Header closeButton className="border-bottom">
           <Offcanvas.Title>Add Parts</Offcanvas.Title>
         </Offcanvas.Header>
@@ -83,7 +139,7 @@ const AddButton = () => {
               </InputGroup>
             </Form.Group>
 
-             {/* *********Category********** */}
+            {/* *********Category********** */}
             <Form.Group className="mb-3">
               <Form.Label className="AddFontSize">Category</Form.Label>
               <div className="d-flex flex-wrap gap-2 mt-2">
@@ -93,7 +149,9 @@ const AddButton = () => {
                     label={category.label}
                     value={category.value}
                     activeButton={activeButton}
-                    setActiveButton={(value) => dispatch(setActiveButton(value))}
+                    setActiveButton={(value) =>
+                      dispatch(setActiveButton(value))
+                    }
                     type="category"
                   />
                 ))}
@@ -110,8 +168,10 @@ const AddButton = () => {
                     label={condition.label}
                     value={condition.value}
                     activeButton={activeCondition}
-                    setActiveButton={(value) => dispatch(setActiveCondition(value))}
-                    type="condition" 
+                    setActiveButton={(value) =>
+                      dispatch(setActiveCondition(value))
+                    }
+                    type="condition"
                   />
                 ))}
               </div>
@@ -163,23 +223,43 @@ const AddButton = () => {
 
             <Form.Group className="mb-3">
               <Form.Label className="AddFontSize">Images</Form.Label>
+
+             
               <div className="d-flex align-items-center justify-content-center">
-                <button
+                <label
+                  htmlFor="fileInput"
                   className="btn d-flex align-items-center justify-content-center"
                   style={globalStyles.AddPageButtonColr}
                 >
                   <Icon
                     icon="solar:upload-bold"
                     style={{ fontSize: "24px", color: "#000" }}
-                  ></Icon>{" "}
+                  ></Icon>
                   Upload
-                </button>
+                </label>
+                <Form.Control
+                  id="fileInput"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleImageChange}
+                  style={{ display: "none" }}
+                />
               </div>
-              <Form.Control
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-              ></Form.Control>
+              {imageArray.length > 0 && (
+        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '20px' }}>
+          {imageArray.map((imgURL, index) => (
+            <div key={index} style={{ width: '200px', height: 'auto' }}>
+              <img
+                src={imgURL}
+                alt={`Preview ${index }`}
+                style={{ width: '100%', height: 'auto', border: '1px solid #ccc' }}
+              />
+            </div>
+          ))}
+        </div>
+      )}
+              
             </Form.Group>
           </Form>
         </Offcanvas.Body>
