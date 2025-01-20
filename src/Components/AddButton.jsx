@@ -14,6 +14,7 @@ import {
   setImage,
   setPartName,
 } from "../redux/slices/ProductSlice";
+import { colors } from '../colors'
 
 const AddButton = () => {
   const dispatch = useDispatch();
@@ -60,6 +61,12 @@ const AddButton = () => {
     const files = e.target.files;
     const newImageArray =[]
 
+ // Check if files is empty, if yes, don't show the alert
+ if (files.length === 0) {
+  return; // Exit if no files are selected
+}
+
+
     if(files.length <1 || files.length >3){
       alert("Please select between 1 and 3")
       return
@@ -91,8 +98,16 @@ const AddButton = () => {
 
   //   function to change the availabilty radio button
   const handleAvailabilityChange = (e) => {
+
     dispatch(setAvailability(e.target.value));
   };
+
+    // Function to remove an image from the array
+    const handleRemoveImage = (index) => {
+      event.preventDefault(); 
+      const updatedArray = imageArray.filter((_, i) => i !== index);
+      setImageArray(updatedArray);
+    };
 
   return (
     <>
@@ -249,12 +264,40 @@ const AddButton = () => {
               {imageArray.length > 0 && (
         <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '20px' }}>
           {imageArray.map((imgURL, index) => (
-            <div key={index} style={{ width: '200px', height: 'auto' }}>
+            <div key={index} style={{ width: '200px', height: 'auto',position: 'relative', }}>
               <img
                 src={imgURL}
                 alt={`Preview ${index }`}
                 style={{ width: '100%', height: 'auto', border: '1px solid #ccc' }}
               />
+               {/* Close button */}
+               <button
+                onClick={(event) => handleRemoveImage(index, event)}
+                style={{
+                  position: 'absolute',
+                  top: '5px',
+                  right: '5px',
+                  background: 'red',
+                  
+                  border: 'none',
+                  borderRadius: '50%',
+                  width: '25px',
+                  height: '25px',
+                  cursor: 'pointer',
+                  padding: '0',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Icon
+                  icon="solar:trash-bold"
+                  style={{
+                    fontSize: '16px',
+                    color: colors.White,
+                  }}
+                />
+              </button>
             </div>
           ))}
         </div>
