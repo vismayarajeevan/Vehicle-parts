@@ -48,13 +48,6 @@ const productslice =createSlice({
     }
 })
 
-export const { setActiveButton,
-    setActiveCondition,
-    setAvailability,
-    setImage,
-    setPartName,
-    setCategory,
-    setDescription,
-    setContactNumber,} =productslice.actions
+export const { setActiveButton,setActiveCondition,setAvailability,setImage,setPartName,setCategory,setDescription, setContactNumber,} =productslice.actions
 
     export default productslice.reducer

@@ -1,5 +1,5 @@
 import { Icon } from "@iconify-icon/react/dist/iconify.js";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, InputGroup, Offcanvas } from "react-bootstrap";
 import { globalStyles } from "../globalStyles";
 import ToggleCategoryBtn from "../reusablecomponents/ToggleCategoryBtn";
@@ -16,18 +16,16 @@ import {
 } from "../redux/slices/ProductSlice";
 import { colors } from '../colors'
 
+import GoogleMapView from "./GoogleMapView";
+
+
+
+
 const AddButton = () => {
+  // call the action using dispatch
   const dispatch = useDispatch();
-  const {
-    activeButton,
-    activeCondition,
-    availability,
-    image,
-    partName,
-    category,
-    description,
-    contactNumber,
-  } = useSelector((state) => state.productReducer);
+  // access the state
+  const {activeButton,activeCondition,availability,image,partName,category,description,contactNumber,} = useSelector((state) => state.productReducer);
 
   // state for sidebar open and close
   const [isAddProductSidebarOpen, setIsAddProductSidebarOpen] = useState(false);
@@ -53,7 +51,7 @@ const AddButton = () => {
     { label: "Used", value: 2 },
   ];
 
-
+// array to store images
  const [imageArray, setImageArray] = useState([])
 
   // function to take input image
@@ -79,35 +77,41 @@ const AddButton = () => {
 
     }
      // Update the imageArray by appending new images to the existing ones
-  setImageArray((prevImageArray) => {
-    const combinedArray = [...prevImageArray, ...newImageArray];
+     setImageArray((prevImageArray) => {
+     const combinedArray = [...prevImageArray, ...newImageArray];
     
     // Limit the array size to 3 images
     if (combinedArray.length > 3) {
       combinedArray.splice(0, combinedArray.length - 3); // Keep only the last 3 images
     }
 
-    return combinedArray;
-  });
+     return combinedArray;
+    });
     console.log(newImageArray);
     
     
-    dispatch(setImage([...imageArray, ...newImageArray]));
+     dispatch(setImage([...imageArray, ...newImageArray]));
     
   };
 
-  //   function to change the availabilty radio button
+
+  // function to change the availabilty radio button
   const handleAvailabilityChange = (e) => {
 
     dispatch(setAvailability(e.target.value));
   };
 
-    // Function to remove an image from the array
+
+  // Function to remove an image from the array
     const handleRemoveImage = (index) => {
       event.preventDefault(); 
       const updatedArray = imageArray.filter((_, i) => i !== index);
       setImageArray(updatedArray);
     };
+    
+   
+
+    
 
   return (
     <>
@@ -261,6 +265,8 @@ const AddButton = () => {
                   style={{ display: "none" }}
                 />
               </div>
+
+
               {imageArray.length > 0 && (
         <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '20px' }}>
           {imageArray.map((imgURL, index) => (
@@ -300,11 +306,20 @@ const AddButton = () => {
               </button>
             </div>
           ))}
+
         </div>
       )}
               
             </Form.Group>
           </Form>
+          {/* location */}
+         
+          <div>
+          <h3 className="AddFontSize" style={{marginTop:'70px'}}>Location</h3>
+          <GoogleMapView />
+          </div>
+          
+          <button className="p-2 mt-5 w-100 rounded" style={{backgroundColor:colors.CategoryActiveButton, color:colors.White, border:'none', fontWeight:"600"}}>Submit</button>
         </Offcanvas.Body>
       </Offcanvas>
     </>

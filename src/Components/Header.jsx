@@ -6,6 +6,7 @@ import { Container, Navbar,Form, Nav,Button,InputGroup, Modal, Offcanvas, Badge 
 import google_img from '../assets/google.png'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { Bell } from 'lucide-react'
+import Formfield from '../reusablecomponents/Formfield'
 
 
 
@@ -16,12 +17,16 @@ const Header = () => {
   // state for signup modal 
   const [showSignupModal, setShowSignupModal] = useState(false);
 
+  // state for forgot password modal
+  const [showForgotPasswordModal, setForgotPasswordModal] = useState(false)
+
  
 
   // function to display login modal
   const handleLoginClick = () => {
     setShowLoginModal(true);
     setShowSignupModal(false);
+    setForgotPasswordModal(false)
   };
 
   // function to display login modal
@@ -29,6 +34,12 @@ const Header = () => {
      setShowSignupModal(true)
      setShowLoginModal(false)
   }
+
+  // function to display forgot password modal
+  const handleForgotPasswordClick =() =>{
+    setForgotPasswordModal(true)
+    setShowLoginModal(false)
+ }
 
 
   // state for eye icon
@@ -86,22 +97,26 @@ const Header = () => {
       </Modal.Header>
       <Modal.Body className='ps-5 pe-5'>
         <Form>
+
+
            <Form.Group className='mb-3' controlId='formEmail'>
              <Form.Label>Email</Form.Label>
              <InputGroup>
              <Form.Control type='email' placeholder='Enter your email' />
              </InputGroup>
              </Form.Group>
+
+
              <Form.Group className='mb-1' controlId='formPassword'>
              <Form.Label>Password</Form.Label>
              <Form.Control type={showPassword ? 'text' : 'password'} placeholder='Enter your password' />
               <InputGroup onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
-             </InputGroup>
-          </Form.Group>
+             </InputGroup>   
+             </Form.Group>
 
          {/* forgot password */}
          <div className='d-flex justify-content-end align-items-center mb-3'>
-          <Button variant='link' size='sm' className='p-0 text-decoration-none'>Forgot password?</Button>
+          <Button variant='link' size='sm' className='p-0 text-decoration-none' onClick={handleForgotPasswordClick}>Forgot password?</Button>
          </div>
 
          {/* login button */}
@@ -126,6 +141,44 @@ const Header = () => {
   </Modal>
   )}
 
+     {/* ***************************forgot password modal***************************** */}
+     {showForgotPasswordModal && (
+      <Modal show={showForgotPasswordModal} onHide={() => showForgotPasswordModal(false)}  centered>
+        <Modal.Header className='mb-4' closeButton style={{ borderBottom: 'none' }}>
+          <Modal.Title className='w-100 text-center'>Forgot Password</Modal.Title>
+      </Modal.Header>
+      <Modal.Body className='ps-5 pe-5'>
+        <Form>
+
+
+           <Form.Group className='mb-5' controlId='formEmail'>
+             <Form.Label>Email</Form.Label>
+             <InputGroup>
+             <Form.Control type='email' placeholder='Enter your email' />
+             </InputGroup>
+             </Form.Group>
+
+
+          
+
+        
+
+         {/* login button */}
+         <Button className='w-100 mb-3 p-2' style={{ background: "linear-gradient(90deg, #008E8E 100%, #00B8BB 100%)", border: "none",color: "white",}}>Continue</Button>
+
+         
+
+        {/* sign up */}
+        <p className="text-center text-muted">Back to
+        <Button onClick={handleLoginClick} variant="link" className="p-0 text-decoration-none ms-2">Login</Button>
+        </p>
+
+      </Form>
+    </Modal.Body> 
+  </Modal>
+  )}
+
+
 
    {/* ***************************signup modal***************************** */}
   {showSignupModal && (
@@ -135,26 +188,34 @@ const Header = () => {
        </Modal.Header>
        <Modal.Body className='ps-5 pe-5'>
        <Form>
-        <Form.Group className='mb-3' controlId='formUsername'>
-          <Form.Label>UserName</Form.Label>
+       <Formfield
+    label="Username"
+    type="text"
+    placeholder="Enter your username"
+    value="{username}"
+    onChange="{handleUsernameChange}"
+    id="formUsername"
+  />
+        {/* <Form.Group className='mb-3' controlId='formUsername'>
+          <Form.Label style={{fontSize:'13px', fontWeight:'500'}}>Username</Form.Label>
           <InputGroup>
-          <Form.Control type='text' placeholder='Enter your username' />
+          <Form.Control type='text' placeholder='Enter your username' style={{ fontSize: "12px" , fontWeight:'200', padding:'10px'}}/>
           </InputGroup>
-        </Form.Group>
+        </Form.Group> */}
         <Form.Group className='mb-3' controlId='formEmail'>
-          <Form.Label>Email</Form.Label>
+          <Form.Label style={{fontSize:'13px', fontWeight:'500'}}>Email</Form.Label>
           <InputGroup>
           <Form.Control type='email' placeholder='Enter your email' />
           </InputGroup>
         </Form.Group>
         <Form.Group className='mb-3' controlId='formPassword'>
-             <Form.Label>Password</Form.Label>
+             <Form.Label style={{fontSize:'13px', fontWeight:'600'}}>Password</Form.Label>
              <Form.Control type={showPassword ? 'text' : 'password'} placeholder='Enter your password' />
               <InputGroup onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
              </InputGroup>
           </Form.Group>
-       <Form.Group className='mb-3' controlId='formPassword'>
-          <Form.Label>Confirm Password</Form.Label>
+       <Form.Group className='mb-4' controlId='formPassword'>
+          <Form.Label style={{fontSize:'13px', fontWeight:'600'}}>Confirm Password</Form.Label>
           
           <Form.Control type={showPassword ? 'text' : 'password'} placeholder='Enter your password' />
           <InputGroup onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
