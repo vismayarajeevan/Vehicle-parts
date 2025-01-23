@@ -17,6 +17,7 @@ import {
 import { colors } from '../colors'
 
 import GoogleMapView from "./GoogleMapView";
+import SubmitButtons from "../reusablecomponents/SubmitButtons";
 
 
 
@@ -29,6 +30,10 @@ const AddButton = () => {
 
   // state for sidebar open and close
   const [isAddProductSidebarOpen, setIsAddProductSidebarOpen] = useState(false);
+
+  // state to update location
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
 
   // function to show sidebar
   const handleAddProducts = () => {
@@ -109,7 +114,9 @@ const AddButton = () => {
       setImageArray(updatedArray);
     };
     
-   
+    const handleLocationSelect = (location) => {
+      setSelectedLocation(location);
+    };
 
     
 
@@ -314,12 +321,13 @@ const AddButton = () => {
           </Form>
           {/* location */}
          
-          <div>
-          <h3 className="AddFontSize" style={{marginTop:'70px'}}>Location</h3>
-          <GoogleMapView />
+          <div  style={{marginTop:'70px'}}>
+          
+          <GoogleMapView selectedLocation={selectedLocation} onLocationSelect={handleLocationSelect}/>
           </div>
           
-          <button className="p-2 mt-5 w-100 rounded" style={{backgroundColor:colors.CategoryActiveButton, color:colors.White, border:'none', fontWeight:"600"}}>Submit</button>
+         {/* submit button */}
+         <div className="mt-5"> <SubmitButtons>Submit</SubmitButtons></div>
         </Offcanvas.Body>
       </Offcanvas>
     </>

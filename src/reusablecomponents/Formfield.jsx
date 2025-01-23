@@ -2,6 +2,7 @@ import React from 'react'
 import { Form, InputGroup } from 'react-bootstrap'
 
 const Formfield = ({ label, type, placeholder, value, onChange, showPassword, togglePasswordVisibility, id }) => {
+
   return (
     <Form.Group className="mb-3" controlId={id}>
     <Form.Label style={{ fontSize: '13px', fontWeight: '500' }}>{label}</Form.Label>
@@ -16,6 +17,7 @@ const Formfield = ({ label, type, placeholder, value, onChange, showPassword, to
       <InputGroup onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }} />
     )}
   </Form.Group>
+  
   )
 }
 
