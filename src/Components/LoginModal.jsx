@@ -2,6 +2,8 @@ import React from 'react'
 import { Button, Form, InputGroup, Modal } from 'react-bootstrap'
 import google_img from '../assets/google.png'
 import SubmitButtons from '../reusablecomponents/SubmitButtons'
+import GoogleButton from '../reusablecomponents/GoogleButton'
+import Formfield from '../reusablecomponents/Formfield'
 
 const LoginModal = ({showLoginModal, setShowLoginModal,togglePasswordVisibility, handleForgotPasswordClick, showPassword, handleSignUpClick}) => {
   return (
@@ -14,20 +16,22 @@ const LoginModal = ({showLoginModal, setShowLoginModal,togglePasswordVisibility,
         <Form>
 
 
-           <Form.Group className='mb-3' controlId='formEmail'>
-             <Form.Label>Email</Form.Label>
-             <InputGroup>
-             <Form.Control type='email' placeholder='Enter your email' />
-             </InputGroup>
-             </Form.Group>
+        <Formfield
+              label="Email"
+              type="email"
+              placeholder="Enter your email"
+              onChange="{handleUsernameChange}"
+              id="formEmail"
+            />
 
 
-             <Form.Group className='mb-1' controlId='formPassword'>
-             <Form.Label>Password</Form.Label>
-             <Form.Control type={showPassword ? 'text' : 'password'} placeholder='Enter your password' />
-              <InputGroup onClick={togglePasswordVisibility} style={{ cursor: 'pointer' }}>
-             </InputGroup>   
-             </Form.Group>
+             <Formfield
+              label="Password"
+              type={showPassword ? "text" : "password"}
+              placeholder="Enter your password"
+              onChange="{handleUsernameChange}"
+              id="formUsername"
+            />
 
          {/* forgot password */}
          <div className='d-flex justify-content-end align-items-center mb-3'>
@@ -45,7 +49,8 @@ const LoginModal = ({showLoginModal, setShowLoginModal,togglePasswordVisibility,
          </div>
 
          {/* continue with google */}
-        <button  className="btn w-100 mb-3 d-flex align-items-center justify-content-center gap-2 bg-white rounded" style={{border:'none', boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)",transition: "box-shadow 0.3s ease-in-out",}}><img src={google_img} className='img-fluid' width={'35px'} height={'35px'} alt="" />Continue with Google</button>
+       
+        <GoogleButton />
 
         {/* sign up */}
         <p className="text-center text-muted">Don't have an account?{' '}

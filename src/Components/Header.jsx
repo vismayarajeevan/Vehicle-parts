@@ -8,6 +8,7 @@ import SignupModal from "./SignupModal";
 import NotificationSidebar from "./NotificationSidebar";
 import ForgotPasswordModal from "./ForgotPasswordModal";
 import OtpModal from "./OtpModal";
+import EnterDetailsModal from "./EnterDetailsModal";
 
 const Header = () => {
   // state for login modal
@@ -18,7 +19,11 @@ const Header = () => {
   // state for forgot password modal
   const [showForgotPasswordModal, setForgotPasswordModal] = useState(false);
 
+  // state for otp modal
    const [showOtpModal, setShowOtpModal] = useState(false);
+
+  // state for enter details modal
+  const [showEnterDetailsModal, setShowEnterDetailsModal] = useState(false)
 
 
 
@@ -41,12 +46,17 @@ const Header = () => {
     setShowLoginModal(false);
   };
 
+   // function to display otp modal
   const handleOtpModalClick =()=>{
     setShowOtpModal(true)
-    setForgotPasswordModal(false)
+    setShowSignupModal(false)
   }
  
-  
+   // function to display enterdetails modal
+   const handleEnterDetailsModalClick =()=>{
+    setShowEnterDetailsModal(true)
+    setForgotPasswordModal(false)
+  }
 
   // state for eye icon
   const [showPassword, setShowPassword] = useState(false);
@@ -134,9 +144,8 @@ const Header = () => {
         <ForgotPasswordModal
         showForgotPasswordModal={showForgotPasswordModal}
         setForgotPasswordModal={setForgotPasswordModal}
-          
-          handleLoginClick={handleLoginClick}
-          handleOtpModalClick={handleOtpModalClick}
+        handleEnterDetailsModalClick={handleEnterDetailsModalClick}
+          handleLoginClick={handleLoginClick}  
         />
       )}
 
@@ -145,7 +154,18 @@ const Header = () => {
         <OtpModal
           showOtpModal={showOtpModal}
           setShowOtpModal={setShowOtpModal}
-          handleOtpModalClick={handleOtpModalClick}
+          
+        />
+      )}
+
+         {/* ***************************otp modal***************************** */}
+         {showEnterDetailsModal && (
+        <EnterDetailsModal
+          showEnterDetailsModal={showEnterDetailsModal}
+          setShowEnterDetailsModal={setShowEnterDetailsModal}
+          showPassword={showPassword}
+         
+         
         />
       )}
 
@@ -157,6 +177,7 @@ const Header = () => {
           togglePasswordVisibility={togglePasswordVisibility}
           showPassword={showPassword}
           handleLoginClick={handleLoginClick}
+          handleOtpModalClick={handleOtpModalClick}
         />
       )}
 
