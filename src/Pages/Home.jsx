@@ -14,7 +14,7 @@ const Home = () => {
      <AddButton />
      <CategorySlider />
      <Choices />
-     <GoogleMapView />
+     
     </>
   )
 }

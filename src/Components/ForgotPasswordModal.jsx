@@ -4,7 +4,12 @@ import SubmitButtons from '../reusablecomponents/SubmitButtons'
 
 
 
-const ForgotPasswordModal = ({showForgotPasswordModal,setForgotPasswordModal, handleLoginClick}) => {
+const ForgotPasswordModal = ({showForgotPasswordModal,setForgotPasswordModal, handleLoginClick,handleOtpModalClick}) => {
+  const handleContinueClick = () => {
+    handleOtpModalClick(); // Open OTP modal
+  };
+  
+ 
   return (
     <Modal show={showForgotPasswordModal} onHide={() => setForgotPasswordModal(false)}  centered>
         <Modal.Header className='mb-4' closeButton style={{ borderBottom: 'none' }}>
@@ -19,7 +24,7 @@ const ForgotPasswordModal = ({showForgotPasswordModal,setForgotPasswordModal, ha
              </InputGroup>
              </Form.Group>
          {/* login button */}
-         <SubmitButtons>Continue</SubmitButtons>
+         <SubmitButtons onClick={handleContinueClick}>Continue</SubmitButtons>
 
         
         {/* sign up */}

@@ -1,8 +1,15 @@
-import React from "react";
-import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import React, { useState } from "react";
+import { Button, Card, Col, Container, Form, Row,Offcanvas } from "react-bootstrap";
 import filter from "../assets/filter.png";
 
 const ChoicesView = () => {
+
+
+  const [show, setShow] = useState(false);
+
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+
   return (
     <div>
       <div className="d-flex align-items-center justify-content-between p-4">
@@ -15,7 +22,7 @@ const ChoicesView = () => {
           />
         </Form>
         <div>
-          <img src={filter} alt="" className="img-fluid" width={"30px"} />
+          <img src={filter} alt="" className="img-fluid" width={"30px"} onClick={handleShow} />
         </div>
       </div>
 
@@ -37,7 +44,51 @@ const ChoicesView = () => {
           </Col>
         </Row>
       </Container>
-      <div></div>
+      
+
+       {/* Offcanvas Bar */}
+       <Offcanvas
+        show={show}
+        onHide={handleClose}
+        placement="bottom"
+        style={{ height: "50vh" }}
+        className="rounded"
+      >
+        <Offcanvas.Header  style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "relative",
+          }}> 
+            {/* Custom Close Button */}
+            <Button
+            onClick={handleClose}
+            style={{
+              backgroundColor: "red",
+              color: "white",
+              border: "none",
+              position: "absolute",
+              left: "15px",
+              top: "15px",
+              borderRadius: "50%",
+              width: "30px",
+              height: "30px",
+              textAlign: "center",
+              padding: "0",
+            }}
+          >
+            &times;
+          </Button>
+          <Offcanvas.Title className="text-center">Filter</Offcanvas.Title>
+        </Offcanvas.Header>
+
+        <hr />
+        <Offcanvas.Body>
+          <p>Here you can add filter options or other content.</p>
+          {/* Example filter options */}
+          
+        </Offcanvas.Body>
+      </Offcanvas>
     </div>
   );
 };

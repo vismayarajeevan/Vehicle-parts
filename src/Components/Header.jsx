@@ -7,6 +7,7 @@ import LoginModal from "./LoginModal";
 import SignupModal from "./SignupModal";
 import NotificationSidebar from "./NotificationSidebar";
 import ForgotPasswordModal from "./ForgotPasswordModal";
+import OtpModal from "./OtpModal";
 
 const Header = () => {
   // state for login modal
@@ -16,6 +17,10 @@ const Header = () => {
 
   // state for forgot password modal
   const [showForgotPasswordModal, setForgotPasswordModal] = useState(false);
+
+   const [showOtpModal, setShowOtpModal] = useState(false);
+
+
 
   // function to display login modal
   const handleLoginClick = () => {
@@ -35,6 +40,13 @@ const Header = () => {
     setForgotPasswordModal(true);
     setShowLoginModal(false);
   };
+
+  const handleOtpModalClick =()=>{
+    setShowOtpModal(true)
+    setForgotPasswordModal(false)
+  }
+ 
+  
 
   // state for eye icon
   const [showPassword, setShowPassword] = useState(false);
@@ -120,9 +132,20 @@ const Header = () => {
       {/* ***************************forgot password modal***************************** */}
       {showForgotPasswordModal && (
         <ForgotPasswordModal
-          showForgotPasswordModal={showForgotPasswordModal}
-          setForgotPasswordModal={setForgotPasswordModal}
+        showForgotPasswordModal={showForgotPasswordModal}
+        setForgotPasswordModal={setForgotPasswordModal}
+          
           handleLoginClick={handleLoginClick}
+          handleOtpModalClick={handleOtpModalClick}
+        />
+      )}
+
+       {/* ***************************otp modal***************************** */}
+       {showOtpModal && (
+        <OtpModal
+          showOtpModal={showOtpModal}
+          setShowOtpModal={setShowOtpModal}
+          handleOtpModalClick={handleOtpModalClick}
         />
       )}
 
