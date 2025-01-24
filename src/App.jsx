@@ -6,6 +6,7 @@ import Home from './Pages/Home'
 import Overview from './Pages/Overview'
 import CategoryView from './Pages/CategoryView'
 import ChoicesView from './Pages/ChoicesView'
+import CardOverview from './Pages/CardOverview'
 
 function App() {
   
@@ -14,7 +15,7 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/overview' element={<Overview />} />
+        <Route path='/overview/:id' element={<CardOverview />} />
         <Route path='/categoryView/:category' element={<CategoryView />} />
         <Route path='/choices' element={<ChoicesView />} />
       </Routes>

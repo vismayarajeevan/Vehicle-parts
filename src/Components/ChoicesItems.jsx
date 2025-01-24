@@ -5,11 +5,11 @@ import { Link, useNavigate } from 'react-router-dom'
 
 
 
-const ChoicesItems = ({part}) => {
+const ChoicesItems = ({part, parts  }) => {
     const navigate = useNavigate();
   return (
     <div>
-         <Link to={'/overview'} style={{textDecoration:'none'}}>
+         <Link to={`/overview/${part.id}`}  state={{ part, parts  }}   style={{textDecoration:'none'}}>
     <Card style={{ width: '100%', maxWidth: '18rem' }}>
       <div className='p-3'>
          <Card.Img variant="top" src={part.image} style={{height:'200px',objectFit:'cover', width:'100%'}}/>

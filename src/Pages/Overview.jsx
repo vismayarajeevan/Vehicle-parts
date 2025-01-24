@@ -3,27 +3,45 @@ import React, { useEffect, useState } from "react";
 import { Badge, Button, Col, Container, Row } from "react-bootstrap";
 import whatsapp_icon from "../assets/whatsapp.png";
 import { colors } from "../colors";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
-const images = [
-  "https://images.unsplash.com/photo-1626668893632-6f3a4466d22f?auto=format&fit=crop&q=80&w=800",
-  "https://images.unsplash.com/photo-1626668893632-6f3a4466d22f?auto=format&fit=crop&q=80&w=800",
-  "https://images.unsplash.com/photo-1626668893632-6f3a4466d22f?auto=format&fit=crop&q=80&w=800",
-  "https://images.unsplash.com/photo-1626668893632-6f3a4466d22f?auto=format&fit=crop&q=80&w=800",
-];
+
+// const images = [
+//   "https://images.unsplash.com/photo-1626668893632-6f3a4466d22f?auto=format&fit=crop&q=80&w=800",
+//   "https://images.unsplash.com/photo-1626668893632-6f3a4466d22f?auto=format&fit=crop&q=80&w=800",
+//   "https://images.unsplash.com/photo-1626668893632-6f3a4466d22f?auto=format&fit=crop&q=80&w=800",
+//   "https://images.unsplash.com/photo-1626668893632-6f3a4466d22f?auto=format&fit=crop&q=80&w=800",
+// ];
 
 const Overview = () => {
   const { id } = useParams();
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const location = useLocation();
+  const { parts } = location.state || {}; // Retrieve parts from location state
+  // const [currentImageIndex, setCurrentImageIndex] = useState(0);
+   
+  const [item, setItem] = useState(null);
+
 
   // Auto-scroll functionality
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
-    }, 3000); // Change image every 3 seconds
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCurrentImageIndex((prev) => (prev + 1) % images.length);
+  //   }, 3000); // Change image every 3 seconds
 
-    return () => clearInterval(interval); // Cleanup on component unmount
-  }, []);
+  //   return () => clearInterval(interval); // Cleanup on component unmount
+  // }, []);
+
+  useEffect(() => {
+    // Find the selected item based on the ID
+    // const selectedItem = parts.find((part) => part.id === parseInt(id));
+    // setItem(selectedItem);
+    console.log(parts);
+    
+  }, [id]);
+
+  if (!item) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <Container fluid className="p-5" style={{ overflowX: "hidden" ,
@@ -34,15 +52,15 @@ const Overview = () => {
         {/* Image Section */}
         <Col md={6} style={{ maxHeight: "100vh", overflowY: "auto" }}>
           <div className="d-flex flex-column gap-4">
-            {images.map((image, index) => (
+            {/* {images.map((image, index) => ( */}
               <div
-                key={index}
+                // key={index}
                 className="position-relative overflow-hidden rounded"
                 style={{ height: "400px" }}
               >
                 <img
-                  src={image}
-                  alt={`Product view ${index + 1}`}
+                  src={item.image}
+                  // alt={`Product view ${index + 1}`}
                   className="w-100 h-100"
                   style={{
                     objectFit: "cover",
@@ -50,7 +68,7 @@ const Overview = () => {
                   }}
                 />
               </div>
-            ))}
+            {/* ))} */}
           </div>
         </Col>
 
@@ -62,7 +80,7 @@ const Overview = () => {
               top: "20px",
             }}
           >
-            <h1 className="mb-5">Honda Civic Spoiler</h1>
+            <h1 className="mb-5">{item.name}</h1>
             <p className="text-muted mb-5">
               High-quality spoiler designed specifically for Honda Civic models.
               Enhances aerodynamics and adds a sporty look to your vehicle.
@@ -100,7 +118,7 @@ const Overview = () => {
               </div>
 
               <div className="mt-3">
-                <p style={{fontSize:"25px", fontWeight:'800'}}>₹ 25</p>
+                <p style={{fontSize:"25px", fontWeight:'800'}}>₹ {item.price}</p>
               </div>
 
             </div>
