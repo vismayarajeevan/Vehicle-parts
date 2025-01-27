@@ -13,7 +13,10 @@ const parts = [
     name: "Engine Oil Filter",
     price: 29.99,
     rating: 4.5,
-    image: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&q=80&w=800"
+    image: ["https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1486462660700-7ec09f3540ba?auto=format&fit=crop&q=80&w=800"
+    ]
   },
   {
     id: 2,
@@ -83,6 +86,7 @@ const Choices = () => {
           <h2 className="h4 font-weight-bold text-dark">Your Choices</h2>
           <Link 
             to="/choices" 
+            state={{ parts }} 
             className="d-flex align-items-center text-primary hover:text-blue-700"
           >
             See All

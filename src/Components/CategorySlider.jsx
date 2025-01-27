@@ -51,7 +51,13 @@ const CategorySlider = () => {
         <Row className="g-4">
           {categories.map((category) => (
             <Col key={category.id} xs={6} sm={4} md={3} lg={2}>
-              <Link to={`/category/${category.name.toLowerCase()}`} style={{textDecoration:'none', color:'inherit'}}>
+             <Link
+  to={`/category/${category.name.toLowerCase()}`}
+  style={{ textDecoration: 'none', color: 'inherit' }}
+  state={{ categoryItems: [category] }} // Pass the correct data
+>
+
+
               <div  className="position-relative cursor-pointer" style={{ cursor: 'pointer' }}>
                 <div 
                   className="bg-white rounded-4 position-relative"
