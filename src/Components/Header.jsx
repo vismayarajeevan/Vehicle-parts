@@ -3,18 +3,23 @@ import logo from "../assets/logo.png";
 import user from "../assets/user.svg";
 import notification from "../assets/notification.png";
 import { Container, Navbar, Form, Nav } from "react-bootstrap";
-import LoginModal from "./LoginModal";
-import SignupModal from "./SignupModal";
+
 import NotificationSidebar from "./NotificationSidebar";
 import ForgotPasswordModal from "./ForgotPasswordModal";
 import OtpModal from "./OtpModal";
 import EnterDetailsModal from "./EnterDetailsModal";
+import AuthenticationModal from "./AuthenticationModal";
 
 const Header = () => {
-  // state for login modal
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  // state for signup modal
-  const [showSignupModal, setShowSignupModal] = useState(false);
+  // state for authentication modal
+  const [authenticationModal, setAuthenticationModal]= useState(false)
+
+  // state to check it is register modal or not
+  const[isRegister, setIsRegister] = useState(false)
+
+  // const [showLoginModal, setShowLoginModal] = useState(false);
+  // // state for signup modal
+  // const [showSignupModal, setShowSignupModal] = useState(false);
 
   // state for forgot password modal
   const [showForgotPasswordModal, setForgotPasswordModal] = useState(false);
@@ -29,27 +34,33 @@ const Header = () => {
 
   // function to display login modal
   const handleLoginClick = () => {
-    setShowLoginModal(true);
-    setShowSignupModal(false);
+    // setShowLoginModal(true);
+    // setShowSignupModal(false);
+    setAuthenticationModal(true)
+    setIsRegister(false)
     setForgotPasswordModal(false);
   };
 
   // function to display signup modal
   const handleSignUpClick = () => {
-    setShowSignupModal(true);
-    setShowLoginModal(false);
+    // setShowSignupModal(true);
+    // setShowLoginModal(false);
+    setAuthenticationModal(true)
+    setIsRegister(true)
   };
 
   // function to display forgot password modal
   const handleForgotPasswordClick = () => {
     setForgotPasswordModal(true);
-    setShowLoginModal(false);
+    // setShowLoginModal(false);
+    setAuthenticationModal(false)
   };
 
    // function to display otp modal
   const handleOtpModalClick =()=>{
-    setShowOtpModal(true)
-    setShowSignupModal(false)
+    // setShowOtpModal(true)
+    // setShowSignupModal(false)
+    // setAuthenticationModal(false)
   }
  
    // function to display enterdetails modal
@@ -73,6 +84,8 @@ const Header = () => {
   const handleNotificationClick = () => {
     setShowNotifications(!showNotifications);
   };
+
+
 
   return (
     <>
@@ -127,17 +140,26 @@ const Header = () => {
         </Container>
       </Navbar>
 
-      {/* ***************************login modal***************************** */}
-      {showLoginModal && (
-        <LoginModal
-          showLoginModal={showLoginModal}
-          setShowLoginModal={setShowLoginModal}
+      {/* ***************************login and signup modal***************************** */}
+     
+
+      {
+        authenticationModal && (
+          <AuthenticationModal 
+          authenticationModal={authenticationModal}
+          setAuthenticationModal={setAuthenticationModal}
+          isRegister={isRegister}
           togglePasswordVisibility={togglePasswordVisibility}
-          handleForgotPasswordClick={handleForgotPasswordClick}
           showPassword={showPassword}
-          handleSignUpClick={handleSignUpClick}
-        />
-      )}
+          handlePrimaryAction={isRegister ? handleOtpModalClick : () => {}}
+          handleSecondaryAction={isRegister ? handleLoginClick : handleSignUpClick}
+          handleForgotPasswordClick={handleForgotPasswordClick}
+
+         
+
+          />
+        )
+      }
 
       {/* ***************************forgot password modal***************************** */}
       {showForgotPasswordModal && (
@@ -158,7 +180,7 @@ const Header = () => {
         />
       )}
 
-         {/* ***************************otp modal***************************** */}
+         {/* ***************************enterdetails modal***************************** */}
          {showEnterDetailsModal && (
         <EnterDetailsModal
           showEnterDetailsModal={showEnterDetailsModal}
@@ -169,17 +191,7 @@ const Header = () => {
         />
       )}
 
-      {/* ***************************signup modal***************************** */}
-      {showSignupModal && (
-        <SignupModal
-          showSignupModal={showSignupModal}
-          setShowSignupModal={setShowSignupModal}
-          togglePasswordVisibility={togglePasswordVisibility}
-          showPassword={showPassword}
-          handleLoginClick={handleLoginClick}
-          handleOtpModalClick={handleOtpModalClick}
-        />
-      )}
+     
 
       {/* ***************************notifications***************************** */}
 

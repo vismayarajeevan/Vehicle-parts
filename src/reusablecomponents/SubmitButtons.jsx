@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap'
 
 
 
-const SubmitButtons = ({onClick, className, style,children}) => {
+const SubmitButtons = ({onClick, className, style,children,disabled}) => {
   return (
     <Button
     onClick={onClick}
@@ -15,6 +15,7 @@ const SubmitButtons = ({onClick, className, style,children}) => {
         color: "white",
       }
     }
+    disabled={disabled}
   >
     {children}
   </Button>
