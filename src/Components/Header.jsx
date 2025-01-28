@@ -17,9 +17,7 @@ const Header = () => {
   // state to check it is register modal or not
   const[isRegister, setIsRegister] = useState(false)
 
-  // const [showLoginModal, setShowLoginModal] = useState(false);
-  // // state for signup modal
-  // const [showSignupModal, setShowSignupModal] = useState(false);
+  
 
   // state for forgot password modal
   const [showForgotPasswordModal, setForgotPasswordModal] = useState(false);
@@ -30,12 +28,14 @@ const Header = () => {
   // state for enter details modal
   const [showEnterDetailsModal, setShowEnterDetailsModal] = useState(false)
 
+  // state to store email
+  const [enteredEmail, setEnteredEmail] = useState('');
+
 
 
   // function to display login modal
   const handleLoginClick = () => {
-    // setShowLoginModal(true);
-    // setShowSignupModal(false);
+    
     setAuthenticationModal(true)
     setIsRegister(false)
     setForgotPasswordModal(false);
@@ -43,8 +43,7 @@ const Header = () => {
 
   // function to display signup modal
   const handleSignUpClick = () => {
-    // setShowSignupModal(true);
-    // setShowLoginModal(false);
+    
     setAuthenticationModal(true)
     setIsRegister(true)
   };
@@ -58,9 +57,9 @@ const Header = () => {
 
    // function to display otp modal
   const handleOtpModalClick =()=>{
-    // setShowOtpModal(true)
-    // setShowSignupModal(false)
-    // setAuthenticationModal(false)
+     setShowOtpModal(true)
+    
+    setAuthenticationModal(false)
   }
  
    // function to display enterdetails modal
@@ -154,6 +153,9 @@ const Header = () => {
           handlePrimaryAction={isRegister ? handleOtpModalClick : () => {}}
           handleSecondaryAction={isRegister ? handleLoginClick : handleSignUpClick}
           handleForgotPasswordClick={handleForgotPasswordClick}
+          handleOtpModalClick={handleOtpModalClick}
+
+          setEnteredEmail={setEnteredEmail}
 
          
 
@@ -176,6 +178,7 @@ const Header = () => {
         <OtpModal
           showOtpModal={showOtpModal}
           setShowOtpModal={setShowOtpModal}
+          enteredEmail={enteredEmail}
           
         />
       )}

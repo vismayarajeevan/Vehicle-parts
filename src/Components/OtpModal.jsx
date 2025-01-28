@@ -5,7 +5,7 @@ import OtpInput from 'react-otp-input';
 
 
 
-const OtpModal = ({ showOtpModal, setShowOtpModal}) => {
+const OtpModal = ({ showOtpModal, setShowOtpModal, enteredEmail }) => {
 
     const [otp, setOtp] = useState('');
   return (
@@ -16,7 +16,7 @@ const OtpModal = ({ showOtpModal, setShowOtpModal}) => {
     <Modal.Body className="ps-5 pe-5">
        <div >
             <p>An OTP has been sent to the provided email address 
-    <a href="">johnAb@gmail.com. </a> </p>
+    <a href="" className='ms-1'>{enteredEmail}. </a> </p>
     <p>Please enter the OTP to proceed.</p>
     </div>
     <div className='mt-5 mb-5'>

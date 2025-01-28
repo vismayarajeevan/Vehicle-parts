@@ -9,7 +9,7 @@ import { showToast } from '../reusablecomponents/Toast';
 
 
 const AuthenticationModal = ({authenticationModal,setAuthenticationModal,isRegister,togglePasswordVisibility,
-    showPassword,handlePrimaryAction,handleSecondaryAction,handleForgotPasswordClick}) => {
+    showPassword,handlePrimaryAction,handleSecondaryAction,handleForgotPasswordClick,handleOtpModalClick, setEnteredEmail}) => {
 
         // state for login
         const [loginFields,setLoginFields] = useState({
@@ -129,8 +129,11 @@ if (!signupFields.phoneNumber) {
                   autoClose: 3000,
                 })
                 setSignupFields({
-                  userName: "", email: "",phoneNumber:"", password: "", confirmPassword: "",
+                  userName: "",phoneNumber:"", password: "", confirmPassword: "",
                 })
+
+                setEnteredEmail(signupFields.email);
+                handleOtpModalClick()
 
                  
               }else{
@@ -160,8 +163,9 @@ if (!signupFields.phoneNumber) {
 
 
             if(isRegister){
-                // handleSubmitInAuthentication()
+          
                 handleRegister(e)
+               
             }else{
               console.log("");
               
