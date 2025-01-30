@@ -4,7 +4,7 @@ import Formfield from "../reusablecomponents/Formfield";
 import GoogleButton from "../reusablecomponents/GoogleButton";
 import SubmitButtons from "../reusablecomponents/SubmitButtons";
 import { registerApi } from "../services/allAPI";
-import { ToastContainer, toast } from "react-toastify";
+
 import { showToast } from "../reusablecomponents/Toast";
 
 const AuthenticationModal = ({
