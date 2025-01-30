@@ -3,9 +3,10 @@ import { Button, Form, Modal, Spinner } from "react-bootstrap";
 import Formfield from "../reusablecomponents/Formfield";
 import GoogleButton from "../reusablecomponents/GoogleButton";
 import SubmitButtons from "../reusablecomponents/SubmitButtons";
-import { registerApi } from "../services/allAPI";
+import { loginApi, registerApi } from "../services/allAPI";
 
 import { showToast } from "../reusablecomponents/Toast";
+
 
 const AuthenticationModal = ({
   authenticationModal,
@@ -126,6 +127,7 @@ const AuthenticationModal = ({
 
   console.log("fields", signupFields);
 
+  // register
   const handleRegister = async (e) => {
     e.preventDefault();
 
@@ -136,10 +138,8 @@ const AuthenticationModal = ({
         const result = await registerApi(signupFields);
         console.log("result is", result);
         if (result.status == 200) {
-          showToast(`${result.data.message}`, "success", {
-            position: "top-right",
-            autoClose: 3000,
-          });
+          showToast(`${result.data.message}`, "success");
+
           setSignupFields({
             userName: "",
             phoneNumber: "",
@@ -150,10 +150,7 @@ const AuthenticationModal = ({
           setEnteredEmail(signupFields.email);
           handleOtpModalClick();
         } else {
-          showToast(`${result.data.message}`, "error", {
-            position: "top-right",
-            autoClose: 3000,
-          });
+          showToast(`${result.data.message}`, "error");
         }
       } catch (error) {
         console.error("Registration error:", error);
@@ -164,16 +161,61 @@ const AuthenticationModal = ({
           error.message ||
           "Something went wrong!";
 
-        showToast(errorMessage, "error", {
-          position: "top-right",
-          autoClose: 3000,
-        });
+        showToast(errorMessage, "error");
 
        
       }
       setIsLoading(false);
     }
   };
+
+
+  // login function
+  const handleLogin = async(e)=>{
+    e.preventDefault()
+
+    // Validate email
+  if (!loginFields.email.trim() || !validateEmail(loginFields.email)) {
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      email: "Invalid email format.",
+    }));
+    return;
+  }
+
+  // Validate password field
+  if (!loginFields.password.trim()) {
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      password: "Password is required.",
+    }));
+    return;
+  }
+
+  try {
+  const result= await loginApi(loginFields)
+  console.log(result);
+  
+  if(result.status==200){
+    sessionStorage.setItem('token',result.data.token)
+    setLoginFields({email: "", password: ""})
+    setAuthenticationModal(false)
+    showToast(`${result.data.message}`, "success");
+  }else{
+    showToast(`${result.data.message}`, "error");
+  }
+    
+  } catch (error) {
+    // Extract proper error message safely
+    const errorMessage =
+    error.response?.data?.message ||
+    error.message ||
+    "Something went wrong!";
+
+  showToast(errorMessage, "error");
+    
+  }
+  }
 
   // function for submit form
   const handleSubmit = (e) => {
@@ -182,7 +224,7 @@ const AuthenticationModal = ({
     if (isRegister) {
       handleRegister(e);
     } else {
-      console.log("");
+      handleLogin(e);
     }
   };
 
