@@ -7,13 +7,16 @@ import Home from './Pages/Home'
 import CategoryView from './Pages/CategoryView'
 import ChoicesView from './Pages/ChoicesView'
 import CardOverview from './Pages/CardOverview'
+import { ToastContainer } from 'react-toastify'
 
 function App() {
   
 
   return (
     <>
+    <ToastContainer/>
       <Routes>
+        
         <Route path='/' element={<Home />} />
         <Route path='/overview/:id' element={<CardOverview />} />
         <Route path="/category/:categoryName" element={<CategoryView />} /> 
