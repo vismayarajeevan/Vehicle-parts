@@ -16,7 +16,12 @@ export const loginApi =async(reqBody)=>{
     return await commonAPI('POST',`${SERVER_URL}/auth/login`,reqBody)
 }
 
-// login
+// forgot
 export const forgotApi =async(reqBody)=>{
     return await commonAPI('POST',`${SERVER_URL}/auth/forgotPassword`,reqBody)
+}
+
+// login
+export const googleAuthApi =async(reqBody)=>{
+    return await commonAPI('POST',`${SERVER_URL}/auth/googleSignin`,reqBody)
 }

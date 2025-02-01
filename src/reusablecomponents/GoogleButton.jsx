@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap'
 import google_img from '../assets/google.png'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { auth } from '../utils/firebase'
+import { googleAuthApi } from '../services/allAPI'
 
 const GoogleButton = ({onClick}) => {
 
@@ -13,8 +14,14 @@ const GoogleButton = ({onClick}) => {
       const credetial = GoogleAuthProvider.credentialFromResult(result)
       const token = credetial.accessToken
       const user = result.user
+      console.log("token",token);
+      // const {uid} = user.uid
+      
+      const authUID = await googleAuthApi(user.uid)
+      console.log("authuid",authUID);
+      
+      console.log("uid",user.uid);
 
-      console.log(user);
       console.log("user info",user);
       
       
