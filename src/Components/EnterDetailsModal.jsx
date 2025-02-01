@@ -9,6 +9,13 @@ const EnterDetailsModal = ({showEnterDetailsModal,setShowEnterDetailsModal,showP
 
     const [otp, setOtp] = useState('');
 
+    const [updatePassword,setUpdatePassword] = useState({
+      email:"",otp:"",newPassword:""
+    })
+
+    console.log(updatePassword);
+    
+
   return (
     <Modal centered show={showEnterDetailsModal} onHide={() => setShowEnterDetailsModal(false)}>
     <Modal.Header closeButton style={{ borderBottom: 'none' }}>

@@ -28,8 +28,10 @@ const Header = () => {
   // state for enter details modal
   const [showEnterDetailsModal, setShowEnterDetailsModal] = useState(false)
 
-  // state to store email
+  // state to store email in otpmodal
   const [enteredEmail, setEnteredEmail] = useState('');
+
+
 
 
 
@@ -171,6 +173,7 @@ const Header = () => {
         setForgotPasswordModal={setForgotPasswordModal}
         handleEnterDetailsModalClick={handleEnterDetailsModalClick}
           handleLoginClick={handleLoginClick}  
+          setEnteredEmail ={setEnteredEmail}
         />
       )}
 

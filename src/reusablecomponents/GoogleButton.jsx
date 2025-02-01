@@ -14,8 +14,6 @@ const GoogleButton = ({onClick}) => {
       const credetial = GoogleAuthProvider.credentialFromResult(result)
       const token = credetial.accessToken
       const user = result.user
-      console.log("token",token);
-      // const {uid} = user.uid
       
       const authUID = await googleAuthApi(user.uid)
       console.log("authuid",authUID);

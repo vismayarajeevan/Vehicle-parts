@@ -25,3 +25,9 @@ export const forgotApi =async(reqBody)=>{
 export const googleAuthApi =async(reqBody)=>{
     return await commonAPI('POST',`${SERVER_URL}/auth/googleSignin`,reqBody)
 }
+
+
+// reset Password
+export const resetPasswordApi =async(reqBody)=>{
+    return await commonAPI('PUT',`${SERVER_URL}/auth/resetPassword`,reqBody)
+}
