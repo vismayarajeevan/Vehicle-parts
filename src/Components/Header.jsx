@@ -39,7 +39,7 @@ const Header = () => {
     setAuthenticationModal(true)
     setIsRegister(false)
     setShowOtpModal(false)
-    // setForgotPasswordModal(false);
+     setForgotPasswordModal(false);
   };
 
   // function to display signup modal
