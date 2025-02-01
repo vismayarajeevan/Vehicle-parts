@@ -6,7 +6,7 @@ import { forgotApi } from '../services/allAPI'
 
 import { showToast } from "../reusablecomponents/Toast";
 
-const ForgotPasswordModal = ({showForgotPasswordModal,setForgotPasswordModal, handleLoginClick,handleEnterDetailsModalClick}) => {
+const ForgotPasswordModal = ({showForgotPasswordModal,setForgotPasswordModal, handleLoginClick,handleEnterDetailsModalClick,setEnteredEmail}) => {
 
   // state for email
   const [forgotEmail, setForgotEmail] = useState({
@@ -50,8 +50,15 @@ const ForgotPasswordModal = ({showForgotPasswordModal,setForgotPasswordModal, ha
 
       if(result.status ==200){
          showToast(`${result.data.message}`, "success");
+
+        // Store email for EnterDetailsModal
+        setEnteredEmail(forgotEmail.email);
+
+        // Clear the email field and close modal
          setForgotEmail({email:""})
          setForgotPasswordModal(false)
+
+          // Open EnterDetailsModal
          handleEnterDetailsModalClick()
       }else{
         showToast(`${result.data.message}`, "error");
@@ -76,7 +83,12 @@ const ForgotPasswordModal = ({showForgotPasswordModal,setForgotPasswordModal, ha
       </Modal.Header>
       <Modal.Body className='ps-5 pe-5'>
         <Form style={{marginBottom:'50px'}}>
-        <Formfield label="Email" type="email" placeholder="Enter your email" onChange={e=>setForgotEmail({ email: e.target.value })} id="formEmail"/>
+        <Formfield label="Email" type="email" placeholder="Enter your email" 
+        onChange={(e)=>{
+          setForgotEmail({ email: e.target.value }) 
+          setEnteredEmail(e.target.value); 
+        }}
+          id="formEmail"/>
         {emailError && <p className="text-danger mt-1">{emailError}</p>}
       </Form>
        {/* login button */}

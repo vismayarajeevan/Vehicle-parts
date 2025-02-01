@@ -51,10 +51,10 @@ const OtpModal = ({ showOtpModal, setShowOtpModal, enteredEmail,handleLoginClick
       }
 
         // Check if OTP contains only numbers and has 6 digits
-   else if (!/^\d{6}$/.test(otp)) {
-    setError("OTP must be 6 digits and contain only numbers.");
-    return;
-  }else{
+       else if (!/^\d{6}$/.test(otp)) {
+       setError("OTP must be 6 digits and contain only numbers.");
+       return;
+      }else{
 
     setIsLoading(true)
     const data = { email: enteredEmail, otp }

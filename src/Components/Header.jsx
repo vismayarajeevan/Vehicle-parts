@@ -42,6 +42,7 @@ const Header = () => {
     setIsRegister(false)
     setShowOtpModal(false)
      setForgotPasswordModal(false);
+     setShowEnterDetailsModal(false)
   };
 
   // function to display signup modal
@@ -194,6 +195,8 @@ const Header = () => {
           showEnterDetailsModal={showEnterDetailsModal}
           setShowEnterDetailsModal={setShowEnterDetailsModal}
           showPassword={showPassword}
+          enteredEmail={enteredEmail}
+          handleLoginClick={handleLoginClick}
          
          
         />
