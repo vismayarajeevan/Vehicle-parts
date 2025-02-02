@@ -11,16 +11,20 @@ const GoogleButton = ({onClick}) => {
     const provider = new GoogleAuthProvider()
     try {
       const result = await signInWithPopup(auth,provider)
-      const credetial = GoogleAuthProvider.credentialFromResult(result)
-      const token = credetial.accessToken
+      // const credetial = GoogleAuthProvider.credentialFromResult(result)
+      // const token = credetial.accessToken
       const user = result.user
+
+      let uidvalue = user.uid 
+      console.log(uidvalue);
       
-      const authUID = await googleAuthApi(user.uid)
+      
+      const authUID = await googleAuthApi({uid:uidvalue})
       console.log("authuid",authUID);
       
-      console.log("uid",user.uid);
+      // console.log("uid",uid);
 
-      console.log("user info",user);
+      // console.log("user info",user);
       
       
     } catch (error) {
