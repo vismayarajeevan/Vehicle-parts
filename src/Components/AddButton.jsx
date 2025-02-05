@@ -1,53 +1,58 @@
 import { Icon } from "@iconify-icon/react/dist/iconify.js";
-import React, { useEffect, useState } from "react";
-import { Button, Form, InputGroup, Offcanvas } from "react-bootstrap";
+import React, { useState } from "react";
+import { Button, Form, InputGroup, Offcanvas, Spinner } from "react-bootstrap";
 import { globalStyles } from "../globalStyles";
 import ToggleCategoryBtn from "../reusablecomponents/ToggleCategoryBtn";
 import { useDispatch, useSelector } from "react-redux";
- import {
-   setActiveButton,
+import {
+  setActiveButton,
   setActiveCondition,
-//   setAvailability,
-//   setCategory,
-//   setContactNumber,
-//   setDescription,
-//   setImage,
-//   setPartName,
- } from "../redux/slices/ProductSlice";
-import { colors } from '../colors'
+  resetActiveButton,
+  resetActiveCondition,
+} from "../redux/slices/ProductSlice";
 
 import GoogleMapView from "./GoogleMapView";
 import SubmitButtons from "../reusablecomponents/SubmitButtons";
-import { startTransition } from "react";
 import { addPartsApi } from "../services/allAPI";
-
-
-
-
+import { showToast } from "../reusablecomponents/Toast";
 
 const AddButton = () => {
   // call the action using dispatch
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // access the state
-   const {activeButton,activeCondition,
-  // availability,image,partName,category,description,contactNumber,
-  } 
-   = useSelector((state) => state.productReducer);
+  const { activeButton, activeCondition} = useSelector((state) => state.productReducer);
   const [productDetails, setProductDetails] = useState({
-        partName: "",
-        category: "",
-        condition: "",
-        brand: "",
-        price: "",
-        stockAvailability: "true", 
-        description: "",
-        contactNumber: "",
-        latitude: "", 
-        longitude: "", 
-        images: [],
-      });
+    partName: "",
+    category: "",
+    condition: "",
+    brand: "",
+    price: "",
+    stockAvailability: "true",
+    description: "",
+    contactNumber: "",
+    latitude: "",
+    longitude: "",
+    images: [],
+  });
+
   console.log(productDetails);
-  
+
+  const [errors, setErrors] = useState({
+    partName: "",
+    category: "",
+    condition: "",
+    brand: "",
+    price: "",
+    stockAvailability: "",
+    description: "",
+    contactNumber: "",
+    latitude: "",
+    longitude: "",
+    images: "",
+  });
+
+  // state for spinner
+  const [isLoading, setIsLoading] = useState(false);
 
   // state for sidebar open and close
   const [isAddProductSidebarOpen, setIsAddProductSidebarOpen] = useState(false);
@@ -56,101 +61,43 @@ const AddButton = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   // array to store images
- const [imageArray, setImageArray] = useState([])
+  const [imageArray, setImageArray] = useState([]);
 
- //   array for categories
- const categories = [
-  { label: "Car", value: 1 },
-  { label: "Bike", value: 2 },
-  { label: "Bus", value: 3 },
-  { label: "Cycle", value: 4 },
-  { label: "Scooty", value: 5 },
-  { label: "Others", value: 6 },
-];
+  //   array for categories
+  const categories = [
+    { label: "Car", value: 1 },
+    { label: "Bike", value: 2 },
+    { label: "Bus", value: 3 },
+    { label: "Cycle", value: 4 },
+    { label: "Scooty", value: 5 },
+    { label: "Others", value: 6 },
+  ];
 
- //   array for condition
- const conditions = [
-  { label: "New", value: 1 },
-  { label: "Used", value: 2 },
-]
-
+  //   array for condition
+  const conditions = [
+    { label: "New", value: 1 },
+    { label: "Used", value: 2 },
+  ];
 
   // function to show sidebar
   const handleAddProducts = () => {
     setIsAddProductSidebarOpen(!isAddProductSidebarOpen);
   };
 
-  
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
 
- 
+    if (files.length === 0) {
+      alert("Please select at least 1 image");
+      return;
+    }
 
+    // Add new images while ensuring max 3 images
+    const updatedImages = [...imageArray, ...files].slice(-3); // Keeps only the last 3 images
 
-
-  // function to take input image
-//   const handleImageChange = (e) => {
-//     const files = e.target.files;
-//     const newImageArray =[]
-
-//  // Check if files is empty, if yes, don't show the alert
-//  if (files.length === 0 || files.length >3) {
-//   alert("Please select between 1 and 3")
-//   return; // Exit if no files are selected
-// }
-
-
-//     // if(files.length <1 ){
-//     //   alert("Please select between 1 and 3")
-//     //   return
-//     // }
-
-//     for(let i=0;i<files.length;i++){
-//       const file =files[i]
-//       const imageURL = URL.createObjectURL(file)
-//       newImageArray.push(imageURL)
-
-//     }
-//      // Update the imageArray by appending new images to the existing ones
-//      setImageArray((prevImageArray) => {
-//      const combinedArray = [...prevImageArray, ...newImageArray];
-    
-//     // Limit the array size to 3 images
-//     if (combinedArray.length > 3) {
-//       combinedArray.splice(0, combinedArray.length - 3); // Keep only the last 3 images
-//     }
-
-//      return combinedArray;
-//     });
-//     console.log(newImageArray);
-    
-    
-//      dispatch(setImage([...imageArray, ...newImageArray]));
-    
-//   };
-
-
-const handleImageChange = (e) => {
-  const files = Array.from(e.target.files);
-
-  if (files.length === 0) {
-    alert("Please select at least 1 image");
-    return;
-  }
-
-  // Add new images while ensuring max 3 images
-  const updatedImages = [...imageArray, ...files].slice(-3); // Keeps only the last 3 images
-
-  setImageArray(updatedImages);
-  setProductDetails((prevState) => ({ ...prevState, images: updatedImages }));
-};
-
-
-
-   // Function to remove an image from the array
-  //  const handleRemoveImage = (index) => {
-  //   event.preventDefault(); 
-  //   const updatedArray = imageArray.filter((_, i) => i !== index);
-  //   setImageArray(updatedArray);
-  // };
+    setImageArray(updatedImages);
+    setProductDetails((prevState) => ({ ...prevState, images: updatedImages }));
+  };
 
   const handleRemoveImage = (index) => {
     const updatedArray = imageArray.filter((_, i) => i !== index);
@@ -158,155 +105,180 @@ const handleImageChange = (e) => {
     setProductDetails((prevState) => ({ ...prevState, images: updatedArray }));
   };
 
+  // take value from input
+  const handleProductDetailsChange = (e) => {
+    const { name, value } = e.target;
+    setProductDetails({ ...productDetails, [name]: value });
+  };
 
-  // function to change the availabilty radio button
-  // const handleAvailabilityChange = (e) => {
+  const handleLocationSelect = (location) => {
+    setSelectedLocation(location);
+    setProductDetails({
+      ...productDetails,
+      latitude: location.lat,
+      longitude: location.lng,
+    });
+  };
 
-  //   dispatch(setAvailability(e.target.value));
-  // };
+  const handleCategoryChange = (value) => {
+    dispatch(setActiveButton(value));
+    setProductDetails((prev) => ({ ...prev, category: value }));
+  };
 
+  const handleConditionChange = (value) => {
+    dispatch(setActiveCondition(value));
+    setProductDetails((prev) => ({ ...prev, condition: value }));
+  };
 
- 
+  const validateForm = () => {
+    const newErrors = {};
+    const {
+      partName,
+      category,
+      condition,
+      brand,
+      price,
+      description,
+      contactNumber,
+      latitude,
+      longitude,
+      images,
+    } = productDetails;
 
-    // take value from input
-    const handleProductDetailsChange = (e) => {
-      const { name, value } = e.target;
-      setProductDetails({ ...productDetails, [name]: value });
-    };
-  
-    
-    // const handleLocationSelect = (location) => {
-    //   setSelectedLocation(location);
-    // };
+    // Validate part name (letters only)
+    const partNameRegex = /^[A-Za-z\s]+$/;
+    if (!partName) newErrors.partName = "Part Name is required";
+    else if (!partNameRegex.test(partName))
+      newErrors.partName = "Part Name must contain only letters";
 
-    const handleLocationSelect = (location) => {
-      setSelectedLocation(location);
-      setProductDetails({ ...productDetails, latitude: location.lat, longitude: location.lng });
-    };
+    // Validate category
+    if (!category) newErrors.category = "Category is required";
 
-    // const handleSubmit = async()=>{
-    //   const {partName,category,condition,brand,price,stockAvailability,description,contactNumber,latitude,longitude} = productDetails
-    //   console.log(productDetails);
-      
-    //   if (partName && category && condition && brand && price && stockAvailability && description && contactNumber && latitude && longitude) {
-    //     const reqBody = new FormData()
-    //     reqBody.append("partName",partName)
-    //   reqBody.append("category",category)
-    //   reqBody.append("condition",condition)
-    //   reqBody.append("brand",brand)
-    //   reqBody.append("price",price)
-    //   reqBody.append("stockAvailability",stockAvailability)
-    //   reqBody.append("description",description)
-    //   reqBody.append("contactNumber",contactNumber)
-    //   reqBody.append("latitude",latitude)
-    //   reqBody.append("longitude",longitude)
-      
+    // Validate condition
+    if (!condition) newErrors.condition = "Condition is required";
 
-    //   const token = sessionStorage.getItem('token')
+    // Validate brand
+    if (!brand) newErrors.brand = "Brand is required";
 
-    //   // if token present pass header
-    //   if(token){
-    //     const reqHeaders ={
-    //       "Content-Type":"multipart/form-data",
-    //       "Authorization":`Bearer ${token}`
-    //     }
+    // Validate price
+    if (!price) newErrors.price = "Price is required";
 
-    //     // make api call
-    //     try {
-    //       const result = await addProjectAPI(reqBody,reqHeaders)
-    //       if(result.status==200){
-    //         alert("Project added successfully")
-    //         setAddProjectResponse(result)
-    //         handleClose()
-    //       }else{
-    //         alert(result.response.data)
-    //       }
-          
-    //     } catch (error) {
-    //       console.log(error);
-          
-    //     }
+    // Validate description
+    if (!description) newErrors.description = "Description is required";
 
-    //   }
-    // }else{
-    //   alert("Please fill the form completely")
-    // }
-  
+    // Validate contact number (exactly 10 digits)
+    const contactNumberRegex = /^[0-9]{10}$/;
+    if (!contactNumber) newErrors.contactNumber = "Contact Number is required";
+    else if (!contactNumberRegex.test(contactNumber))
+      newErrors.contactNumber =
+        "Contact Number must consist of exactly 10 digits";
 
-      
-    //   }
+    // Validate location
+    if (!latitude || !longitude) newErrors.location = "Location is required";
 
+    // Validate images
+    if (images.length === 0)
+      newErrors.images = "At least one image is required";
 
-    const handleCategoryChange = (value) => {
-      dispatch(setActiveButton(value));
-      setProductDetails((prev) => ({ ...prev, category: value }));
-    };
-    
-    const handleConditionChange = (value) => {
-      dispatch(setActiveCondition(value));
-      setProductDetails((prev) => ({ ...prev, condition: value }));
-    };
-    
-    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
-    const handleSubmit = async () => {
-        const {
-          partName,
-          category,
-          condition,
-          brand,
-          price,
-          stockAvailability,
-          description,
-          contactNumber,
-          latitude,
-          longitude
-        } = productDetails;
-      
-        if (partName && category && condition && brand && price && stockAvailability && description && contactNumber && latitude && longitude) {
-          const reqBody = new FormData();
-          reqBody.append("partName", partName);
-          reqBody.append("category", category);
-          reqBody.append("condition", condition);
-          reqBody.append("brand", brand);
-          reqBody.append("price", price);
-          reqBody.append("stockAvailability", stockAvailability);
-          reqBody.append("description", description);
-          reqBody.append("contactNumber", contactNumber);
-          reqBody.append("latitude", latitude);
-          reqBody.append("longitude", longitude);
-          imageArray.forEach((image) => reqBody.append("images", image));
-      
-          // 🔹 Ensure headers are properly set
-          const token = sessionStorage.getItem("token");
-          const reqHeaders = {
-            "Authorization": `Bearer ${token}`
-          };
-      
-          try {
-            const result = await addPartsApi(reqBody, reqHeaders);  // 🔹 Ensure headers are passed
-            console.log("Server Response:", result);
-            
-      
-            if (result.status === 201) {
-              console.log("data:",result.data.carPart
-              );
-              
-              alert("Part added successfully");
-              setIsAddProductSidebarOpen(false);
-            } else {
-              alert(result.response.data);
-            }
-          } catch (error) {
-            console.error("Error submitting form:", error);
-          }
-        } else {
-          alert("Please fill the form completely");
-        }
+  const handleSubmit = async () => {
+    if (!validateForm()) return;
+    setIsLoading(true);
+
+    const {
+      partName,
+      category,
+      condition,
+      brand,
+      price,
+      stockAvailability,
+      description,
+      contactNumber,
+      latitude,
+      longitude,
+    } = productDetails;
+
+    if (
+      partName &&
+      category &&
+      condition &&
+      brand &&
+      price &&
+      stockAvailability &&
+      description &&
+      contactNumber &&
+      latitude &&
+      longitude
+    ) {
+      const reqBody = new FormData();
+      reqBody.append("partName", partName);
+      reqBody.append("category", category);
+      reqBody.append("condition", condition);
+      reqBody.append("brand", brand);
+      reqBody.append("price", price);
+      reqBody.append("stockAvailability", stockAvailability);
+      reqBody.append("description", description);
+      reqBody.append("contactNumber", contactNumber);
+      reqBody.append("latitude", latitude);
+      reqBody.append("longitude", longitude);
+      imageArray.forEach((image) => reqBody.append("images", image));
+
+      // 🔹 Ensure headers are properly set
+      const token = sessionStorage.getItem("token");
+      const reqHeaders = {
+        Authorization: `Bearer ${token}`,
       };
-      
 
-    
+      try {
+        const result = await addPartsApi(reqBody, reqHeaders); // 🔹 Ensure headers are passed
+        console.log("Server Response:", result);
+
+        if (result.status === 201) {
+          console.log("data:", result.data.carPart);
+
+          showToast(`${result.data.message}`, "success");
+          setIsAddProductSidebarOpen(false);
+
+          // Reset category and condition
+          dispatch(resetActiveButton()); // Reset active category button
+          dispatch(resetActiveCondition()); // Reset active condition button
+          // Clear all input fields after successful submission
+          setProductDetails({
+            partName: "",
+            category: "",
+            condition: "",
+            brand: "",
+            price: "",
+            stockAvailability: "true",
+            description: "",
+            contactNumber: "",
+            latitude: "",
+            longitude: "",
+            images: [],
+          });
+
+          // Clear the image array
+          setImageArray([]);
+          setSelectedLocation(null);
+        } else {
+          showToast(`${result.data.message}`, "error");
+        }
+      } catch (error) {
+        const errorMessage =
+          error.response?.data?.message ||
+          error.message ||
+          "Something went wrong!";
+
+        showToast(errorMessage, "error");
+      }
+      setIsLoading(false);
+    } else {
+      alert("Please fill the form completely");
+    }
+  };
 
   return (
     <>
@@ -348,11 +320,13 @@ const handleImageChange = (e) => {
                 <Form.Control
                   type="text"
                   name="partName"
-                   value={productDetails.partName}
-                   onChange={handleProductDetailsChange}
-                  // onChange={e=>setProductDetails({...productDetails,partName:e.target.value})}
+                  value={productDetails.partName}
+                  onChange={handleProductDetailsChange}
                 />
               </InputGroup>
+              {errors.partName && (
+                <div className="text-danger">{errors.partName}</div>
+              )}
             </Form.Group>
 
             {/* *********Category********** */}
@@ -364,18 +338,16 @@ const handleImageChange = (e) => {
                     key={category.value}
                     label={category.label}
                     value={category.label}
-                    // onChange={e=>setProductDetails({...productDetails,category:e.target.value})}
                     onChange={handleCategoryChange}
-
                     activeButton={activeButton}
-                    //  setActiveButton={(value) =>
-                    //    dispatch(setActiveButton(value))
-                    //  }
                     setActiveButton={handleCategoryChange}
                     type="category"
                   />
                 ))}
               </div>
+              {errors.category && (
+                <div className="text-danger">{errors.category}</div>
+              )}
             </Form.Group>
 
             {/* condition */}
@@ -387,20 +359,15 @@ const handleImageChange = (e) => {
                     key={condition.value}
                     label={condition.label}
                     value={condition.label}
-                    // onChange={handleProductDetailsChange}
-                    // checked={productDetails.condition === condition.label}
-
-
-                  // onChange={e=>setProductDetails({...productDetails,condition:e.target.value})}
                     activeButton={activeCondition}
-                    // setActiveButton={(value) =>
-                    //   dispatch(setActiveCondition(value))
-                    // }
                     setActiveButton={handleConditionChange}
                     type="condition"
                   />
                 ))}
               </div>
+              {errors.condition && (
+                <div className="text-danger">{errors.condition}</div>
+              )}
             </Form.Group>
 
             {/* description  */}
@@ -411,100 +378,81 @@ const handleImageChange = (e) => {
                 name="description"
                 rows={3}
                 value={productDetails.description}
-                // onChange={e=>setProductDetails({...productDetails,description:e.target.value})}
                 onChange={handleProductDetailsChange}
-
               ></Form.Control>
+              {errors.description && (
+                <div className="text-danger">{errors.description}</div>
+              )}
             </Form.Group>
 
             <Form.Group className="mb-3">
-                           <Form.Label>Brand</Form.Label>
-                           <Form.Control
-                            type="text"
-                            name="brand"
-                            value={productDetails.brand}
-                            onChange={handleProductDetailsChange}
-                          />
-                        </Form.Group>
+              <Form.Label>Brand</Form.Label>
+              <Form.Control
+                type="text"
+                name="brand"
+                value={productDetails.brand}
+                onChange={handleProductDetailsChange}
+              />
+              {errors.brand && (
+                <div className="text-danger">{errors.brand}</div>
+              )}
+            </Form.Group>
 
-
-                         {/* Price */}
-                                    <Form.Group className="mb-3">
-                                      <Form.Label>Price</Form.Label>
-                                      <Form.Control
-                                        type="number"
-                                        name="price"
-                                        value={productDetails.price}
-                                        onChange={handleProductDetailsChange}
-                                      />
-                                    </Form.Group>
-
-
-
-
-
+            {/* Price */}
+            <Form.Group className="mb-3">
+              <Form.Label>Price</Form.Label>
+              <Form.Control
+                type="number"
+                name="price"
+                value={productDetails.price}
+                onChange={handleProductDetailsChange}
+              />
+              {errors.price && (
+                <div className="text-danger">{errors.price}</div>
+              )}
+            </Form.Group>
 
             {/* contact */}
             <Form.Group className="mb-3">
               <Form.Label className="AddFontSize">Contact Number</Form.Label>
               <Form.Control
                 type="number"
-                name="contactNumber" 
+                name="contactNumber"
                 value={productDetails.contactNumber}
-                // onChange={e=>setProductDetails({...productDetails,contactNumber:e.target.value})}
                 onChange={handleProductDetailsChange}
-
               ></Form.Control>
+              {errors.contactNumber && (
+                <div className="text-danger">{errors.contactNumber}</div>
+              )}
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label className="AddFontSize">Availability</Form.Label>
               <div className="d-flex align-items-center gap-3 mt-2">
-                {/* <Form.Check
+                <Form.Check
                   type="radio"
                   label="Yes"
-                  name="availability"
+                  name="stockAvailability"
                   value="true"
                   id="available"
-                  checked={stockAvailability === "available"}
-                  onChange={handleAvailabilityChange}
-                ></Form.Check> */}
-                {/* <Form.Check
+                  checked={productDetails.stockAvailability === "true"}
+                  onChange={handleProductDetailsChange}
+                />
+                <Form.Check
                   type="radio"
                   label="No"
-                  name="availability"
+                  name="stockAvailability"
                   value="false"
                   id="not-available"
-                  checked={stockAvailability === "not-available"}
-                  onChange={handleAvailabilityChange}
-                ></Form.Check> */}
-
-<Form.Check
-  type="radio"
-  label="Yes"
-  name="stockAvailability"
-  value="true"
-  id="available"
-  checked={productDetails.stockAvailability === "true"}
-  onChange={handleProductDetailsChange}
-/>
-<Form.Check
-  type="radio"
-  label="No"
-  name="stockAvailability"
-  value="false"
-  id="not-available"
-  checked={productDetails.stockAvailability === "false"}
-  onChange={handleProductDetailsChange}
-/>
-
+                  checked={productDetails.stockAvailability === "false"}
+                  onChange={handleProductDetailsChange}
+                />
               </div>
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label className="AddFontSize">Images</Form.Label>
 
-             
               <div className="d-flex align-items-center justify-content-center">
                 <label
                   htmlFor="fileInput"
@@ -527,56 +475,98 @@ const handleImageChange = (e) => {
                 />
               </div>
 
-
               {imageArray.length > 0 && (
-        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '20px' }}>
-          {imageArray.map((imgURL, index) => (
-            <div key={index} style={{ width: '200px', height: 'auto',position: 'relative', }}>
-              <img
-                // src={imgURL}
-                src={URL.createObjectURL(imgURL)}
-                alt={`Preview ${index }`}
-                style={{ width: '100%', height: 'auto', border: '1px solid #ccc' }}
-              />
-               {/* Close button */}
-               <button
-                onClick={(event) => handleRemoveImage(index, event)}
-                style={{
-                  position: 'absolute',
-                  top: '5px',
-                  right: '5px',
-                  background: 'red',
-                  
-                  border: 'none',
-                  borderRadius: '50%',
-                  width: '25px',
-                  height: '25px',
-                  cursor: 'pointer',
-                  padding: '0',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-               x
-              </button>
-            </div>
-          ))}
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "10px",
+                    flexWrap: "wrap",
+                    marginTop: "20px",
+                  }}
+                >
+                  {imageArray.map((imgURL, index) => (
+                    <div
+                      key={index}
+                      style={{
+                        width: "200px",
+                        height: "auto",
+                        position: "relative",
+                      }}
+                    >
+                      <img
+                        // src={imgURL}
+                        src={URL.createObjectURL(imgURL)}
+                        alt={`Preview ${index}`}
+                        style={{
+                          width: "100%",
+                          height: "auto",
+                          border: "1px solid #ccc",
+                        }}
+                      />
+                      {/* Close button */}
+                      <button
+                        onClick={(event) => handleRemoveImage(index, event)}
+                        style={{
+                          position: "absolute",
+                          top: "5px",
+                          right: "5px",
+                          background: "red",
 
-        </div>
-      )}
-              
+                          border: "none",
+                          borderRadius: "50%",
+                          width: "25px",
+                          height: "25px",
+                          cursor: "pointer",
+                          padding: "0",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        x
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {errors.images && (
+                <div className="text-danger">{errors.images}</div>
+              )}
             </Form.Group>
           </Form>
           {/* location */}
-         
-          <div  style={{marginTop:'70px'}}>
-          
-          <GoogleMapView selectedLocation={selectedLocation} onLocationSelect={handleLocationSelect}/>
+
+          <div style={{ marginTop: "70px" }}>
+            <GoogleMapView
+              selectedLocation={selectedLocation}
+              onLocationSelect={handleLocationSelect}
+            />
+            {errors.location && (
+              <div className="text-danger">{errors.location}</div>
+            )}
           </div>
-          
-         {/* submit button */}
-         <div className="mt-5"> <SubmitButtons onClick={handleSubmit}>Submit</SubmitButtons></div>
+
+          {/* submit button */}
+          <div className="mt-5">
+            {" "}
+            <SubmitButtons onClick={handleSubmit}>
+              {isLoading ? (
+                <>
+                  <Spinner
+                    animation="border"
+                    role="status"
+                    size="sm"
+                    className="me-2"
+                  >
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                  Submitting...
+                </>
+              ) : (
+                " Submit "
+              )}
+            </SubmitButtons>
+          </div>
         </Offcanvas.Body>
       </Offcanvas>
     </>
@@ -584,18 +574,3 @@ const handleImageChange = (e) => {
 };
 
 export default AddButton;
-
-
-
-
-
-
- 
-
-
-
-
-  
-  
-
-

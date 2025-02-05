@@ -3,7 +3,6 @@ import ImageSlider from '../Components/ImageSlider'
 import Header from '../Components/Header'
 import CategorySlider from '../Components/CategorySlider'
 import AddButton from '../Components/AddButton'
-import Add from '../Components/Add'
 
 import Choices from '../Components/Choices'
 import GoogleMapView from '../Components/GoogleMapView'
