@@ -7,7 +7,6 @@ import { loginApi, registerApi } from "../services/allAPI";
 
 import { showToast } from "../reusablecomponents/Toast";
 
-
 const AuthenticationModal = ({
   authenticationModal,
   setAuthenticationModal,
@@ -36,7 +35,9 @@ const AuthenticationModal = ({
   });
 
   // state for spinner
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
+  const [isRegisterLoading, setIsRegisterLoading] = useState(false);
+  const [isLoginLoading, setIsLoginLoading] = useState(false);
 
   console.log(signupFields);
   console.log(loginFields);
@@ -132,7 +133,7 @@ const AuthenticationModal = ({
     e.preventDefault();
 
     if (handleValidation()) {
-      setIsLoading(true);
+      setIsRegisterLoading(true);
 
       try {
         const result = await registerApi(signupFields);
@@ -162,60 +163,57 @@ const AuthenticationModal = ({
           "Something went wrong!";
 
         showToast(errorMessage, "error");
-
-       
       }
-      setIsLoading(false);
+      setIsRegisterLoading(false);
     }
   };
 
-
   // login function
-  const handleLogin = async(e)=>{
-    e.preventDefault()
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
     // Validate email
-  if (!loginFields.email.trim() || !validateEmail(loginFields.email)) {
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      email: "Invalid email format.",
-    }));
-    return;
-  }
+    if (!loginFields.email.trim() || !validateEmail(loginFields.email)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: "Invalid email format.",
+      }));
+      return;
+    }
 
-  // Validate password field
-  if (!loginFields.password.trim()) {
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      password: "Password is required.",
-    }));
-    return;
-  }
+    // Validate password field
+    if (!loginFields.password.trim()) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        password: "Password is required.",
+      }));
+      return;
+    }
+    setIsLoginLoading(true);
 
-  try {
-  const result= await loginApi(loginFields)
-  console.log(result);
-  
-  if(result.status==200){
-    sessionStorage.setItem('token',result.data.token)
-    setLoginFields({email: "", password: ""})
-    setAuthenticationModal(false)
-    showToast(`${result.data.message}`, "success");
-  }else{
-    showToast(`${result.data.message}`, "error");
-  }
-    
-  } catch (error) {
-    // Extract proper error message safely
-    const errorMessage =
-    error.response?.data?.message ||
-    error.message ||
-    "Something went wrong!";
+    try {
+      const result = await loginApi(loginFields);
+      console.log(result);
 
-  showToast(errorMessage, "error");
-    
-  }
-  }
+      if (result.status == 200) {
+        sessionStorage.setItem("token", result.data.token);
+        setLoginFields({ email: "", password: "" });
+        setAuthenticationModal(false);
+        showToast(`${result.data.message}`, "success");
+      } else {
+        showToast(`${result.data.message}`, "error");
+      }
+    } catch (error) {
+      // Extract proper error message safely
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Something went wrong!";
+
+      showToast(errorMessage, "error");
+    }
+    setIsLoginLoading(false);
+  };
 
   // function for submit form
   const handleSubmit = (e) => {
@@ -384,7 +382,23 @@ const AuthenticationModal = ({
             )}
 
             <SubmitButtons onClick={handleSubmit}>
-              {isLoading ? (
+              {isRegister ? (
+                isRegisterLoading ? (
+                  <>
+                    <Spinner
+                      animation="border"
+                      role="status"
+                      size="sm"
+                      className="me-2"
+                    >
+                      <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                    Signing Up...
+                  </>
+                ) : (
+                  "Sign Up"
+                )
+              ) : isLoginLoading ? (
                 <>
                   <Spinner
                     animation="border"
@@ -394,14 +408,11 @@ const AuthenticationModal = ({
                   >
                     <span className="visually-hidden">Loading...</span>
                   </Spinner>
-                  {isRegister ? "Signing Up..." : "Logging In..."}
+                  Logging In...
                 </>
-              ) : isRegister ? (
-                "Sign Up"
               ) : (
                 "Login"
               )}
-              {/* {isRegister ? "Sign Up" : "Login"} */}
             </SubmitButtons>
 
             {/* Divider */}
@@ -431,7 +442,6 @@ const AuthenticationModal = ({
           </Form>
         </Modal.Body>
       </Modal>
-     
     </>
   );
 };

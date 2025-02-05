@@ -3,7 +3,7 @@
 // import { Button, Form, InputGroup, Offcanvas } from "react-bootstrap";
 // import { globalStyles } from "../globalStyles";
 // import ToggleCategoryBtn from "../reusablecomponents/ToggleCategoryBtn";
-// import { useDispatch, useSelector } from "react-redux";
+// // import { useDispatch, useSelector } from "react-redux";
 // // import {
 // //   setActiveButton,
 // //   setActiveCondition,
@@ -25,12 +25,22 @@
 
 // const AddButton = () => {
 //   // call the action using dispatch
-//   const dispatch = useDispatch();
+//   // const dispatch = useDispatch();
 //   // access the state
 //   // const {activeButton,activeCondition,availability,image,partName,category,description,contactNumber,} = useSelector((state) => state.productReducer);
-//   const [productDetails,setProductDetails] =useState({
-//     partName:"", category:"", condition:"", brand:"", price:"", stockAvailability:"", description:"", contactNumber:"", latitude:"", longitude:"",images:""
-//   })
+//   const [productDetails, setProductDetails] = useState({
+//         partName: "",
+//         category: "",
+//         condition: "",
+//         brand: "",
+//         price: "",
+//         stockAvailability: "true", 
+//         description: "",
+//         contactNumber: "",
+//         latitude: "12.9716", 
+//         longitude: "77.5946", 
+//         images: [],
+//       });
 //   console.log(productDetails);
   
 
@@ -40,30 +50,36 @@
 //   // state to update location
 //   const [selectedLocation, setSelectedLocation] = useState(null);
 
+//   // array to store images
+//  const [imageArray, setImageArray] = useState([])
+
+//  //   array for categories
+//  const categories = [
+//   { label: "Car", value: 1 },
+//   { label: "Bike", value: 2 },
+//   { label: "Bus", value: 3 },
+//   { label: "Cycle", value: 4 },
+//   { label: "Scooty", value: 5 },
+//   { label: "Others", value: 6 },
+// ];
+
+//  //   array for condition
+//  const conditions = [
+//   { label: "New", value: 1 },
+//   { label: "Used", value: 2 },
+// ]
+
 
 //   // function to show sidebar
 //   const handleAddProducts = () => {
 //     setIsAddProductSidebarOpen(!isAddProductSidebarOpen);
 //   };
 
-//   //   array for categories
-//   const categories = [
-//     { label: "Car", value: 1 },
-//     { label: "Bike", value: 2 },
-//     { label: "Bus", value: 3 },
-//     { label: "Cycle", value: 4 },
-//     { label: "Scooty", value: 5 },
-//     { label: "Others", value: 6 },
-//   ];
+  
 
-//   //   array for condition
-//   const conditions = [
-//     { label: "New", value: 1 },
-//     { label: "Used", value: 2 },
-//   ];
+ 
 
-// // array to store images
-//  const [imageArray, setImageArray] = useState([])
+
 
 //   // function to take input image
 //   const handleImageChange = (e) => {
@@ -71,15 +87,16 @@
 //     const newImageArray =[]
 
 //  // Check if files is empty, if yes, don't show the alert
-//  if (files.length === 0) {
+//  if (files.length === 0 || files.length >3) {
+//   alert("Please select between 1 and 3")
 //   return; // Exit if no files are selected
 // }
 
 
-//     if(files.length <1 || files.length >3){
-//       alert("Please select between 1 and 3")
-//       return
-//     }
+//     // if(files.length <1 ){
+//     //   alert("Please select between 1 and 3")
+//     //   return
+//     // }
 
 //     for(let i=0;i<files.length;i++){
 //       const file =files[i]
@@ -106,6 +123,14 @@
 //   };
 
 
+//    // Function to remove an image from the array
+//    const handleRemoveImage = (index) => {
+//     event.preventDefault(); 
+//     const updatedArray = imageArray.filter((_, i) => i !== index);
+//     setImageArray(updatedArray);
+//   };
+
+
 //   // function to change the availabilty radio button
 //   const handleAvailabilityChange = (e) => {
 
@@ -113,21 +138,24 @@
 //   };
 
 
-//   // Function to remove an image from the array
-//     const handleRemoveImage = (index) => {
-//       event.preventDefault(); 
-//       const updatedArray = imageArray.filter((_, i) => i !== index);
-//       setImageArray(updatedArray);
+ 
+
+//     // take value from input
+//     const handleProductDetailsChange = (e) => {
+//       const { name, value } = e.target;
+//       setProductDetails({ ...productDetails, [name]: value });
 //     };
+  
     
 //     const handleLocationSelect = (location) => {
 //       setSelectedLocation(location);
 //     };
 
 //     const handleSubmit = async()=>{
-//       const {partName, category, condition, brand, price, stockAvailability, description, contactNumber, latitude, longitude} = productDetails
-//       if(partName && category && condition && brand && price && stockAvailability && description && contactNumber && latitude && longitude){
-
+//       const {partName,category,condition,brand,price,stockAvailability,description,contactNumber,latitude,longitude} = productDetails
+//       console.log(productDetails);
+      
+//       if (partName && category && condition && brand && price && stockAvailability && description && contactNumber && latitude && longitude) {
 //         const reqBody = new FormData()
 //         reqBody.append("partName",partName)
 //       reqBody.append("category",category)
@@ -139,8 +167,7 @@
 //       reqBody.append("contactNumber",contactNumber)
 //       reqBody.append("latitude",latitude)
 //       reqBody.append("longitude",longitude)
-//       reqBody.append("images",images)
-
+      
 
 //       const token = sessionStorage.getItem('token')
 
@@ -403,441 +430,14 @@
 
 
 
-// import { Icon } from "@iconify-icon/react/dist/iconify.js";
-// import React, { useState } from "react";
-// import { Button, Form, InputGroup, Offcanvas } from "react-bootstrap";
-// import GoogleMapView from "./GoogleMapView";
-// import SubmitButtons from "../reusablecomponents/SubmitButtons";
-// import { addPartsApi } from "../services/allAPI";
-
-
-// const AddButton = () => {
- 
-//   const [productDetails, setProductDetails] = useState({
-//     partName: "",
-//     category: "",
-//     condition: "",
-//     brand: "",
-//     price: "",
-//     stockAvailability: "true",  // Default to "available"
-//     description: "",
-//     contactNumber: "",
-//     latitude: "12.9716",  // Dummy latitude
-//     longitude: "77.5946",  // Dummy longitude
-//     images: [],
-//   });
-
-//   const [isAddProductSidebarOpen, setIsAddProductSidebarOpen] = useState(false);
-//   const [imageArray, setImageArray] = useState([]);
-//   const [selectedLocation, setSelectedLocation] = useState(null);
-
-//   const categories = [
-//     { label: "Car", value: "Car" },
-//     { label: "Bike", value: "Bike" },
-//     { label: "Bus", value: "Bus" },
-//     { label: "Cycle", value: "Cycle" },
-//     { label: "Scooty", value: "Scooty" },
-//     { label: "Others", value: "Others" },
-//   ];
-
-//   const conditions = [
-//     { label: "New", value: "New" },
-//     { label: "Used", value: "Used" },
-//   ];
-
-//   const handleAddProducts = () => {
-//     setIsAddProductSidebarOpen(!isAddProductSidebarOpen);
-//   };
-
-  
-  
-
-  
-
-//   const handleImageChange = (e) => {
-//     const files = e.target.files;
-  
-//     if (files.length === 0) return;
-  
-//     if (files.length < 1 || files.length > 3) {
-//       alert("Please select between 1 and 3 images");
-//       return;
-//     }
-  
-//     // Convert FileList to an array
-//     const newImageArray = Array.from(files);
-  
-//     // Limit the array size to 3 images
-//     const combinedArray = [...imageArray, ...newImageArray].slice(0, 3);
-  
-//     // Update the imageArray state
-//     setImageArray(combinedArray);
-  
-//     // Update the images in productDetails
-//     setProductDetails((prevState) => ({
-//       ...prevState,
-//       images: combinedArray,
-//     }));
-//   };
-
-//   const handleRemoveImage = (index) => {
-//     const updatedArray = imageArray.filter((_, i) => i !== index);
-//     setImageArray(updatedArray);
-  
-//     // Update the images in productDetails
-//     setProductDetails((prevState) => ({
-//       ...prevState,
-//       images: updatedArray,
-//     }));
-//   };
-
-  
 
  
-//   const handleProductDetailsChange = (e) => {
-//     const { name, value } = e.target;
-//     console.log(`Updating ${name} to ${value}`); // Add a log to track changes
-//     setProductDetails({ ...productDetails, [name]: value });
-//   };
-  
 
-//   const handleLocationSelect = (location) => {
-//     setSelectedLocation(location);
-//   };
+
+
 
   
   
-  
-  
-//   const handleSubmit = async () => {
-//     const { partName, category, condition, brand, price, stockAvailability, description, contactNumber, latitude, longitude } = productDetails;
-  
-//     if (partName && category && condition && brand && price && stockAvailability && description && contactNumber && latitude && longitude) {
-//       const reqBody = new FormData();
-  
-//       // Append form data fields
-//       reqBody.append("partName", partName);
-//       reqBody.append("category", category);
-//       reqBody.append("condition", condition);
-//       reqBody.append("brand", brand);
-//       reqBody.append("price", price);
-//       reqBody.append("stockAvailability", stockAvailability);
-//       reqBody.append("description", description);
-//       reqBody.append("contactNumber", contactNumber);
-//       reqBody.append("latitude", latitude);
-//       reqBody.append("longitude", longitude);
-  
-//       // Append images (if any)
-//       if (imageArray.length > 0) {
-//         imageArray.forEach((image, index) => {
-//           reqBody.append(`images`, image);  // Append images directly
-//         });
-//       } else {
-//         console.log("No images selected");
-//       }
-  
-//       // Log the FormData to verify all data is appended
-//       // Log the FormData entries properly
-// for (let pair of reqBody.entries()) {
-//   if (pair[1] instanceof File) {
-//     console.log(`${pair[0]}: { 
-//       index: ${imageArray.indexOf(pair[1])}, 
-//       name: ${pair[1].name}, 
-//       size: ${pair[1].size}, 
-//       type: ${pair[1].type}, 
-//       url: ${URL.createObjectURL(pair[1])} 
-//     }`);
-//   } else {
-//     console.log(`${pair[0]}: ${pair[1]}`);
-//   }
-// }
-
-  
-//       const token = sessionStorage.getItem('token');
-  
-//       if (token) {
-//         const reqHeaders = {
-//           "Content-Type": "multipart/form-data",
-//           "Authorization": `Bearer ${token}`,
-//         };
-  
-//         try {
-//           const result = await addPartsApi(reqBody, reqHeaders);
-//           console.log("API Result:", result);
-//           if (result.status === 201) {
-//             alert("Part added successfully");
-//             handleClose();
-//           } else {
-//             alert(result.response.data);
-//           }
-//         } catch (error) {
-//           console.error(error);
-//         }
-//       }
-//     } else {
-//       alert("Please fill the form completely");
-//     }
-//   };  
-
-//   return (
-//     <>
-//       <Button
-//         onClick={handleAddProducts}
-//         className="btn position-fixed bottom-0 end-0 m-4 ps-3 pe-3 shadow-lg"
-//         style={{
-//           backgroundColor: "#008E8E",
-//           borderRadius: "50px",
-//           border: "none",
-//         }}
-//       >
-//         Add{" "}
-//         <i className="fa-solid fa-square-plus ms-2" style={{ color: "#ffffff" }}></i>
-//       </Button>
-
-//       <Offcanvas
-//         show={isAddProductSidebarOpen}
-//         onHide={() => setIsAddProductSidebarOpen(false)}
-//         placement="end"
-//       >
-//         <Offcanvas.Header closeButton className="border-bottom">
-//           <Offcanvas.Title>Add Parts</Offcanvas.Title>
-//         </Offcanvas.Header>
-//         <Offcanvas.Body>
-//           <Form>
-//             {/* PartName */}
-//             <Form.Group className="mb-3">
-//               <Form.Label>Part Name</Form.Label>
-//               <InputGroup>
-//                 <Form.Control
-//                   type="text"
-//                   name="partName"
-//                   value={productDetails.partName}
-//                   onChange={handleProductDetailsChange}
-//                 />
-//               </InputGroup>
-//             </Form.Group>
-
-//             {/* Category */}
-//             <Form.Group className="mb-3">
-//               <Form.Label>Category</Form.Label>
-//               <div className="d-flex flex-wrap gap-2 mt-2">
-//                 {categories.map((category) => (
-//                   <label key={category.value}>
-//                     <input
-//                       type="radio"
-//                       name="category"
-//                       value={category.value}
-//                       checked={productDetails.category === category.value}
-//                       onChange={handleProductDetailsChange}
-//                     />
-//                     {category.label}
-//                   </label>
-//                 ))}
-//               </div>
-//             </Form.Group>
-
-//             {/* Condition */}
-//             <Form.Group className="mb-3">
-//               <Form.Label>Condition</Form.Label>
-//               <div className="d-flex flex-wrap gap-2 mt-2">
-//                 {conditions.map((condition) => (
-//                   <label key={condition.value}>
-//                     <input
-//                       type="radio"
-//                       name="condition"
-//                       value={condition.value}
-//                       checked={productDetails.condition === condition.value}
-//                       onChange={handleProductDetailsChange}
-//                     />
-//                     {condition.label}
-//                   </label>
-//                 ))}
-//               </div>
-//             </Form.Group>
-
-//             {/* Description */}
-//             <Form.Group className="mb-3">
-//               <Form.Label>Description</Form.Label>
-//               <Form.Control
-//                 as="textarea"
-//                 rows={3}
-//                 name="description"
-//                 value={productDetails.description}
-//                 onChange={handleProductDetailsChange}
-//               />
-//             </Form.Group>
-
-//             {/* Contact Number */}
-//             <Form.Group className="mb-3">
-//               <Form.Label>Contact Number</Form.Label>
-//               <Form.Control
-//                 type="text"
-//                 name="contactNumber"
-//                 value={productDetails.contactNumber}
-//                 onChange={handleProductDetailsChange}
-//               />
-//             </Form.Group>
-
-//             {/* Brand */}
-//             <Form.Group className="mb-3">
-//               <Form.Label>Brand</Form.Label>
-//               <Form.Control
-//                 type="text"
-//                 name="brand"
-//                 value={productDetails.brand}
-//                 onChange={handleProductDetailsChange}
-//               />
-//             </Form.Group>
-
-//             {/* Price */}
-//             <Form.Group className="mb-3">
-//               <Form.Label>Price</Form.Label>
-//               <Form.Control
-//                 type="number"
-//                 name="price"
-//                 value={productDetails.price}
-//                 onChange={handleProductDetailsChange}
-//               />
-//             </Form.Group>
-
-//             {/* Availability */}
-//             <Form.Group className="mb-3">
-//               <Form.Label>Availability</Form.Label>
-//               <div className="d-flex align-items-center gap-3 mt-2">
-//                 <Form.Check
-//                   type="radio"
-//                   label="Yes"
-//                   name="stockAvailability"
-//                   value="true"
-//                   checked={productDetails.stockAvailability === "true"}
-//                   onChange={handleProductDetailsChange}
-//                 />
-//                 <Form.Check
-//                   type="radio"
-//                   label="No"
-//                   name="stockAvailability"
-//                   value="false"
-//                   checked={productDetails.stockAvailability === "false"}
-//                   onChange={handleProductDetailsChange}
-//                 />
-//               </div>
-//             </Form.Group>
-
-//             {/* Image Upload */}
-//             <Form.Group className="mb-3">
-//               <Form.Label>Images</Form.Label>
-//               <div className="d-flex align-items-center justify-content-center">
-//                 <label
-//                   htmlFor="fileInput"
-//                   className="btn d-flex align-items-center justify-content-center"
-//                 >
-//                   <Icon icon="solar:upload-bold" style={{ fontSize: "24px", color: "#000" }} />
-//                   Upload
-//                 </label>
-//                 <Form.Control
-//                   id="fileInput"
-//                   type="file"
-//                   accept="image/*"
-//                   multiple
-//                   onChange={handleImageChange}
-//                   style={{ display: "none" }}
-//                 />
-//               </div>
-//             </Form.Group>
-
-//             {/* Display uploaded images */}
-//             {/* {imageArray.length > 0 && (
-//               <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '20px' }}>
-//                 {imageArray.map((img, index) => (
-//                   <div key={index} style={{ width: '200px', height: 'auto', position: 'relative' }}>
-//                 <input type="file" onChange={e=>setProductDetails({...productDetails,images:e.target.files[0]})} style={{display:'none'}}/>
-
-//                     <img
-//                       src={URL.createObjectURL(img)}
-//                       alt={`Preview ${index}`}
-//                       style={{ width: '100%', height: 'auto', border: '1px solid #ccc' }}
-//                     />
-//                     <button
-//                       onClick={() => handleRemoveImage(index)}
-//                       style={{
-//                         position: 'absolute',
-//                         top: '5px',
-//                         right: '5px',
-//                         background: 'red',
-//                         border: 'none',
-//                         borderRadius: '50%',
-//                         width: '25px',
-//                         height: '25px',
-//                         cursor: 'pointer',
-//                         padding: '0',
-//                       }}
-//                     >
-//                       <Icon
-//                         icon="solar:trash-bold"
-//                         style={{
-//                           fontSize: '16px',
-//                           color: 'white',
-//                         }}
-//                       />
-//                     </button>
-//                   </div>
-//                 ))}
-//               </div>
-//             )} */}
-
-
-// {imageArray.length > 0 && (
-//   <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '20px' }}>
-//     {imageArray.map((img, index) => (
-//       <div key={index} style={{ width: '200px', height: 'auto', position: 'relative' }}>
-//         <img
-//           src={URL.createObjectURL(img)}
-//           alt={`Preview ${index}`}
-//           style={{ width: '100%', height: 'auto', border: '1px solid #ccc' }}
-//         />
-//         <button
-//           onClick={() => handleRemoveImage(index)}
-//           style={{
-//             position: 'absolute',
-//             top: '5px',
-//             right: '5px',
-//             background: 'red',
-//             border: 'none',
-//             borderRadius: '50%',
-//             width: '25px',
-//             height: '25px',
-//             cursor: 'pointer',
-//             padding: '0',
-//           }}
-//         >
-//           <Icon
-//             icon="solar:trash-bold"
-//             style={{
-//               fontSize: '16px',
-//               color: 'white',
-//             }}
-//           />
-//         </button>
-//       </div>
-//     ))}
-//   </div>
-// )}
-
-//             {/* Google Map */}
-//             <GoogleMapView selectedLocation={selectedLocation} onLocationSelect={handleLocationSelect} />
-
-//             {/* Submit Button */}
-//             <div className="mt-5">
-//               <SubmitButtons onClick={handleSubmit}>Submit</SubmitButtons>
-//             </div>
-//           </Form>
-//         </Offcanvas.Body>
-//       </Offcanvas>
-//     </>
-//   );
-// };
-
-// export default AddButton;
 
 
 import { Icon } from "@iconify-icon/react/dist/iconify.js";
@@ -885,15 +485,49 @@ const AddButton = () => {
 
  
 
+  // const handleImageChange = (e) => {
+  //   const files = Array.from(e.target.files);
+  //   if (files.length === 0 || files.length > 3) {
+  //     alert("Please select between 1 and 3 images");
+  //     return;
+  //   }
+  //   setImageArray(files.slice(0, 3));
+  //   setProductDetails((prevState) => ({ ...prevState, images: files.slice(0, 3) }));
+  // };
+
+
+
+  // const handleImageChange = (e) => {
+  //   const files = Array.from(e.target.files);
+  
+  //   // Combine old and new images, ensuring a max of 3 images
+  //   const updatedImages = [...imageArray, ...files].slice(0, 3);
+  
+  //   if (updatedImages.length === 0) {
+  //     alert("Please select at least 1 image");
+  //     return;
+  //   }
+  
+  //   setImageArray(updatedImages);
+  //   setProductDetails((prevState) => ({ ...prevState, images: updatedImages }));
+  // };
+  
+
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    if (files.length === 0 || files.length > 3) {
-      alert("Please select between 1 and 3 images");
+  
+    if (files.length === 0) {
+      alert("Please select at least 1 image");
       return;
     }
-    setImageArray(files.slice(0, 3));
-    setProductDetails((prevState) => ({ ...prevState, images: files.slice(0, 3) }));
+  
+    // Add new images while ensuring max 3 images
+    const updatedImages = [...imageArray, ...files].slice(-3); // Keeps only the last 3 images
+  
+    setImageArray(updatedImages);
+    setProductDetails((prevState) => ({ ...prevState, images: updatedImages }));
   };
+  
 
   const handleRemoveImage = (index) => {
     const updatedArray = imageArray.filter((_, i) => i !== index);
@@ -911,60 +545,8 @@ const AddButton = () => {
     setProductDetails({ ...productDetails, latitude: location.lat, longitude: location.lng });
   };
 
-  // const handleSubmit = async () => {
-  //   const {partName,category,condition,brand,price,stockAvailability,description,contactNumber,latitude,longitude} = productDetails
-  //   console.log(productDetails);
-    
-    
-    
-  //   if (partName && category && condition && brand && price && stockAvailability && description && contactNumber && latitude && longitude) {
-      
-    
-
-  //   const reqBody = new FormData();
-  //   reqBody.append("partName", partName);
-  //   reqBody.append("category", category);
-  //   reqBody.append("condition", condition);
-  //   reqBody.append("brand", brand);
-  //   reqBody.append("price", price);
-  //   reqBody.append("stockAvailability", stockAvailability);
-  //   reqBody.append("description", description);
-  //   reqBody.append("contactNumber", contactNumber);
-  //   reqBody.append("latitude", latitude);
-  //   reqBody.append("longitude", longitude);
-  //   imageArray.forEach((image) => reqBody.append("images", image));
-
-  //   const token = sessionStorage.getItem("token");
-  //   if (token) {
-  //     const reqHeaders ={
-  //       "Content-Type":"multipart/form-data",
-  //       "Authorization":`Bearer ${token}`
-  //     }
-  //     try {
-  //       const result = await addPartsApi(reqBody,);
   
-  //       console.log(result);
-  //       console.log("data",reqBody);
-        
-        
-  //       if (result.status === 201) {
-  //         alert("Part added successfully");
-  //         setIsAddProductSidebarOpen(false);
-  //       } else {
-  //         alert(result.response.data);
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-
-  //   }
   
-
-  
-  // }else{
-  //   alert("Pleade fill the form completely")
-  // }
-  // };
 
 
 
