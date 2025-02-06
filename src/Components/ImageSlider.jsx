@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Carousel } from 'react-bootstrap'
+import React, { useEffect, useState } from "react";
+import { Button, Carousel } from "react-bootstrap";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
 import "bootstrap/dist/css/bootstrap.min.css";
-import {  ChevronLeft, ChevronRight } from 'lucide-react';
-
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const ImageSlider = () => {
-
-
-    const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const images = [
     "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&q=80&w=1200",
@@ -25,15 +21,16 @@ const ImageSlider = () => {
     "https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&q=80&w=1200",
   ];
 
- 
-
-
   const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
+    setCurrentIndex((prevIndex) =>
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    );
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
   };
 
   useEffect(() => {
@@ -41,50 +38,69 @@ const ImageSlider = () => {
     return () => clearInterval(timer);
   }, []);
 
-
-    
   return (
-   <>
-       
+    <>
       {/* Main Content */}
-      <main className="pt-5 pb-5" style={{ backgroundColor: '#DCEDEF'}}>
+      <main className="pt-5 pb-5" style={{ backgroundColor: "#DCEDEF" }}>
         <div className="container">
-        {/* Carousel */}
-        <Carousel activeIndex={currentIndex} onSelect={(selectedIndex) => setCurrentIndex(selectedIndex)} controls={false} indicators={false}>
-          {images.map((image, index) => (
-            <Carousel.Item key={index}>
-              <img src={image} alt="" className="d-block w-100 rounded" style={{ height: "500px", objectFit: "cover" }}/>
-             
+          {/* Carousel */}
+          <Carousel
+            activeIndex={currentIndex}
+            onSelect={(selectedIndex) => setCurrentIndex(selectedIndex)}
+            controls={false}
+            indicators={false}
+          >
+            {images.map((image, index) => (
+              <Carousel.Item key={index}>
+                <img
+                  src={image}
+                  alt=""
+                  className="d-block w-100 rounded"
+                  style={{ height: "500px", objectFit: "cover" }}
+                />
 
-            {/* side buttons */}
-              <button onClick={prevSlide} className="position-absolute top-50 start-0 translate-middle-y bg-dark bg-opacity-50 text-white p-3 rounded-circle transition-colors"
-                  aria-label="Previous slide">
+                {/* side buttons */}
+                <button
+                  onClick={prevSlide}
+                  className="position-absolute top-50 start-0 translate-middle-y bg-dark bg-opacity-50 text-white p-3 rounded-circle transition-colors"
+                  aria-label="Previous slide"
+                >
                   <ChevronLeft size={24} />
                 </button>
-                <button onClick={nextSlide} className="position-absolute top-50 end-0 translate-middle-y bg-dark bg-opacity-50 text-white p-3 rounded-circle transition-colors"
-                  aria-label="Next slide" >
+                <button
+                  onClick={nextSlide}
+                  className="position-absolute top-50 end-0 translate-middle-y bg-dark bg-opacity-50 text-white p-3 rounded-circle transition-colors"
+                  aria-label="Next slide"
+                >
                   <ChevronRight size={24} />
                 </button>
+              </Carousel.Item>
+            ))}
+          </Carousel>
 
-              
-                {/* Bottom round slide bars */}
+          {/* Bottom round slide bars */}
 
-           <div className="d-flex justify-content-center gap-2 mt-4">
-             {images.map((_, index) => (
-             <Button key={index} onClick={() => setCurrentIndex(index)} aria-label={`Go to slide ${index + 1}`} className={`rounded-circle p-0 transition-all ${
-              currentIndex === index ? "bg-grey" : "bg-secondary opacity-50" }`}
-              style={{ width: currentIndex === index ? "14px" : "12px", height: currentIndex === index ? "14px" : "12px", transition: "all 0.3s ease",
-               }}/>
-              ))}
-           </div>
-        </Carousel.Item>
-          ))}
-        </Carousel>
+          <div className="d-flex justify-content-center gap-2 mt-4">
+            {images.map((_, index) => (
+              <Button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                aria-label={`Go to slide ${index + 1}`}
+                className={`rounded-circle p-0 transition-all ${
+                  currentIndex === index ? "bg-grey" : "bg-secondary opacity-50"
+                }`}
+                style={{
+                  width: currentIndex === index ? "14px" : "12px",
+                  height: currentIndex === index ? "14px" : "12px",
+                  transition: "all 0.3s ease",
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      </main>
+    </>
+  );
+};
 
-      </div>
-    </main>
-   </>
-  )
-}
-
-export default ImageSlider
+export default ImageSlider;
