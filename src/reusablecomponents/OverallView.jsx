@@ -36,19 +36,22 @@ const OverallView = ({ items, title }) => {
     <Container fluid className="p-4">
       <h2 className="mb-4">{title}</h2>
       <Row className="g-4">
-        {items &&
-          items.map((item) => (
-            <Col
-              key={item.id}
-              xs={12}
-              sm={6}
-              md={4}
-              lg={3}
-              className="d-flex justify-content-center"
-            >
-              <ChoicesItems part={item} />
-            </Col>
-          ))}
+        {items?.length>0 ? (
+                items.map((item) => (
+                  <Col
+                    key={item._id}
+                    xs={12}
+                    sm={6}
+                    md={4}
+                    lg={3}
+                    className="d-flex justify-content-center"
+                  >
+                    <ChoicesItems part={item} />
+                  </Col>
+        ))
+       ) : (
+      <p>No items available.</p>
+    )}
       </Row>
     </Container>
 

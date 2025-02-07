@@ -9,6 +9,7 @@ import ForgotPasswordModal from "./ForgotPasswordModal";
 import OtpModal from "./OtpModal";
 import EnterDetailsModal from "./EnterDetailsModal";
 import AuthenticationModal from "./AuthenticationModal";
+import Navbarcomp from "./NavbarComp";
 
 const Header = () => {
   // state for authentication modal
@@ -93,7 +94,7 @@ const Header = () => {
   return (
     <>
       {/* *******************************navbar****************************** */}
-      <Navbar expand="lg" className="bg-body-light">
+      {/* <Navbar expand="lg" className="bg-body-light">
         <Container>
           <img src={logo} className="img-fluid me-5" width="50px" alt="" />
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -141,8 +142,9 @@ const Header = () => {
             </div>
           </Navbar.Collapse>
         </Container>
-      </Navbar>
+      </Navbar> */}
 
+<Navbarcomp handleLoginClick={handleLoginClick}/>
       {/* ***************************login and signup modal***************************** */}
      
 

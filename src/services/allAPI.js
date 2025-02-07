@@ -32,6 +32,12 @@ export const resetPasswordApi =async(reqBody)=>{
     return await commonAPI('PUT',`${SERVER_URL}/auth/resetPassword`,reqBody)
 }
 
+// add part
 export const addPartsApi =async(reqBody,reqHeader)=>{
     return await commonAPI('POST',`${SERVER_URL}/addParts`,reqBody,reqHeader)
+}
+
+// display all parts
+export const displayAllPartsApi =async()=>{
+    return await commonAPI('GET',`${SERVER_URL}/getAllParts?latitude=null&longitude=null`,{})
 }

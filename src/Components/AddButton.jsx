@@ -15,6 +15,7 @@ import GoogleMapView from "./GoogleMapView";
 import SubmitButtons from "../reusablecomponents/SubmitButtons";
 import { addPartsApi } from "../services/allAPI";
 import { showToast } from "../reusablecomponents/Toast";
+import { addPart } from "../redux/slices/ProductSlice";
 
 const AddButton = () => {
   // call the action using dispatch
@@ -241,6 +242,8 @@ const AddButton = () => {
 
           showToast(`${result.data.message}`, "success");
           setIsAddProductSidebarOpen(false);
+          // Dispatch the addPart action to update the global state
+        dispatch(addPart(result.data.carPart));
 
           // Reset category and condition
           dispatch(resetActiveButton()); // Reset active category button

@@ -3,8 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState ={
     activeButton:1,
     activeCondition:1,
-   
-
+    parts: [],
+    locationAccessGranted: false,
+    location: null,
 }
   
 
@@ -27,10 +28,21 @@ const productslice =createSlice({
       resetActiveCondition: (state) => {
         state.activeCondition = "";  // Reset to initial value (empty string or default condition)
       },
-     
+      addPart: (state, action) => {
+        state.parts.push(action.payload)
+      },
+      setLocationAccess: (state, action) => {
+        state.locationAccessGranted = action.payload; // Add this action
+      },
+      setLocation: (state, action) => {
+        state.location = action.payload;
+    },
+    setParts: (state, action) => {
+      state.parts = action.payload;
+  },
     }
 })
 
-export const { setActiveButton,setActiveCondition, resetActiveButton, resetActiveCondition} =productslice.actions
+export const { setActiveButton,setActiveCondition, resetActiveButton, resetActiveCondition,addPart, setLocationAccess, setLocation, setParts} =productslice.actions
 
     export default productslice.reducer
