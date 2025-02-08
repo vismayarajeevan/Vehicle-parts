@@ -41,3 +41,9 @@ export const addPartsApi =async(reqBody,reqHeader)=>{
 export const displayAllPartsApi =async()=>{
     return await commonAPI('GET',`${SERVER_URL}/getAllParts?latitude=null&longitude=null`,{})
 }
+
+// my post
+
+export const displayuserPartsApi =async(reqHeader)=>{
+    return await commonAPI('GET',`${SERVER_URL}/getPartsOfUser`,{},reqHeader)
+}

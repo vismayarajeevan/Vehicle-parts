@@ -5,11 +5,27 @@ import logo from "../assets/logo.png";
 import { MapPin } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { setLocationAccess } from "../redux/slices/ProductSlice";
+import { useLocation, Link  } from "react-router-dom";
+
 
 
 const Navbarcomp = ({ handleLoginClick }) => {
+
+  const currentPage = useLocation(); // Get current URL path
   const [activeLink, setActiveLink] = useState("home");
   const [location, setLocation] = useState("Fetching location...");
+
+
+  // Update active link based on URL path
+  useEffect(() => {
+    if (currentPage.pathname === "/myposts") {
+      setActiveLink("posts");
+    } else if (currentPage.pathname === "/designs") {
+      setActiveLink("designs");
+    } else {
+      setActiveLink("home");
+    }
+  }, [currentPage.pathname]); // Runs every time the path changes
 
 const dispatch = useDispatch();
 useEffect(() => {
@@ -49,76 +65,7 @@ useEffect(() => {
 }, []);
 
 
-// useEffect(() => {
-//   if ("geolocation" in navigator) {
-//       navigator.geolocation.getCurrentPosition(
-//           (position) => {
-//               const { latitude, longitude } = position.coords;
-//               console.log("Latitude:", latitude, "Longitude:", longitude);
-
-//               fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`)
-//                   .then((response) => response.json())
-//                   .then((data) => {
-//                       console.log("Reverse Geocoding Data:", data);
-//                       const city = data.city || data.locality || "Unknown City";
-//                       const country = data.countryName || "Unknown Country";
-//                       setLocation(`${city}, ${country}`);
-//                       dispatch(setLocationAccess(true));
-//                   })
-//                   .catch((error) => {
-//                       console.error("Error fetching reverse geocoding data:", error);
-//                       setLocation("Unknown Location");
-//                   });
-//           },
-//           (error) => {
-//               console.error("Error fetching location:", error);
-//               setLocation("Location access denied or unavailable.");
-//           }
-//       );
-//   } else {
-//       setLocation("Geolocation is not supported by this browser.");
-//   }
-// }, [dispatch]);
-
-
-
-
-
-// useEffect(() => {
-//     if ("geolocation" in navigator) {
-//       navigator.geolocation.getCurrentPosition(
-//         (position) => {
-//           const { latitude, longitude } = position.coords;
-//           console.log("Latitude:", latitude, "Longitude:", longitude); // Log coordinates
-  
-//           fetch(
-//             `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
-//           )
-//             .then((response) => response.json())
-//             .then((data) => {
-//               console.log("Reverse Geocoding Data:", data); // Log reverse geocoding data
-  
-//               // Fallback mechanism if city or countryName is not available
-//               const city = data.city || data.locality || "Unknown City";
-//               const country = data.countryName || "Unknown Country";
-//               setLocation(`${city}, ${country}`);
-  
-//               dispatch(setLocationAccess(true));
-//             })
-//             .catch((error) => {
-//               console.error("Error fetching reverse geocoding data:", error);
-//               setLocation("Unknown Location");
-//             });
-//         },
-//         (error) => {
-//           console.error("Error fetching location:", error);
-//           setLocation("Location access denied or unavailable.");
-//         }
-//       );
-//     } else {
-//       setLocation("Geolocation is not supported by this browser.");
-//     }
-//   }, [dispatch]);
+ 
   return (
     <>
       <Navbar expand="lg" className="bg-body-light py-2">
@@ -174,25 +121,19 @@ useEffect(() => {
 
             {/* Navigation Links */}
             <Nav className="me-auto gap-lg-4 gap-2">
-              <Nav.Link
-                href="#home"
-                className={activeLink === "home" ? "active" : "text-secondary"}
-                onClick={() => setActiveLink("home")}
-              >
-                Home
-              </Nav.Link>
-              <Nav.Link
-                href="#posts"
-                className={activeLink === "posts" ? "active" : "text-secondary"}
-                onClick={() => setActiveLink("posts")}
-              >
-                My Posts
-              </Nav.Link>
-              <Nav.Link 
-              href="#designs"
-              className={activeLink === "designs" ? "active" : "text-secondary"}
-              onClick={() => setActiveLink("designs")}
-              >Designs</Nav.Link>
+              
+
+
+<Nav.Link as={Link} to="/" className={activeLink === "home" ? "active" : "text-secondary"}>
+              Home
+            </Nav.Link>
+            <Nav.Link as={Link} to="/myposts" className={activeLink === "posts" ? "active" : "text-secondary"}>
+              My Posts
+            </Nav.Link>
+            <Nav.Link as={Link} to="/designs" className={activeLink === "designs" ? "active" : "text-secondary"}>
+              Designs
+            </Nav.Link>
+            
 
               <Nav.Link
                 href="#profile"
