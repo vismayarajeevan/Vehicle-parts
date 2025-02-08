@@ -44,6 +44,6 @@ export const displayAllPartsApi =async(searchKey)=>{
 
 // my post
 
-export const displayuserPartsApi =async(searchKey,reqHeader)=>{
-    return await commonAPI('GET',`${SERVER_URL}/getPartsOfUser?search=${searchKey}`,{},reqHeader)
+export const displayuserPartsApi =async(reqHeader)=>{
+    return await commonAPI('GET',`${SERVER_URL}/getPartsOfUser`,{},reqHeader)
 }

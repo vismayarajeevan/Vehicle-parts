@@ -15,12 +15,10 @@ function MyPost() {
 
   // state to hold user product
   const [userProduct, setUserProduct] = useState([])
-  // const [filteredProducts, setFilteredProducts] = useState([]);
-   // state to hold search key
-   const [searchKey,setSearchKey] = useState('')
+  
 
   // function to get user product
-  const getuserProduct = async(searchTerm)=>{
+  const getuserProduct = async()=>{
     console.log("inside userproducts");
 
     const token= sessionStorage.getItem('token')
@@ -31,15 +29,13 @@ function MyPost() {
      }
 
      try {
-      const result = await displayuserPartsApi(searchTerm,reqHeader)
+      const result = await displayuserPartsApi(reqHeader)
       console.log(result);
       if(result.status == 200){
         console.log(result.data);
         setUserProduct(result.data.carParts)
        
-        
-
-        // setFilteredProducts(result.data.carParts);
+      
         
       } else {
         console.error("API Error:", result);
@@ -57,7 +53,7 @@ function MyPost() {
 
   useEffect(()=>{
     getuserProduct()
-  },[searchKey])
+  },[])
 
   const handleSearch = debounce((value) => {
     setSearchKey(value);
@@ -76,21 +72,7 @@ function MyPost() {
 <>
     <Navbarcomp />
       <Container className="py-5">
-      <Form className="d-none d-lg-block">
-                  <Form.Control
-                    type="search"
-                    placeholder="Search here..."
-                    // value={searchQuery}
-                    onChange={e=>handleSearch(e.target.value)}
-                    style={{
-                      width: "250px",
-                      border: "none",
-                      background: "#F0F0F0",
-                      height: "35px",
-                    }}
-                    aria-label="Search"
-                  />
-                </Form> 
+      
         <Row xs={1} sm={2} md={3} lg={4} className="g-4 mt-4">
           {userProduct.map((product) => (
             <Col key={product._id}>
