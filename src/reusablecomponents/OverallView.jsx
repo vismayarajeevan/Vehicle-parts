@@ -3,12 +3,20 @@ import { Button, Col, Container, Form, Row, Offcanvas } from "react-bootstrap";
 import ChoicesItems from "../Components/ChoicesItems";
 import { colors } from "../colors";
 import filter from '../assets/filter.png'
+
+
 const OverallView = ({ items, title }) => {
 
-    const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false);
+  const [searchKey, setSearchKey] = useState("");
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
+
+  // Filter items based on search input
+  const filteredItems = items?.filter((item) =>
+    item.partName.toLowerCase().includes(searchKey.toLowerCase())
+  );
 
   return (
     <div className="container py-4">
@@ -17,6 +25,8 @@ const OverallView = ({ items, title }) => {
         <Form.Control
           type="search"
           placeholder="Search here..."
+          value={searchKey}
+            onChange={(e) => setSearchKey(e.target.value)}
           style={{ width: "300px", border: "none", background: "#F0F0F0" }}
           aria-label="Search"
         />
@@ -36,7 +46,7 @@ const OverallView = ({ items, title }) => {
     <Container fluid className="p-4">
       <h2 className="mb-4">{title}</h2>
       <Row className="g-4">
-        {items?.length>0 ? (
+        {/* {items?.length>0 ? (
                 items.map((item) => (
                   <Col
                     key={item._id}
@@ -51,7 +61,23 @@ const OverallView = ({ items, title }) => {
         ))
        ) : (
       <p>No items available.</p>
-    )}
+    )} */}
+    {filteredItems.length > 0 ? (
+            filteredItems.map((item) => (
+              <Col
+                key={item._id}
+                xs={12}
+                sm={6}
+                md={4}
+                lg={3}
+                className="d-flex justify-content-center"
+              >
+                <ChoicesItems part={item} />
+              </Col>
+            ))
+          ) : (
+            <p className="text-center text-muted">No items found.</p>
+          )}
       </Row>
     </Container>
 

@@ -1,19 +1,23 @@
-import React, { useEffect } from 'react'
-import { Card, Col, Row } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react'
+import { Card, Col, Form, Row } from 'react-bootstrap'
 import choice_img from '../assets/choices.png'
 import { Link } from 'react-router-dom'
 import ChoicesView from '../Pages/ChoicesView';
 import { ChevronRight } from 'lucide-react';
 import ChoicesItems from './ChoicesItems';
-import { useDispatch, useSelector } from 'react-redux';
-import { displayAllPartsApi } from '../services/allAPI';
-import { setParts } from '../redux/slices/ProductSlice';
+
 
 
 
 
 const Choices = ({displayData}) => {
   
+ const [searchKey,setSearchKey] = useState('')
+ // Filtering the displayData based on search input
+ const filteredParts = displayData?.filter((part) =>
+  part.partName.toLowerCase().includes(searchKey.toLowerCase())
+);
+
 
   return (
 
@@ -23,8 +27,6 @@ const Choices = ({displayData}) => {
           <h2 className="h4 font-weight-bold text-dark">Your Choices</h2>
           <Link 
             to="/choices" 
-            // state={{ parts }} 
-            // state={{ displayData }} 
             state={{ parts: displayData }} // Pass displayData as 'parts'
             className="d-flex align-items-center text-primary hover:text-blue-700"
           >
@@ -32,14 +34,34 @@ const Choices = ({displayData}) => {
             <ChevronRight className="ms-2" />
           </Link>
         </div>
-       
+        <Form 
+        onSubmit={(e) => e.preventDefault()} className="d-none d-lg-block">
+                  <Form.Control
+                    type="search"
+                    placeholder="Search here..."
+                    value={searchKey} // Controlled input
+                    onChange={e=>setSearchKey(e.target.value)}
+                    style={{
+                      width: "250px",
+                      border: "none",
+                      background: "#F0F0F0",
+                      height: "35px",
+                    }}
+                    aria-label="Search"
+                  />
+                </Form> 
       </div>
       <Row className="g-4">
-            {displayData?.map(part => (
-              <Col key={part._id} xs={12} sm={6} md={4} lg={3} className="d-flex justify-content-center">
-                <ChoicesItems part={part} />
-              </Col>
-            ))}
+            
+            {filteredParts.length > 0 ? (
+          filteredParts.map((part) => (
+            <Col key={part._id} xs={12} sm={6} md={4} lg={3} className="d-flex justify-content-center">
+              <ChoicesItems part={part} />
+            </Col>
+          ))
+        ) : (
+          <p className="text-center text-muted">No matching parts found.</p>
+        )}
           </Row>
    
   </div>

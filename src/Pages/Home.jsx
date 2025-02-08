@@ -6,6 +6,12 @@ import AddButton from "../Components/AddButton";
 
 import Choices from "../Components/Choices";
 import { displayAllPartsApi } from "../services/allAPI";
+import { useLocation } from "react-router-dom";
+
+
+
+
+
 
 const Home = () => {
   const [getAllParts, setGetAllParts] = useState([]);
@@ -13,7 +19,13 @@ const Home = () => {
   useEffect(() => {
     displayAllParts();
     
-  });
+  },[]);
+
+
+  
+
+
+
 
   const displayAllParts = async () => {
     try {
@@ -36,7 +48,10 @@ const Home = () => {
 
       <CategorySlider />
   
-      <Choices displayData={getAllParts} />
+      <Choices displayData={getAllParts} /> 
+    
+
+    
     </>
   );
 };

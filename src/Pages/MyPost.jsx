@@ -1,11 +1,13 @@
 
-import { Container, Row, Col, Card, Dropdown } from 'react-bootstrap';
+import { Container, Row, Col, Card, Dropdown, Form } from 'react-bootstrap';
 import { BsThreeDotsVertical, BsPencilSquare, BsTrash } from 'react-icons/bs';
 import 'bootstrap/dist/css/bootstrap.min.css';
  import './Mypost.css'
 import Navbarcomp from '../Components/NavbarComp';
 import { useEffect, useState } from 'react';
 import { displayuserPartsApi } from '../services/allAPI';
+import { debounce } from 'lodash';
+
 
 
 
@@ -13,23 +15,31 @@ function MyPost() {
 
   // state to hold user product
   const [userProduct, setUserProduct] = useState([])
+  // const [filteredProducts, setFilteredProducts] = useState([]);
+   // state to hold search key
+   const [searchKey,setSearchKey] = useState('')
 
   // function to get user product
-  const getuserProduct = async()=>{
+  const getuserProduct = async(searchTerm)=>{
     console.log("inside userproducts");
 
     const token= sessionStorage.getItem('token')
+    console.log("token",token)
     if(token){
       const reqHeader ={
         "Authorization":`Bearer ${token}`
      }
 
      try {
-      const result = await displayuserPartsApi(reqHeader)
+      const result = await displayuserPartsApi(searchTerm,reqHeader)
       console.log(result);
       if(result.status == 200){
         console.log(result.data);
         setUserProduct(result.data.carParts)
+       
+        
+
+        // setFilteredProducts(result.data.carParts);
         
       } else {
         console.error("API Error:", result);
@@ -47,7 +57,11 @@ function MyPost() {
 
   useEffect(()=>{
     getuserProduct()
-  },[])
+  },[searchKey])
+
+  const handleSearch = debounce((value) => {
+    setSearchKey(value);
+  }, 500);
 
 
   // const handleEdit = (id) => {
@@ -62,7 +76,22 @@ function MyPost() {
 <>
     <Navbarcomp />
       <Container className="py-5">
-        <Row xs={1} sm={2} md={3} lg={4} className="g-4">
+      <Form className="d-none d-lg-block">
+                  <Form.Control
+                    type="search"
+                    placeholder="Search here..."
+                    // value={searchQuery}
+                    onChange={e=>handleSearch(e.target.value)}
+                    style={{
+                      width: "250px",
+                      border: "none",
+                      background: "#F0F0F0",
+                      height: "35px",
+                    }}
+                    aria-label="Search"
+                  />
+                </Form> 
+        <Row xs={1} sm={2} md={3} lg={4} className="g-4 mt-4">
           {userProduct.map((product) => (
             <Col key={product._id}>
               <Card className="h-100 position-relative">

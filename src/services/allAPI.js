@@ -38,12 +38,12 @@ export const addPartsApi =async(reqBody,reqHeader)=>{
 }
 
 // display all parts
-export const displayAllPartsApi =async()=>{
-    return await commonAPI('GET',`${SERVER_URL}/getAllParts?latitude=null&longitude=null`,{})
+export const displayAllPartsApi =async(searchKey)=>{
+    return await commonAPI('GET',`${SERVER_URL}/getAllParts?latitude=null&longitude=null?search=${searchKey}`,{})
 }
 
 // my post
 
-export const displayuserPartsApi =async(reqHeader)=>{
-    return await commonAPI('GET',`${SERVER_URL}/getPartsOfUser`,{},reqHeader)
+export const displayuserPartsApi =async(searchKey,reqHeader)=>{
+    return await commonAPI('GET',`${SERVER_URL}/getPartsOfUser?search=${searchKey}`,{},reqHeader)
 }

@@ -5,15 +5,32 @@ import logo from "../assets/logo.png";
 import { MapPin } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { setLocationAccess } from "../redux/slices/ProductSlice";
-import { useLocation, Link  } from "react-router-dom";
+import { useLocation, Link, useNavigate  } from "react-router-dom";
+import { showToast } from "../reusablecomponents/Toast";
 
 
 
-const Navbarcomp = ({ handleLoginClick }) => {
+const Navbarcomp = ({ handleLoginClick}) => {
 
   const currentPage = useLocation(); // Get current URL path
+  const navigate = useNavigate()
   const [activeLink, setActiveLink] = useState("home");
   const [location, setLocation] = useState("Fetching location...");
+
+ 
+  
+
+  const handleMyPostsClick = () => {
+    const token = sessionStorage.getItem("token"); // Check if user is logged in
+
+    if (token) {
+      navigate("/myposts");
+    } else {
+      showToast("Please log in to view your posts!","warning"); // Show toast notification
+      handleLoginClick(); // Open login modal
+    }
+  };
+  
 
 
   // Update active link based on URL path
@@ -75,50 +92,25 @@ useEffect(() => {
             <div className="d-flex flex-column">
               <div className="d-flex align-items-center gap-3">
                 <img src={logo} className="img-fluid" width="50px" alt="Logo" />
-                {/* Search Bar for Large Screens */}
-                <Form className="d-none d-lg-block">
-                  <Form.Control
-                    type="search"
-                    placeholder="Search here..."
-                    style={{
-                      width: "250px",
-                      border: "none",
-                      background: "#F0F0F0",
-                      height: "35px",
-                    }}
-                    aria-label="Search"
-                  />
-                </Form>
-              </div>
-              {/* Location Below Logo */}
-              <div className="d-flex align-items-center gap-1 mt-1">
+
+                <div className="d-flex align-items-center gap-1 mt-1">
                 <MapPin size={16} className="text-danger" />
                 <span className="text-secondary" style={{ fontSize: "13px" }}>
                   {location}
                 </span>
               </div>
+                
+
+              </div>
+              
             </div>
             {/* Navbar Toggle */}
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
           </div>
 
           <Navbar.Collapse id="basic-navbar-nav" className="w-100 mt-2">
-            {/* Search Bar for Small Screens */}
-            <Form className="w-100 d-lg-none mb-2">
-              <Form.Control
-                type="search"
-                placeholder="Search here..."
-                style={{
-                  width: "100%",
-                  maxWidth: "250px",
-                  border: "none",
-                  background: "#F0F0F0",
-                  height: "35px",
-                }}
-                aria-label="Search"
-              />
-            </Form>
-
+          
+              
             {/* Navigation Links */}
             <Nav className="me-auto gap-lg-4 gap-2">
               
@@ -127,7 +119,7 @@ useEffect(() => {
 <Nav.Link as={Link} to="/" className={activeLink === "home" ? "active" : "text-secondary"}>
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/myposts" className={activeLink === "posts" ? "active" : "text-secondary"}>
+            <Nav.Link onClick={handleMyPostsClick}  className={activeLink === "posts" ? "active" : "text-secondary"}>
               My Posts
             </Nav.Link>
             <Nav.Link as={Link} to="/designs" className={activeLink === "designs" ? "active" : "text-secondary"}>

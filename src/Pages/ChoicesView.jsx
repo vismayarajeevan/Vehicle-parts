@@ -1,6 +1,6 @@
 
 import React from "react";
-OverallView
+
 import { useLocation } from "react-router-dom";
 import OverallView from "../reusablecomponents/OverallView";
 
