@@ -44,7 +44,7 @@ const Home = () => {
     <>
       <Header />
       <ImageSlider />
-      <AddButton />
+      <AddButton displayAllParts={displayAllParts}/>
 
       <CategorySlider />
   

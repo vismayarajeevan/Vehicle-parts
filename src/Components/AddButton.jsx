@@ -1,5 +1,5 @@
 import { Icon } from "@iconify-icon/react/dist/iconify.js";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Form, InputGroup, Offcanvas, Spinner } from "react-bootstrap";
 import { globalStyles } from "../globalStyles";
 import ToggleCategoryBtn from "../reusablecomponents/ToggleCategoryBtn";
@@ -16,8 +16,15 @@ import SubmitButtons from "../reusablecomponents/SubmitButtons";
 import { addPartsApi } from "../services/allAPI";
 import { showToast } from "../reusablecomponents/Toast";
 import { addPart } from "../redux/slices/ProductSlice";
+import { CategoryContext } from "../context/CategoryProvider";
 
-const AddButton = () => {
+const AddButton = ({displayAllParts}) => {
+
+  // context api
+  const {addItemToCategory} = useContext(CategoryContext)
+
+
+
   // call the action using dispatch
   const dispatch = useDispatch();
   // access the state
@@ -242,6 +249,13 @@ const AddButton = () => {
 
           showToast(`${result.data.message}`, "success");
           setIsAddProductSidebarOpen(false);
+          displayAllParts()
+
+
+          // Add the item to the appropriate category in the context
+          addItemToCategory(category.toLowerCase(), result.data.carPart);
+
+
           // Dispatch the addPart action to update the global state
         dispatch(addPart(result.data.carPart));
 

@@ -50,7 +50,7 @@ const CategorySlider = () => {
   <div className="mb-5">
         <Row className="g-4">
           {categories.map((category) => (
-            <Col key={category.id} xs={6} sm={4} md={3} lg={2}>
+            <Col key={category._id} xs={6} sm={4} md={3} lg={2}>
              <Link
   to={`/category/${category.name.toLowerCase()}`}
   style={{ textDecoration: 'none', color: 'inherit' }}
@@ -73,7 +73,7 @@ const CategorySlider = () => {
                   </div>
                   <img 
                     src={category.image} 
-                    alt={category.name}
+                    alt={category.partName}
                     className="position-absolute start-50 translate-middle-x"
                     style={{ 
                       maxWidth: '90%',
