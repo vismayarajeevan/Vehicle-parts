@@ -17,11 +17,15 @@ import { addPartsApi } from "../services/allAPI";
 import { showToast } from "../reusablecomponents/Toast";
 import { addPart } from "../redux/slices/ProductSlice";
 import { CategoryContext } from "../context/CategoryProvider";
+import { AuthContext } from "../context/AuthProvider";
 
 const AddButton = ({displayAllParts}) => {
 
   // context api
   const {addItemToCategory} = useContext(CategoryContext)
+
+  // login from authContext
+  const {handleLoginClick} = useContext(AuthContext)
 
 
 
@@ -89,8 +93,18 @@ const AddButton = ({displayAllParts}) => {
 
   // function to show sidebar
   const handleAddProducts = () => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      showToast("Please login to add a product", "warning");
+      handleLoginClick(); // Trigger the login modal
+      return;
+    }
     setIsAddProductSidebarOpen(!isAddProductSidebarOpen);
   };
+  // // function to show sidebar
+  // const handleAddProducts = () => {
+  //   setIsAddProductSidebarOpen(!isAddProductSidebarOpen);
+  // };
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);

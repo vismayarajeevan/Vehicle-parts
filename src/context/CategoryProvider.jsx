@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 
 export const CategoryContext = createContext()
 
@@ -13,6 +13,7 @@ const CategoryProvider = ({children}) => {
             others: [],
           });
         
+
           const addItemToCategory = (category, item) => {
             console.log(`Adding item to category: ${category}`, item); // Debugging
             setCategories((prevCategories) => ({

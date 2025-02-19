@@ -1,88 +1,56 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import NotificationSidebar from "./NotificationSidebar";
 import ForgotPasswordModal from "./ForgotPasswordModal";
 import OtpModal from "./OtpModal";
 import EnterDetailsModal from "./EnterDetailsModal";
 import AuthenticationModal from "./AuthenticationModal";
 import Navbarcomp from "./NavbarComp";
+import { AuthContext } from "../context/AuthProvider";
+
 
 const Header = ({onSearch}) => {
-  // state for authentication modal
-  const [authenticationModal, setAuthenticationModal]= useState(false)
 
-  // state to check it is register modal or not
-  const[isRegister, setIsRegister] = useState(false)
+  const { 
+    authenticationModal,
+    setAuthenticationModal,
+    isRegister,
+    showForgotPasswordModal,
+    setForgotPasswordModal,
+    showOtpModal,
+    setShowOtpModal,
+    showEnterDetailsModal,
+    setShowEnterDetailsModal,
+    enteredEmail,
+    setEnteredEmail,
+    showPassword,
+    togglePasswordVisibility,
+    handleLoginClick,
+    handleSignUpClick,
+    handleForgotPasswordClick,
+    handleOtpModalClick,
+    handleEnterDetailsModalClick} = useContext(AuthContext);
+
+ 
+
+
+
+
 
   
 
-  // state for forgot password modal
-  const [showForgotPasswordModal, setForgotPasswordModal] = useState(false);
-
-  // state for otp modal
-   const [showOtpModal, setShowOtpModal] = useState(false);
-
-  // state for enter details modal
-  const [showEnterDetailsModal, setShowEnterDetailsModal] = useState(false)
-
-  // state to store email in otpmodal
-  const [enteredEmail, setEnteredEmail] = useState('');
-
-
-
-
-
-  // function to display login modal
-  const handleLoginClick = () => {
-    
-    setAuthenticationModal(true)
-    setIsRegister(false)
-    setShowOtpModal(false)
-     setForgotPasswordModal(false);
-     setShowEnterDetailsModal(false)
-  };
-
-  // function to display signup modal
-  const handleSignUpClick = () => {
-    
-    setAuthenticationModal(true)
-    setIsRegister(true)
-  };
-
-  // function to display forgot password modal
-  const handleForgotPasswordClick = () => {
-    setForgotPasswordModal(true);
-    // setShowLoginModal(false);
-    setAuthenticationModal(false)
-  };
-
-   // function to display otp modal
-  const handleOtpModalClick =()=>{
-     setShowOtpModal(true)
-    
-    setAuthenticationModal(false)
-  }
+  
  
-   // function to display enterdetails modal
-   const handleEnterDetailsModalClick =()=>{
-    setShowEnterDetailsModal(true)
-    setForgotPasswordModal(false)
-  }
+   
 
-  // state for eye icon
-  const [showPassword, setShowPassword] = useState(false);
-
-  // function to show password
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+ 
 
   // state for show notifications
-  const [showNotifications, setShowNotifications] = useState(false);
+  // const [showNotifications, setShowNotifications] = useState(false);
 
   //  function for notification
-  const handleNotificationClick = () => {
-    setShowNotifications(!showNotifications);
-  };
+  // const handleNotificationClick = () => {
+  //   setShowNotifications(!showNotifications);
+  // };
 
 
 
@@ -155,10 +123,10 @@ const Header = ({onSearch}) => {
 
       {/* ***************************notifications***************************** */}
 
-      <NotificationSidebar
+      {/* <NotificationSidebar
         showNotifications={showNotifications}
         setShowNotifications={setShowNotifications}
-      />
+      /> */}
     </>
   );
 };
