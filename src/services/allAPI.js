@@ -47,3 +47,15 @@ export const displayAllPartsApi =async(searchKey)=>{
 export const displayuserPartsApi =async(reqHeader)=>{
     return await commonAPI('GET',`${SERVER_URL}/getPartsOfUser`,{},reqHeader)
 }
+
+// edit mypost
+
+export const edituserPartsApi =async(id,reqBody,reqHeader)=>{
+    return await commonAPI('PUT',`${SERVER_URL}/updateParts/${id}`,reqBody,reqHeader)
+}
+
+// edit mypost
+
+export const deleteuserPartsApi =async(id,reqHeader)=>{
+    return await commonAPI('DELETE',`${SERVER_URL}/deleteParts/${id}`,{},reqHeader)
+}
