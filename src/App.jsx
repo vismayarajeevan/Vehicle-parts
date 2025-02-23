@@ -21,7 +21,6 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/overview/:id' element={<CardOverview />} />
         <Route path="/category/:categoryName" element={<CategoryView />} /> 
-        {/* <Route path='/categoryView/:category' element={<CategoryView />} /> */}
         <Route path='/choices' element={<ChoicesView />} />
         <Route path='/myposts' element={<MyPost />} />
       </Routes>

@@ -1,0 +1,146 @@
+
+  .category-card {
+    background: white;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 10px;
+    height: 185px;
+    width: 185px;
+    position: relative;
+    transition: transform 0.3s ease-in-out;
+    z-index: 1;
+}
+
+/* Property for controlling animation */
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+/* Animated border effect (hidden by default) */
+.category-card-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* The animated glowing border - larger than the card */
+.category-card-wrapper::before {
+    content: '';
+    position: absolute;
+    height: 200px; /* Larger than the card */
+    width: 200px;
+    border-radius: 20px;
+    background-image: conic-gradient(from var(--angle), transparent 60%, blue);
+    animation: spin 3s linear infinite;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease-in-out;
+    z-index: -1;
+}
+
+/* Glowing blurred effect */
+.category-card-wrapper::after {
+    content: '';
+    position: absolute;
+    height: 200px;
+    width: 200px;
+    border-radius: 20px;
+    background-image: conic-gradient(from var(--angle), transparent 60%, blue);
+    filter: blur(10px);
+    animation: spin 3s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    z-index: -2;
+}
+
+/* Show animation on hover */
+.category-card-wrapper:hover::before,
+.category-card-wrapper:hover::after {
+    opacity: 1;
+}
+
+.category-card-wrapper:hover .category-card {
+    transform: scale(1.05);
+}
+
+/* Rotating animation */
+@keyframes spin {
+    from {
+        --angle: 0deg;
+    }
+    to {
+        --angle: 360deg;
+    }
+}
+
+/* Category image */
+.category-image {
+    max-width: 90%;
+    max-height: 80px;
+    object-fit: contain;
+}
+
+/* Center the HR inside the card */
+.category-divider {
+    width: 50%;
+    height: 1px;
+    background-color: gray;
+    margin: 20px auto 15px;
+    border: none;
+}
+
+.category-name {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+@media (max-width: 1200px){
+    /* Hide glowing effect */
+    .category-card-wrapper::before,
+    .category-card-wrapper::after {
+        opacity: 0 !important;
+    }
+    }
+
+@media (max-width: 760px){
+/* Hide glowing effect */
+.category-card-wrapper::before,
+.category-card-wrapper::after {
+    opacity: 0 !important;
+}
+}
+
+
+@media (max-width: 592px) {
+    
+    .category-card {
+        padding: 10px 5px; /* Reduce padding inside the card */
+        height: 170px; /* Slightly reduce card height */
+        width: 220px; /* Slightly reduce card width */
+    }
+
+    .category-image {
+        max-width: 100%; /* Increase image size */
+        max-height: 80px; /* Increase max height */
+    }
+  
+    .category-name {
+        font-size: 14px;
+    }
+  
+    .category-divider {
+        width: 60%;
+    }
+
+    /* Hide glowing effect */
+    .category-card-wrapper::before,
+    .category-card-wrapper::after {
+        opacity: 0 !important;
+    }
+}
