@@ -16,13 +16,10 @@ import SubmitButtons from "../reusablecomponents/SubmitButtons";
 import { addPartsApi } from "../services/allAPI";
 import { showToast } from "../reusablecomponents/Toast";
 import { addPart } from "../redux/slices/ProductSlice";
-import { CategoryContext } from "../context/CategoryProvider";
 import { AuthContext } from "../context/AuthProvider";
 
 const AddButton = ({displayAllParts}) => {
 
-  // context api
-  const {addItemToCategory} = useContext(CategoryContext)
 
   // login from authContext
   const {handleLoginClick} = useContext(AuthContext)
@@ -266,9 +263,7 @@ const AddButton = ({displayAllParts}) => {
           displayAllParts()
 
 
-          // Add the item to the appropriate category in the context
-          addItemToCategory(category.toLowerCase(), result.data.carPart);
-
+     
 
           // Dispatch the addPart action to update the global state
         dispatch(addPart(result.data.carPart));

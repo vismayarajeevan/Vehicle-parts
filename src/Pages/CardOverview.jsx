@@ -115,7 +115,7 @@ const CardOverview = () => {
               </div>
 
               <div className="mt-3">
-                <p style={{ fontSize: "25px", fontWeight: '800' }}>₹ {part.price}</p>
+                <span className="price">₹ {part.price}</span>
               </div>
             </div>
 

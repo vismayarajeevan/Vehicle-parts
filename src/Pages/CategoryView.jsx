@@ -1,27 +1,28 @@
 import React, { useContext } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import OverallView from '../reusablecomponents/OverallView';
-import { CategoryContext } from '../context/CategoryProvider';
+
 
 const CategoryView = () => {
   const { categoryName } = useParams(); // Access category name from URL
-  // const location = useLocation();
 
-  const {categories} = useContext(CategoryContext)
-// Get items for the selected category
-const categoryItems = categories[categoryName.toLowerCase()] || [];
+  const location = useLocation(); // ✅ Use useLocation to access state
 
-console.log('Category Name:', categoryName); // Debugging
-console.log('Category Items:', categoryItems); // Debugging
+  const categoryItems = location.state?.categoryItems || []; // 
+ 
 
-  // const { categoryItems } = location.state || { categoryItems: [] };
+ 
+  const filteredItems = categoryItems.filter(item => item.category.toLowerCase() === categoryName.toLowerCase());
 
   console.log('Category Name:', categoryName); // Debugging
-  console.log('Category Items:', categoryItems); // Debugging
+  console.log('Filtered Category Items:', filteredItems); // Debugging
+  
+
+
 
   return (
     <>
-      <OverallView items={categoryItems} title={`Category: ${categoryName}`} />
+      <OverallView items={filteredItems} title={`Category: ${categoryName}`} />
     </>
   );
 };

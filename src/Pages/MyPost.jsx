@@ -100,8 +100,14 @@ function MyPost() {
                     <h5 className="card-title mb-0">{product.partName}</h5>
                     <span className="price">₹ {product.price}</span>
                   </div>
-                  <Card.Text>{product.description
-                  }</Card.Text>
+                  <Card.Text style={{
+                    display: '-webkit-box',
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden',
+                    WebkitLineClamp: 2,
+                  }}>
+                    {product.description}
+                    </Card.Text>
                 </Card.Body>
               </Card>
             </Col>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Form, Modal, Spinner } from "react-bootstrap";
 import Formfield from "../reusablecomponents/Formfield";
 import GoogleButton from "../reusablecomponents/GoogleButton";
@@ -6,6 +6,7 @@ import SubmitButtons from "../reusablecomponents/SubmitButtons";
 import { loginApi, registerApi } from "../services/allAPI";
 
 import { showToast } from "../reusablecomponents/Toast";
+import { AuthContext } from "../context/AuthProvider";
 
 const AuthenticationModal = ({
   authenticationModal,
@@ -18,7 +19,11 @@ const AuthenticationModal = ({
   handleForgotPasswordClick,
   handleOtpModalClick,
   setEnteredEmail,
+  
 }) => {
+
+  const {handleLoginSuccess} = useContext(AuthContext)
+
   // state for login
   const [loginFields, setLoginFields] = useState({
     email: "",
@@ -200,6 +205,7 @@ const AuthenticationModal = ({
         setLoginFields({ email: "", password: "" });
         setAuthenticationModal(false);
         showToast(`${result.data.message}`, "success");
+        handleLoginSuccess()
       } else {
         showToast(`${result.data.message}`, "error");
       }

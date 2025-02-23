@@ -6,7 +6,6 @@ import AddButton from "../Components/AddButton";
 
 import Choices from "../Components/Choices";
 import { displayAllPartsApi } from "../services/allAPI";
-import { useLocation } from "react-router-dom";
 
 
 
@@ -46,7 +45,7 @@ const Home = () => {
       <ImageSlider />
       <AddButton displayAllParts={displayAllParts}/>
 
-      <CategorySlider />
+      <CategorySlider displayData={getAllParts}/>
   
       <Choices displayData={getAllParts} /> 
     
