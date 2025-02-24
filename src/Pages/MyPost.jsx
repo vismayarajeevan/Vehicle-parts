@@ -59,29 +59,50 @@ function MyPost() {
   },[])
 
 
-  // JavaScript Clockwise Image Rotation Logic
-  useEffect(() => {
-    const sliders = document.querySelectorAll(".image-slider");
+ 
 
+
+  useEffect(() => {
+    const sliders = document.querySelectorAll(".image-slider1");
+  
     sliders.forEach((slider) => {
-      const slides = slider.querySelectorAll(".slide");
+      const slides = slider.querySelectorAll(".slide-mypost");
       const dots = slider.querySelectorAll(".dot");
       let index = 0;
-
-      function showSlide(i) {
-        slides.forEach((slide, idx) => slide.classList.toggle("active", idx === i));
-        dots.forEach((dot, idx) => dot.classList.toggle("active", idx === i));
+  
+      if (slides.length > 0) {
+        slides[0].classList.add("active");  // Set first slide active
+        dots[0].classList.add("active");    // Set first dot active
       }
-
+  
+      function showSlide(i) {
+        slides.forEach((slide, idx) => {
+          slide.classList.remove("active");
+          if (idx === i) {
+            slide.classList.add("active");
+          }
+        });
+  
+        dots.forEach((dot, idx) => {
+          dot.classList.remove("active");
+          if (idx === i) {
+            dot.classList.add("active");
+          }
+        });
+      }
+  
       function nextSlide() {
         index = (index + 1) % slides.length;
         showSlide(index);
       }
-
-      setInterval(nextSlide, 3000); // Change image every 3 seconds
+  
+      const interval = setInterval(nextSlide, 3000); // Change image every 3 seconds
+  
+      return () => clearInterval(interval); // Cleanup on unmount
     });
   }, [userProduct]);
 
+  
 
 
   const handleSearch = debounce((value) => {
@@ -130,10 +151,10 @@ function MyPost() {
                 <Card className="h-100 position-relative">
                   <div className="card-img-wrapper">
 
-                  <div className="image-slider">
+                  <div className="image-slider1">
                       <div className="slides">
                         {product.images.map((img, index) => (
-                          <img key={index} src={img} className="slide" alt="product" />
+                          <img key={index} src={img} className="slide-mypost" alt="product" />
                         ))}
                       </div>
                       <div className="dots">
