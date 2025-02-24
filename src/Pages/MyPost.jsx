@@ -54,7 +54,35 @@ function MyPost() {
 
   useEffect(()=>{
     getuserProduct()
+
+    
   },[])
+
+
+  // JavaScript Clockwise Image Rotation Logic
+  useEffect(() => {
+    const sliders = document.querySelectorAll(".image-slider");
+
+    sliders.forEach((slider) => {
+      const slides = slider.querySelectorAll(".slide");
+      const dots = slider.querySelectorAll(".dot");
+      let index = 0;
+
+      function showSlide(i) {
+        slides.forEach((slide, idx) => slide.classList.toggle("active", idx === i));
+        dots.forEach((dot, idx) => dot.classList.toggle("active", idx === i));
+      }
+
+      function nextSlide() {
+        index = (index + 1) % slides.length;
+        showSlide(index);
+      }
+
+      setInterval(nextSlide, 3000); // Change image every 3 seconds
+    });
+  }, [userProduct]);
+
+
 
   const handleSearch = debounce((value) => {
     setSearchKey(value);
@@ -101,7 +129,20 @@ function MyPost() {
               <Col key={product._id}>
                 <Card className="h-100 position-relative">
                   <div className="card-img-wrapper">
-                    <Card.Img variant="top" src={product.images} />
+
+                  <div className="image-slider">
+                      <div className="slides">
+                        {product.images.map((img, index) => (
+                          <img key={index} src={img} className="slide" alt="product" />
+                        ))}
+                      </div>
+                      <div className="dots">
+                        {product.images.map((_, index) => (
+                          <span key={index} className="dot"></span>
+                        ))}
+                      </div>
+                    </div>
+                    {/* <Card.Img variant="top" src={product.images} /> */}
                     <Dropdown className="card-dropdown">
                       <Dropdown.Toggle variant="light" size="sm" className="no-arrow rounded-circle">
                         <BsThreeDotsVertical />
