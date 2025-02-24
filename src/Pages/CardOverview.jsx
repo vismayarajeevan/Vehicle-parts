@@ -37,14 +37,25 @@ const CardOverview = () => {
 
 
           {images.length > 0 ? (
-              images.map((img, index) => (
-                <div key={index} className="position-relative overflow-hidden rounded" style={{ height: "400px" }}>
-                  <img src={img} alt={`Slide ${index + 1}`} className="w-100 h-100" style={{ objectFit: "cover" }} />
-                </div>
-              ))
-            ) : (
-              <p>No Image Available</p>
-            )}
+  images.map((img, index) => (
+    <div key={index} className="position-relative overflow-hidden rounded" style={{ height: "400px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <img 
+        src={img} 
+        alt={`Slide ${index + 1}`} 
+        className="w-100 h-100"
+        style={{ 
+          objectFit: "contain",  // Ensures full image is visible without cropping
+          maxWidth: "100%", 
+          maxHeight: "100%",
+          aspectRatio: "16/9" // Maintains image proportions
+        }} 
+      />
+    </div>
+  ))
+) : (
+  <p>No Image Available</p>
+)}
+
 
 
 
