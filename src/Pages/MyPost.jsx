@@ -125,9 +125,15 @@ function MyPost() {
       try {
         const result=await deleteuserPartsApi(id,reqHeader)
         console.log(result);
-        showToast(`${result.data.message}`, "success");
+        if(result.status ==200){
+          showToast(`${result.data.message}`, "success");
+          getuserProduct()
+        }else{
+         showToast(`${result.response.data.message}`, "error");
+        }
         
-        getuserProduct()
+        
+        
         
       } catch (error) {
         console.log(error);

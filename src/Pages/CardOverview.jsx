@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Badge, Button, Col, Container, Row } from "react-bootstrap";
 import whatsapp_icon from "../assets/whatsapp.png";
 import { useLocation } from 'react-router-dom';
@@ -8,6 +8,11 @@ const CardOverview = () => {
   const location = useLocation();
   // const { part } = location.state; // Access the passed data
   const part = location.state?.part || {};
+
+  
+    console.log("part",part);
+    
+  
   // const images = Array.isArray(part.image) ? part.image : [part.image]; // Handle both single and multiple images
 
   const images = Array.isArray(part?.images) ? part.images : [part?.images].filter(Boolean); // Handle images properly
@@ -61,23 +66,7 @@ const CardOverview = () => {
 
 
 
-            {/* {images.map((img, index) => (
-              <div
-                key={index}
-                className="position-relative overflow-hidden rounded"
-                style={{ height: "400px" }}
-              >
-                <img
-                  src={img}
-                  alt={`Slide ${index + 1}`}
-                  className="w-100 h-100"
-                  style={{
-                    objectFit: "cover",
-                    transition: "transform 0.3s ease-in-out",
-                  }}
-                />
-              </div>
-            ))} */}
+
           </div>
         </Col>
 
@@ -97,8 +86,8 @@ const CardOverview = () => {
             <div className="mb-4">
               <div className="d-flex align-items-center justify-content-evenly gap-3 mb-5">
                 <div className="text-center">
-                  <small className="text-muted d-block mb-2" style={{ fontWeight: '700' }}>Category</small>
-                  <Badge bg="info">{part.category || "Unknown"}</Badge>
+                  <small className="text-muted d-block mb-2" style={{ fontWeight: '700',fontSize: "18px"  }}>Category</small>
+                  <Badge style={{fontSize:'14px'}} bg="info">{part.category || "Unknown"}</Badge>
                 </div>
 
                 {/* Vertical Divider */}
@@ -110,20 +99,31 @@ const CardOverview = () => {
                   }}
                 ></div>
                 <div className="text-center">
-                  <small className="text-muted d-block mb-2" style={{ fontWeight: '700' }}>Condition</small>
-                  <Badge bg="warning">{part.condition || "Unknown"}</Badge>
+                  <small className="text-muted d-block mb-2" style={{ fontWeight: '700',fontSize: "18px" }}>Condition</small>
+                  <Badge bg="warning" style={{fontSize:'14px'}}>{part.condition || "Unknown"}</Badge>
                 </div>
               </div>
               <hr style={{ marginBottom: "30px" }} />
               <div className="d-flex align-items-center gap-2">
                 <small
                   className="d-block"
-                  style={{ fontWeight: "600", fontSize: "20px" }}
+                  style={{ fontWeight: "600", fontSize: "18px" }}
                 >
                   Brand:-
                 </small>
                 <span className="text-muted">{part.brand}</span>
               </div>
+
+              <div className="d-flex align-items-center gap-2 mt-2">
+                <small
+                  className="d-block"
+                  style={{ fontWeight: "600", fontSize: "17px" }}
+                >
+                  Availability:-
+                </small>
+                <span className="text-muted">{part.stockAvailability ==true ? "Yes ✅ ":'No ❌ '}</span>
+              </div>
+              
 
               <div className="mt-3">
                 <span className="price">₹ {part.price}</span>

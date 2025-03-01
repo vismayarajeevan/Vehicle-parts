@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, Carousel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -8,8 +9,8 @@ const ChoicesItems = ({ part, parts }) => {
   return (
     <div>
       <Link to={`/overview/${part._id}`} state={{ part, parts }} style={{ textDecoration: 'none' }}>
-        <Card className="h-100 d-flex flex-column" style={{ width: '100%', maxWidth: '18rem' }}>
-          <div className="p-3">
+        <Card className="h-100 d-flex flex-column align-items-stretch" style={{ width: '270px', height: '100%' }}>
+          <div style={{ height: '200px', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center',  }}>
             {images.length > 1 ? (
               <Carousel interval={3000} indicators={true} className="custom-carousel">
                 {images.map((image, index) => (
@@ -18,7 +19,7 @@ const ChoicesItems = ({ part, parts }) => {
                       src={image}
                       alt={`Slide ${index + 1}`}
                       className="d-block w-100"
-                      style={{ height: '200px', objectFit: 'cover', borderRadius: '8px' }}
+                      style={{ height: '100%', maxHeight: '200px', objectFit: 'contain', width: 'auto' }}
                     />
                   </Carousel.Item>
                 ))}
@@ -27,10 +28,10 @@ const ChoicesItems = ({ part, parts }) => {
               <img
                 src={images[0]}
                 alt={part.partName}
-                style={{ height: '200px', objectFit: 'cover', width: '100%', borderRadius: '8px' }}
+                style={{ height: '100%', maxHeight: '200px', objectFit: 'contain', width: 'auto' }}
               />
             ) : (
-              <p>No Image Available</p>
+              <p className="text-center">No Image Available</p>
             )}
           </div>
 

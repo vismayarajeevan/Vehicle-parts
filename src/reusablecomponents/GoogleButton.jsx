@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button } from 'react-bootstrap'
 import google_img from '../assets/google.png'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { auth } from '../utils/firebase'
 import { googleAuthApi } from '../services/allAPI'
+import { showToast } from './Toast'
+import { AuthContext } from '../context/AuthProvider'
 
 const GoogleButton = ({onClick}) => {
+
+  const {handleLoginSuccess} =useContext(AuthContext)
 
   const handleGoogleLogin = async()=>{
     const provider = new GoogleAuthProvider()
@@ -21,6 +25,11 @@ const GoogleButton = ({onClick}) => {
       
       const authUID = await googleAuthApi({uid:uidvalue})
       console.log("authuid",authUID);
+
+      if(authUID.status == 200){
+         showToast(`${authUID.data.message}`, "success");
+         handleLoginSuccess()
+      }
       
       // console.log("uid",uid);
 

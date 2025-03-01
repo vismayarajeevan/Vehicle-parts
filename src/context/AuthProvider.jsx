@@ -87,6 +87,7 @@ export const AuthProvider = ({ children }) => {
   // Function to handle login (to be called after successful login)
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
+    setAuthenticationModal(false);
   };
 
   // Context value to be passed down to components

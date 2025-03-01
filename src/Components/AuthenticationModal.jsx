@@ -7,6 +7,7 @@ import { loginApi, registerApi } from "../services/allAPI";
 
 import { showToast } from "../reusablecomponents/Toast";
 import { AuthContext } from "../context/AuthProvider";
+import { result } from "lodash";
 
 const AuthenticationModal = ({
   authenticationModal,
@@ -156,7 +157,7 @@ const AuthenticationModal = ({
           setEnteredEmail(signupFields.email);
           handleOtpModalClick();
         } else {
-          showToast(`${result.data.message}`, "error");
+          showToast(`${result.response.data.message}`, "error");
         }
       } catch (error) {
         console.error("Registration error:", error);
@@ -206,18 +207,29 @@ const AuthenticationModal = ({
         setAuthenticationModal(false);
         showToast(`${result.data.message}`, "success");
         handleLoginSuccess()
-      } else {
-        showToast(`${result.data.message}`, "error");
       }
-    } catch (error) {
-      // Extract proper error message safely
-      const errorMessage =
-        error.response?.data?.message ||
-        error.message ||
-        "Something went wrong!";
+       else {
+        showToast(`${result.response.data.message}`, "error");
+      }
+   
 
+     }catch (error) {
+      console.log("Full Error Object:", error);
+    
+      // // Extract the error message safely
+      const errorMessage =
+        error.response?.data?.message || // Preferred API error message
+        error.message || // Fallback to Axios default error message
+        "Something went wrong!"; // Final fallback message
+    
       showToast(errorMessage, "error");
+     
+     
+    
     }
+    
+    
+    
     setIsLoginLoading(false);
   };
 

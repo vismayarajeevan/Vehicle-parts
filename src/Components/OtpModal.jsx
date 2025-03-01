@@ -76,7 +76,7 @@ const OtpModal = ({ showOtpModal, setShowOtpModal, enteredEmail,handleLoginClick
         handleLoginClick()
        
       } else {
-        showToast(`${result.data.message}`, "error", {
+        showToast(`${result.response.data.message}`, "error", {
                     position: "top-right",
                     autoClose: 3000,
                   });

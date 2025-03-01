@@ -105,6 +105,7 @@ const AddButton = ({displayAllParts}) => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
+    console.log("file",files)
 
     if (files.length === 0) {
       alert("Please select at least 1 image");
@@ -290,7 +291,7 @@ const AddButton = ({displayAllParts}) => {
           setImageArray([]);
           setSelectedLocation(null);
         } else {
-          showToast(`${result.data.message}`, "error");
+          showToast(`${result.response.data.message}`, "error");
         }
       } catch (error) {
         const errorMessage =
@@ -298,7 +299,7 @@ const AddButton = ({displayAllParts}) => {
           error.message ||
           "Something went wrong!";
 
-        showToast(errorMessage, "error");
+        showToast(errorMessage,"error");
       }
       setIsLoading(false);
     } else {

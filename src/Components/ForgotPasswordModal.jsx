@@ -61,7 +61,7 @@ const ForgotPasswordModal = ({showForgotPasswordModal,setForgotPasswordModal, ha
           // Open EnterDetailsModal
          handleEnterDetailsModalClick()
       }else{
-        showToast(`${result.data.message}`, "error");
+        showToast(`${result.response.data.message}`, "error");
       }
         
       

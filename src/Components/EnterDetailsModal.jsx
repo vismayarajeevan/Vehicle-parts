@@ -111,7 +111,7 @@ const EnterDetailsModal = ({ showEnterDetailsModal, setShowEnterDetailsModal, sh
           handleLoginClick()
         
       } else {
-         showToast(`${result.data.message}`, "error");
+         showToast(`${result.response.data.message}`, "error");
       }
     } catch (error) {
       console.log(error);
