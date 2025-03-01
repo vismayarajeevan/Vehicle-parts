@@ -7,7 +7,7 @@ import { loginApi, registerApi } from "../services/allAPI";
 
 import { showToast } from "../reusablecomponents/Toast";
 import { AuthContext } from "../context/AuthProvider";
-import { result } from "lodash";
+
 
 const AuthenticationModal = ({
   authenticationModal,
