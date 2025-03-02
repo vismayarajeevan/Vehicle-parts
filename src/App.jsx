@@ -9,6 +9,7 @@ import ChoicesView from './Pages/ChoicesView'
 import CardOverview from './Pages/CardOverview'
 import { ToastContainer } from 'react-toastify'
 import MyPost from './Pages/MyPost'
+import Admin from './AdminFiles/Admin'
 
 function App() {
   
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         
         <Route path='/' element={<Home />} />
+        <Route path='/admin' element={<Admin/>}/>
         <Route path='/overview/:id' element={<CardOverview />} />
         <Route path="/category/:categoryName" element={<CategoryView />} /> 
         <Route path='/choices' element={<ChoicesView />} />
