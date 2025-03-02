@@ -9,7 +9,7 @@ import { AuthContext } from '../context/AuthProvider'
 
 const GoogleButton = ({onClick}) => {
 
-  const {handleLoginSuccess} =useContext(AuthContext)
+  const {handleLoginSuccess,setAuthenticationModal} =useContext(AuthContext)
 
   const handleGoogleLogin = async()=>{
     const provider = new GoogleAuthProvider()
@@ -27,6 +27,9 @@ const GoogleButton = ({onClick}) => {
       console.log("authuid",authUID);
 
       if(authUID.status == 200){
+        sessionStorage.setItem("token", authUID.data.token);
+        setAuthenticationModal(false);
+
          showToast(`${authUID.data.message}`, "success");
          handleLoginSuccess()
       }
