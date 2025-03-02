@@ -29,7 +29,7 @@ const Home = () => {
   const displayAllParts = async () => {
     try {
       const result = await displayAllPartsApi();
-      console.log("result", result);
+      console.log("result get", result);
       if (result.status == 200) {
         setGetAllParts(result.data.carParts);
       }
