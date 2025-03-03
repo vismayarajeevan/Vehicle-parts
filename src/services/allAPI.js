@@ -66,3 +66,9 @@ export const deleteuserPartsApi =async(id,reqHeader)=>{
 export const addBannerAdminApi =async(reqBody,reqHeader)=>{
     return await commonAPI('POST',`${SERVER_URL}/addBanner`,reqBody,reqHeader)
 }
+
+
+// display all banners- admin
+export const displayBannerApi =async(reqHeader)=>{
+    return await commonAPI('GET',`${SERVER_URL}/getAllBannerAdmin`,{},reqHeader)
+}
