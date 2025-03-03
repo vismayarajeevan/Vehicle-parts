@@ -143,7 +143,7 @@ const CardOverview = () => {
               <Button
                 className="btn"
                 style={{ backgroundColor: "transparent", border: "none" }}
-                href="https://wa.me/1234567890"
+                href={`https://wa.me/${part.contactNumber?.replace(/\D/g, "")}`} 
                 target="_blank"
               >
                 <img
