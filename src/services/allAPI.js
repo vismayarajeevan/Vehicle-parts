@@ -59,3 +59,10 @@ export const edituserPartsApi =async(id,reqBody,reqHeader)=>{
 export const deleteuserPartsApi =async(id,reqHeader)=>{
     return await commonAPI('DELETE',`${SERVER_URL}/deleteParts/${id}`,{},reqHeader)
 }
+
+
+
+// add banner admin
+export const addBannerAdminApi =async(reqBody,reqHeader)=>{
+    return await commonAPI('POST',`${SERVER_URL}/addBanner`,reqBody,reqHeader)
+}
