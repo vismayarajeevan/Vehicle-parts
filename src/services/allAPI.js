@@ -79,3 +79,10 @@ export const displayBannerApi =async(reqHeader)=>{
 export const deleteAdminBannerApi =async(id,reqHeader)=>{
     return await commonAPI('DELETE',`${SERVER_URL}/deleteBanner/${id}`,{},reqHeader)
 }
+
+
+// display all user list
+
+export const displayuserListApi =async(reqHeader)=>{
+    return await commonAPI('GET',`${SERVER_URL}/auth/getAllUsers`,{},reqHeader)
+}

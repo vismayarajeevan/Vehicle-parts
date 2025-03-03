@@ -5,19 +5,21 @@ import { Trash2, Check, Users, Upload, X } from 'lucide-react';
 import { AuthContext } from '../context/AuthProvider';
 import { showToast } from '../reusablecomponents/Toast';
 import { useNavigate } from 'react-router-dom';
-import { addBannerAdminApi, deleteAdminBannerApi, displayBannerApi } from '../services/allAPI';
+import { addBannerAdminApi, deleteAdminBannerApi, displayBannerApi, displayuserListApi } from '../services/allAPI';
 
 const Admin = () => {
   const { handleLogout: contextHandleLogout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [banners, setBanners] = useState([]);
+  const [users, setUsers] = useState([]); // State for users
   const [newBanner, setNewBanner] = useState({ image: null });
   const [isLoading, setIsLoading] = useState(false);
 
   // Fetch all banners on component mount
   useEffect(() => {
     fetchBanners();
+    fetchUsers();
   }, []);
 
   const fetchBanners = async () => {
@@ -40,6 +42,29 @@ const Admin = () => {
       showToast("Something went wrong while fetching banners", "error");
     }
   };
+
+
+  const fetchUsers = async () => {
+    try {
+      const token = sessionStorage.getItem("token");
+      const reqHeaders = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      const result = await displayuserListApi(reqHeaders);
+      console.log("userlist", result);
+
+      if (result.status === 200) {
+        setUsers(result.data); // Assuming the API returns an array of users
+      } else {
+        showToast("Failed to fetch users", "error");
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      showToast("Something went wrong while fetching users", "error");
+    }
+  };
+
 
   const handleFileChange = (e) => {
     if (e.target.files[0]) {
@@ -228,17 +253,16 @@ const Admin = () => {
                   <tr>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Role</th>
-                    <th>Status</th>
+                    <th>Phone Number</th>
+                    
                   </tr>
                 </thead>
                 <tbody>
                   {users.map((user) => (
-                    <tr key={user.id}>
-                      <td>{user.name}</td>
-                      <td>{user.email}</td>
-                      <td>{user.role}</td>
-                      <td>{user.status === 'active' ? 'Active' : 'Inactive'}</td>
+                    <tr key={user._id}>
+                      <td>{user.userName}</td>
+                      <td>{user.email}</td> 
+                      <td>{user.phoneNumber == "undefined" ?"Google Autentication" :user.phoneNumber}</td>
                     </tr>
                   ))}
                 </tbody>
