@@ -272,9 +272,7 @@ const Admin = () => {
         )}
       </Container>
 
-      <footer className="bg-primary text-white text-center py-3">
-        &copy; 2025 Admin Dashboard. All rights reserved.
-      </footer>
+      
     </div>
   );
 };

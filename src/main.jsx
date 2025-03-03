@@ -6,16 +6,19 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import productStore from "./redux/productStore.js";
 import { AuthProvider } from "./context/AuthProvider.jsx";
+import { SidebarProvider } from "./context/SidebarProvider.jsx";
 
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-        <BrowserRouter>
-        <Provider store={productStore}>
-        <App />
-        </Provider>  
-        </BrowserRouter>
-    </AuthProvider>
+   <SidebarProvider>
+      <AuthProvider>
+          <BrowserRouter>
+          <Provider store={productStore}>
+          <App />
+          </Provider>  
+          </BrowserRouter>
+      </AuthProvider>
+   </SidebarProvider>
   </StrictMode>
 );
