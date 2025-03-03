@@ -54,7 +54,7 @@ export const edituserPartsApi =async(id,reqBody,reqHeader)=>{
     return await commonAPI('PUT',`${SERVER_URL}/updateParts/${id}`,reqBody,reqHeader)
 }
 
-// edit mypost
+// delete mypost
 
 export const deleteuserPartsApi =async(id,reqHeader)=>{
     return await commonAPI('DELETE',`${SERVER_URL}/deleteParts/${id}`,{},reqHeader)
@@ -71,4 +71,11 @@ export const addBannerAdminApi =async(reqBody,reqHeader)=>{
 // display all banners- admin
 export const displayBannerApi =async(reqHeader)=>{
     return await commonAPI('GET',`${SERVER_URL}/getAllBannerAdmin`,{},reqHeader)
+}
+
+
+// delete mypost
+
+export const deleteAdminBannerApi =async(id,reqHeader)=>{
+    return await commonAPI('DELETE',`${SERVER_URL}/deleteBanner/${id}`,{},reqHeader)
 }
