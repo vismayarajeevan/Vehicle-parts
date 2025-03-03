@@ -64,7 +64,7 @@ const ProductSidebar = ({ mode, onClose, productToEdit, displayAllParts }) => {
         condition: productToEdit.condition,
         brand: productToEdit.brand,
         price: productToEdit.price,
-        stockAvailability: productToEdit.stockAvailability,
+        stockAvailability: productToEdit.stockAvailability==true ?"true":"false",
         description: productToEdit.description,
         contactNumber: productToEdit.contactNumber,
         latitude: productToEdit.latitude,
