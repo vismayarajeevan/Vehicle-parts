@@ -7,6 +7,7 @@ import { loginApi, registerApi } from "../services/allAPI";
 
 import { showToast } from "../reusablecomponents/Toast";
 import { AuthContext } from "../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 
 const AuthenticationModal = ({
@@ -24,6 +25,8 @@ const AuthenticationModal = ({
 }) => {
 
   const {handleLoginSuccess} = useContext(AuthContext)
+
+  const navigate = useNavigate();
 
   // state for login
   const [loginFields, setLoginFields] = useState({
@@ -203,10 +206,25 @@ const AuthenticationModal = ({
 
       if (result.status == 200) {
         sessionStorage.setItem("token", result.data.token);
+
+        sessionStorage.setItem("isAdmin", result.data.isAdmin);
+
+
+        
+        
         setLoginFields({ email: "", password: "" });
         setAuthenticationModal(false);
+
+        if (result.data.isAdmin === true) {
+          navigate("/admin");
+        }
         showToast(`${result.data.message}`, "success");
         handleLoginSuccess()
+
+
+        
+
+
       }
        else {
         showToast(`${result.response.data.message}`, "error");

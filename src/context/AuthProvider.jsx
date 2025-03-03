@@ -81,6 +81,8 @@ export const AuthProvider = ({ children }) => {
   // Function to handle logout
   const handleLogout = () => {
     sessionStorage.removeItem("token");
+    sessionStorage.removeItem("isAdmin");
+
     setIsLoggedIn(false);
   };
 

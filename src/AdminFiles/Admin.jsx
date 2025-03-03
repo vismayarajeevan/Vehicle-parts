@@ -3,11 +3,20 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Container, Navbar, Nav, Table, Button, Form, Card, Image } from 'react-bootstrap';
 import { Trash2, Check, Users, Upload, X } from 'lucide-react';
+import { AuthContext } from '../context/AuthProvider';
+import { showToast } from '../reusablecomponents/Toast';
+import { useNavigate } from 'react-router-dom';
 
 const Admin = () => {
+
+  const {handleLogout: contextHandleLogout} = useContext(AuthContext);
+  
+  const navigate = useNavigate();
+
+
   const [banners, setBanners] = useState([
     { id: '1', imageUrl: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809', title: 'Summer Sale', approved: true },
     { id: '2', imageUrl: 'https://images.unsplash.com/photo-1557682250-33bd709cbe85', title: 'New Collection', approved: true },
@@ -56,6 +65,13 @@ const Admin = () => {
     setBanners(banners.filter((banner) => banner.id !== id));
   };
 
+  
+    const handleLogout = () => {
+      contextHandleLogout(); // Use the logout function from AuthContext
+      showToast("Logged out successfully", "success");
+      navigate("/");
+    };
+
   return (
     <div className="bg-light min-vh-100">
       <Navbar bg="primary" variant="dark" className="shadow">
@@ -67,6 +83,9 @@ const Admin = () => {
             </Nav.Link>
             <Nav.Link onClick={() => setActiveTab('users')} active={activeTab === 'users'}>
               Users
+            </Nav.Link>
+            <Nav.Link onClick={handleLogout} active={activeTab === 'users'}>
+              Logout
             </Nav.Link>
           </Nav>
         </Container>

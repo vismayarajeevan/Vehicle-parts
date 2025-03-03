@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import './App.css'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import Home from './Pages/Home'
 
 import CategoryView from './Pages/CategoryView'
@@ -12,7 +12,18 @@ import MyPost from './Pages/MyPost'
 import Admin from './AdminFiles/Admin'
 
 function App() {
-  
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    const isAdmin = sessionStorage.getItem("isAdmin") === "true"; // Convert string to boolean
+
+    if (token && isAdmin) {
+      navigate("/admin");
+    } else {
+      navigate("/");
+    }
+  }, []); // Runs once when the component mounts
 
   return (
     <>
