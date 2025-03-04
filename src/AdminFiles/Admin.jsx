@@ -1,7 +1,9 @@
 
 import React, { useContext, useState, useEffect } from 'react';
-import { Container, Navbar, Nav, Table, Button, Form, Card, Image } from 'react-bootstrap';
-import { Trash2, Check, Users, Upload, X } from 'lucide-react';
+import { Container, Navbar, Nav, Table, Button, Form, Card, Image, Stack } from 'react-bootstrap';
+// import { LogOut, Image, Users } from 'lucide-react';
+import { Trash2,LogOut, Check, Users, Upload, X } from 'lucide-react';
+import { FaImage } from "react-icons/fa"; // Import the image icon
 import { AuthContext } from '../context/AuthProvider';
 import { showToast } from '../reusablecomponents/Toast';
 import { useNavigate } from 'react-router-dom';
@@ -146,7 +148,7 @@ const Admin = () => {
 
   return (
     <div className="bg-light min-vh-100">
-      <Navbar style={{  backgroundColor: "#008E8E", }}  variant="dark" className="shadow">
+      {/* <Navbar style={{  backgroundColor: "#008E8E", }}  variant="dark" className="shadow">
         <Container>
           <Navbar.Brand>Admin Dashboard</Navbar.Brand>
           <Nav>
@@ -159,17 +161,57 @@ const Admin = () => {
             <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
           </Nav>
         </Container>
-      </Navbar>
+      </Navbar> */}
+
+<Navbar bg="white" expand="md" className="shadow-md">
+  <Container>
+    <Navbar.Brand className="fw-bold text-dark">Banner Dashboard</Navbar.Brand>
+    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+    <Navbar.Collapse id="basic-navbar-nav">
+      <Nav className="me-auto">
+        <Nav.Link
+          onClick={() => setActiveTab("banners")}
+          className={`d-flex align-items-center px-3 py-2 rounded ${
+            activeTab === "banners" ? "text-white" : "text-secondary"
+          }`}
+          style={{
+            backgroundColor: activeTab === "banners" ? "#008E8E" : "transparent",
+            boxShadow: activeTab === "banners" ? "0px 4px 6px rgba(0, 142, 142, 0.3)" : "none",
+          }}
+        >
+          <FaImage size={18} className="me-2" /> Banners
+        </Nav.Link>
+        <Nav.Link
+          onClick={() => setActiveTab("users")}
+          className={`d-flex align-items-center px-3 py-2 rounded ${
+            activeTab === "users" ? "text-white" : "text-secondary"
+          }`}
+          style={{
+            backgroundColor: activeTab === "users" ? "#008E8E" : "transparent",
+            boxShadow: activeTab === "users" ? "0px 4px 6px rgba(0, 142, 142, 0.3)" : "none",
+          }}
+        >
+          <Users size={18} className="me-2" /> Users
+        </Nav.Link>
+      </Nav>
+      <Button variant="outline-danger" onClick={handleLogout} className="d-flex align-items-center">
+        <LogOut size={18} className="me-2" /> <span className="d-none d-md-inline">Logout</span>
+      </Button>
+    </Navbar.Collapse>
+  </Container>
+</Navbar>;
 
 
-
-
-      <Container className="py-4">
+      {/* <Container className="py-4">
         {activeTab === 'banners' ? (
           <>
-            <Card className="mb-4">
+            <Card className="bg-white rounded-lg shadow-md p-4 mb-4">
+            <div className="d-flex align-items-center mb-4">
+  <FaImage src="your-image-url.png" width={24} height={24} className="me-2" />
+  <h2 className="fs-4 fw-semibold">Add New Banner</h2>
+</div>
               <Card.Body>
-                <Card.Title>Add New Banner</Card.Title>
+                
                 <Form>
                   <div className="d-flex">
                     <div className="w-50 d-flex flex-column align-items-center justify-content-center border p-3">
@@ -274,7 +316,127 @@ const Admin = () => {
             </Card.Body>
           </Card>
         )}
-      </Container>
+      </Container> */}
+
+
+<Container className="py-4 d-flex flex-column align-items-center">
+  {activeTab === "banners" ? (
+    <>
+      {/* Add New Banner Card */}
+      <Card className="bg-white rounded-lg shadow-md p-4 mb-4 w-100" style={{ maxWidth: "900px" }}>
+        <div className="d-flex align-items-center mb-4">
+          <FaImage size={24} className="me-2 text-primary" />
+          <h4 className="fs-4 fw-semibold">Add New Banner</h4>
+        </div>
+        <Card.Body>
+          <Form>
+            <div className="d-flex">
+              {/* Upload Section */}
+              <div className="w-50 d-flex flex-column align-items-center justify-content-center border p-3">
+                <Form.Label
+                  htmlFor="banner-upload"
+                  style={{ backgroundColor: "#008E8E", color: "white" }}
+                  className="btn d-flex align-items-center"
+                >
+                  <Upload className="me-2" /> Upload Banner
+                </Form.Label>
+                <Form.Control
+                  id="banner-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  hidden
+                />
+              </div>
+              {/* Image Preview Section */}
+              <div className="w-50 d-flex flex-column align-items-center border p-3">
+                {newBanner.imageUrl && (
+                  <div className="position-relative">
+                    <Image src={newBanner.imageUrl} thumbnail className="mt-2" />
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      className="position-absolute top-0 end-0"
+                      onClick={handleRemoveImage}
+                    >
+                      <X />
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </div>
+            <Button
+              style={{ backgroundColor: "#008E8E", border: "none" }}
+              onClick={handleBannerSubmit}
+              className="mt-3 w-100"
+              disabled={!newBanner.imageUrl || isLoading}
+            >
+              {isLoading ? (
+                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              ) : (
+                "Submit Banner"
+              )}
+            </Button>
+          </Form>
+        </Card.Body>
+      </Card>
+
+      {/* Banner Management Card */}
+      <Card className="w-100" style={{ maxWidth: "900px" }}>
+        <Card.Body>
+          <Card.Title className='pb-2'>Banner Management</Card.Title>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Banner</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {banners.map((banner) => (
+                <tr key={banner._id}>
+                  <td>
+                    <Image src={banner.images} thumbnail width={100} />
+                  </td>
+                  <td>
+                    <Button onClick={() => handleDeleteBanner(banner._id)} variant="danger" size="sm" className="ms-2">
+                      <Trash2 />
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Card.Body>
+      </Card>
+    </>
+  ) : (
+    <Card className="w-100" style={{ maxWidth: "900px" }}>
+      <Card.Body>
+        <Card.Title>User Management</Card.Title>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user._id}>
+                <td>{user.userName}</td>
+                <td>{user.email}</td>
+                <td>{user.phoneNumber === "undefined" ? "Google Authentication" : user.phoneNumber}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Card.Body>
+    </Card>
+  )}
+</Container>
+
 
       
     </div>
