@@ -146,7 +146,7 @@ const Admin = () => {
 
   return (
     <div className="bg-light min-vh-100">
-      <Navbar bg="primary" variant="dark" className="shadow">
+      <Navbar style={{  backgroundColor: "#008E8E", }}  variant="dark" className="shadow">
         <Container>
           <Navbar.Brand>Admin Dashboard</Navbar.Brand>
           <Nav>
@@ -161,6 +161,9 @@ const Admin = () => {
         </Container>
       </Navbar>
 
+
+
+
       <Container className="py-4">
         {activeTab === 'banners' ? (
           <>
@@ -170,7 +173,7 @@ const Admin = () => {
                 <Form>
                   <div className="d-flex">
                     <div className="w-50 d-flex flex-column align-items-center justify-content-center border p-3">
-                      <Form.Label htmlFor="banner-upload" className="btn btn-primary d-flex align-items-center">
+                      <Form.Label htmlFor="banner-upload" style={{  backgroundColor: "#008E8E",color:'white' }}  className="btn d-flex align-items-center">
                         <Upload className="me-2" /> Upload Banner
                       </Form.Label>
                       <Form.Control
@@ -198,6 +201,7 @@ const Admin = () => {
                     </div>
                   </div>
                   <Button
+                  style={{  backgroundColor: "#008E8E", border:"none"}} 
                     onClick={handleBannerSubmit}
                     className="mt-3 w-100"
                     disabled={!newBanner.imageUrl || isLoading}
@@ -205,7 +209,7 @@ const Admin = () => {
                     {isLoading ? (
                       <>
                         <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        Submitting...
+                        
                       </>
                     ) : (
                       "Submit Banner"
