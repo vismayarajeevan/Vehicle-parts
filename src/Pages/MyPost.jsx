@@ -159,7 +159,7 @@ function MyPost() {
               <Col key={product._id}>
                 <Card className="h-100 position-relative">
 
-                  <div className="card-img-wrapper">
+                  <div className="card-img-wrapper p-3">
 
                     <Carousel interval={3000} pause="hover">
                       
@@ -196,20 +196,7 @@ function MyPost() {
                       </Dropdown.Menu>
                     </Dropdown>
                   </div>
-                    {/* <Card.Body>
-                      <div className="d-flex justify-content-between align-items-center mb-2">
-                        <h5 className="card-title mb-0" style={{color:'black'}}>{product.partName}</h5>
-                        <span className="price">₹ {product.price}</span>
-                      </div>
-                      <Card.Text style={{
-                        display: '-webkit-box',
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden',
-                        WebkitLineClamp: 1,
-                      }}>
-                        {product.description}
-                      </Card.Text>
-                    </Card.Body> */}
+                   
                     <Card.Body>
   <div className="d-flex justify-content-between align-items-center mb-2" style={{ gap: '10px' }}>
     <h5 className="card-title mb-0 text-truncate" style={{ flex: 1, fontSize: '1rem' }}>

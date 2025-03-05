@@ -44,16 +44,25 @@ const ChoiceItems = ({ part, parts }) => {
                         )}
                     </div>
                     <Card.Body style={{ flex: '1', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                        <div>
+                        {/* <div>
                             <Card.Title style={{ fontWeight: '600', fontSize: '18px' }}>{part.partName}</Card.Title>
                             <span style={{ fontWeight: '800' }}>₹ {part.price}</span>
-                        </div>
+                        </div> */}
+
+<div className="d-flex justify-content-between align-items-center mb-2" style={{ gap: '10px' }}>
+    <h5 className="card-title mb-0 text-truncate" style={{ flex: 1, fontSize: '1rem' }}>
+      {part.partName}
+    </h5>
+    <span className="price" style={{ flexShrink: 0, fontSize: '1rem', fontWeight: '600' }}>
+      ₹ {part.price}
+    </span>
+  </div>
                         <Card.Text
                             style={{
                                 display: '-webkit-box',
                                 WebkitBoxOrient: 'vertical',
                                 overflow: 'hidden',
-                                WebkitLineClamp: 2,
+                                WebkitLineClamp: 1,
                             }}
                         >
                             {part.description}
