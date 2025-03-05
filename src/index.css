@@ -8,3 +8,18 @@
   font-size: 16px;
   font-weight: 500;
 }
+
+.active-tab {
+  background-color: #DBEAFE !important; /* Tailwind's bg-blue-100 */
+  color: #1E40AF !important; /* Tailwind's text-blue-700 */
+  border: none !important;
+}
+
+.inactive-tab {
+  color: #4B5563 !important; /* Tailwind's text-gray-600 */
+  border: none !important;
+}
+
+.inactive-tab:hover {
+  background-color: #F3F4F6 !important; /* Tailwind's hover:bg-gray-100 */
+}
