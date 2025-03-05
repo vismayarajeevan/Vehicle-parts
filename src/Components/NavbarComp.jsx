@@ -115,7 +115,7 @@ const Navbarcomp = () => {
             {isLoggedIn ? (
               <Dropdown>
                 <Dropdown.Toggle as="div" style={{ cursor: "pointer" }}>
-                  <img src={user} className="img-fluid" onClick={() => navigate("/profile")} width="40px" alt="User" />
+                  <img src={user} className="img-fluid" width="40px" alt="User" />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
@@ -130,7 +130,7 @@ const Navbarcomp = () => {
             {isLoggedIn ? (
               <Dropdown>
                 <Dropdown.Toggle as="div" style={{ cursor: "pointer" }}>
-                  <img src={user} className="img-fluid" onClick={() => navigate("/profile")} width="40px" alt="User" />
+                  <img src={user} className="img-fluid" width="40px" alt="User" />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>

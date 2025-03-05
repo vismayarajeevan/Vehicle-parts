@@ -98,14 +98,14 @@ const GoogleMapView = ({ onLocationSelect, selectedLocation }) => {
           </button>
         </div>
 
-        <Autocomplete>
+        {/* <Autocomplete>
         <input
             type="text"
             placeholder="Search for a location"
             className="form-control mb-3"
             style={{ width: "100%" }}
           />
-        </Autocomplete>
+        </Autocomplete> */}
 
         {/* <StandaloneSearchBox
           onLoad={(ref) => (searchBoxRef.current = ref)}
