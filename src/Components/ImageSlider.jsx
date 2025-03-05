@@ -5,6 +5,8 @@ import { Button, Carousel } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { displayBannerUserApi } from "../services/allAPI";
+import { showToast } from "../reusablecomponents/Toast";
+
 
 const ImageSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);

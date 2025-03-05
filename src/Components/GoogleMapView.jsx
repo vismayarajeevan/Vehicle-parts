@@ -24,7 +24,7 @@ const defaultCenter = {
 
 const GoogleMapView = ({ onLocationSelect, selectedLocation }) => {
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyDdSnydUNpyRWhzBj5QkdnTVyxfa7Vq2L8", // Replace with your API key
+    googleMapsApiKey: `${import.meta.env.VITE_GOOGLE_MAP_API_KEY}`, // Replace with your API key
     libraries: ["places"], // Load the places library
   });
 

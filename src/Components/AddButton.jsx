@@ -607,13 +607,25 @@ import React, { useContext } from "react";
 import { Button } from "react-bootstrap";
 import { SidebarContext } from "../context/SidebarProvider";
 import ProductSidebar from "../reusablecomponents/ProductSidebar";
+import { AuthContext } from "../context/AuthProvider";
+import { showToast } from "../reusablecomponents/Toast";
+
 
 const AddButton = ({ displayAllParts }) => {
   const { isAddProductSidebarOpen, setIsAddProductSidebarOpen } = useContext(SidebarContext);
+  // login from authContext
+  const {handleLoginClick} = useContext(AuthContext)
 
   const handleAddProducts = () => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+             showToast("Please login to add a product", "warning");
+             handleLoginClick(); // Trigger the login modal
+           return;
+           }
     setIsAddProductSidebarOpen(true);
   };
+ 
 
   return (
     <>

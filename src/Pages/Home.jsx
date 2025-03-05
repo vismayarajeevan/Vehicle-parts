@@ -6,6 +6,7 @@ import AddButton from "../Components/AddButton";
 
 import Choices from "../Components/Choices";
 import { displayAllPartsApi } from "../services/allAPI";
+import MapView from "../reusablecomponents/MapView";
 
 
 
@@ -44,12 +45,10 @@ const Home = () => {
       <Header />
       <ImageSlider />
       <AddButton displayAllParts={displayAllParts}/>
-
       <CategorySlider displayData={getAllParts}/>
-  
       <Choices displayData={getAllParts} /> 
     
-
+<MapView />
     
     </>
   );
