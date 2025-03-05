@@ -7,12 +7,12 @@ import {getAuth} from 'firebase/auth'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAIs1bUwSV0xvTYxPnYMrP8C0LMPr9VI2o",
-  authDomain: "sparelinkweb.firebaseapp.com",
-  projectId: "sparelinkweb",
-  storageBucket: "sparelinkweb.firebasestorage.app",
-  messagingSenderId: "119892762696",
-  appId: "1:119892762696:web:4e407b47667887acca787d"
+  apiKey: process.env.apiKey,
+  authDomain: process.env.authDomain,
+  projectId: process.env.projectId,
+  storageBucket: process.env.storageBucket,
+  messagingSenderId: process.env.messagingSenderId,
+  appId: process.env.appId
 };
 
 // Initialize Firebase
