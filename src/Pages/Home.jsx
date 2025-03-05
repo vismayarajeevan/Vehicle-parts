@@ -6,7 +6,6 @@ import AddButton from "../Components/AddButton";
 
 import Choices from "../Components/Choices";
 import { displayAllPartsApi } from "../services/allAPI";
-import MapView from "../reusablecomponents/MapView";
 
 
 
