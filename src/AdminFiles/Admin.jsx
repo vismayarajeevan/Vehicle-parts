@@ -1,6 +1,6 @@
 
 import React, { useContext, useState, useEffect,useRef  } from 'react';
-import { Container, Navbar, Nav, Table, Button, Form, Card, Image, Stack } from 'react-bootstrap';
+import { Container, Navbar, Nav, Table, Button, Form, Card, Image, Stack, Row, Col } from 'react-bootstrap';
 // import { LogOut, Image, Users } from 'lucide-react';
 import { Trash2,LogOut, Check, Users, Upload, X } from 'lucide-react';
 import { FaImage } from "react-icons/fa"; // Import the image icon
@@ -8,6 +8,7 @@ import { AuthContext } from '../context/AuthProvider';
 import { showToast } from '../reusablecomponents/Toast';
 import { useNavigate } from 'react-router-dom';
 import { addBannerAdminApi, deleteAdminBannerApi, displayBannerApi, displayuserListApi } from '../services/allAPI';
+import UserAvatar from './UserAvatar';
 
 const Admin = () => {
   const { handleLogout: contextHandleLogout } = useContext(AuthContext);
@@ -158,7 +159,7 @@ const Admin = () => {
 
 <Navbar bg="white" expand="md" className="shadow-md">
   <Container>
-    <Navbar.Brand className="fw-bold text-dark">Banner Dashboard</Navbar.Brand>
+    <Navbar.Brand className="fw-bold text-dark">Admin Dashboard</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="me-auto">
@@ -255,60 +256,82 @@ const Admin = () => {
         </Card.Body>
       </Card>
 
-      {/* Banner Management Card */}
-      <Card className="w-100" style={{ maxWidth: "900px" }}>
-        <Card.Body>
-          <Card.Title className='pb-2'>Banner Management</Card.Title>
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Banner</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {banners.map((banner) => (
-                <tr key={banner._id}>
-                  <td>
-                    <Image src={banner.images} thumbnail width={100} />
-                  </td>
-                  <td>
-                    <Button onClick={() => handleDeleteBanner(banner._id)} variant="danger" size="sm" className="ms-2">
-                      <Trash2 />
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </Card.Body>
-      </Card>
-    </>
+      
+
+
+ {/* Banner List */}
+ <Card className="bg-white rounded-lg shadow-md p-4" style={{ maxWidth: "900px" }}>
+  <div className="d-flex align-items-center mb-4">
+    <FaImage size={24} className="me-2 text-primary" />
+    <h4 className="fs-4 fw-semibold">Banner List</h4>
+  </div>
+  {banners.length === 0 ? (
+    <div className="text-center py-4 text-muted">No banners available. Add your first banner above.</div>
   ) : (
-    <Card className="w-100" style={{ maxWidth: "900px" }}>
-      <Card.Body>
-        <Card.Title>User Management</Card.Title>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone Number</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user._id}>
-                <td>{user.userName}</td>
-                <td>{user.email}</td>
-                <td>{user.phoneNumber === "undefined" ? "Google Authentication" : user.phoneNumber}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </Card.Body>
-    </Card>
+    <Row>
+      {banners.map((banner) => (
+        <Col key={banner._id} md={6} lg={4} className="mb-4">
+          <Card className="h-100">
+            <div className="position-relative" style={{ height: '150px', overflow: 'hidden' }}>
+              <Card.Img
+                variant="top"
+                src={banner.images}
+                style={{ objectFit: 'cover', height: '100%', width: '100%' }}
+              />
+            </div>
+            <Card.Body className="d-flex justify-content-end align-items-center">
+              {/* Trash Icon on the Right */}
+              <Button
+                variant="link"
+                className="text-danger p-0"
+                onClick={() => handleDeleteBanner(banner._id)}
+              >
+                <Trash2 size={18} />
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      ))}
+    </Row>
   )}
+</Card>
+          </>
+        ) : (
+       
+
+  // User Management Tab
+  <Card className="bg-white rounded-lg shadow-md p-4 w-100" style={{ maxWidth: "1200px" }}>
+  <div className="d-flex align-items-center mb-4">
+    <Users size={24} className="me-2 text-primary" />
+    <h4 className="fs-4 fw-semibold">User List</h4>
+  </div>
+  <Table striped bordered hover>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+      </tr>
+    </thead>
+    <tbody>
+      {users.map((user) => (
+        <tr key={user._id}>
+          <td>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <UserAvatar name={user.userName} />
+              <span style={{ marginLeft: '10px' }}>{user.userName}</span>
+            </div>
+          </td>
+          <td>{user.email}</td>
+          <td>{user.phoneNumber === 'undefined' ? 'Google Authentication' : user.phoneNumber}</td>
+        </tr>
+      ))}
+    </tbody>
+  </Table>
+</Card>
+        )}
+
+
 </Container>
 
 
