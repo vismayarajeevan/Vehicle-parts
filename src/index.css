@@ -38,3 +38,32 @@
     height: 200px !important; /* Adjust height for extra small screens */
   }
 }
+
+
+/* Custom CSS for Navbar spacing */
+@media (max-width: 767.98px) {
+  .navbar-nav .nav-link {
+    margin-bottom: 10px; /* Add space between stacked Nav links */
+  }
+
+  .navbar-collapse {
+    padding-top: 10px; /* Add space above the collapsed Navbar content */
+  }
+}
+
+
+/* Default styles */
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+}
+
+/* Responsive styles for small screens */
+@media (max-width: 767.98px) {
+  .user-avatar {
+    width: 30px; /* Smaller size for small screens */
+    height: 30px; /* Smaller size for small screens */
+    font-size: 14px; /* Smaller font size for small screens */
+  }
+}
