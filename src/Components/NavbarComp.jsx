@@ -92,7 +92,7 @@ const Navbarcomp = () => {
                 <MapPin size={16} className="text-danger" />
                 <span
                   className="text-secondary"
-                  style={{ fontSize: "13px", cursor: "pointer" }}
+                  style={{ fontSize: "13px", cursor: "pointer", textDecoration: "underline" }}
                   onClick={requestLocation}
                 >
                   {location}
