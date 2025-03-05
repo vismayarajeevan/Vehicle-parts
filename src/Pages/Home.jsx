@@ -48,7 +48,7 @@ const Home = () => {
       <CategorySlider displayData={getAllParts}/>
       <Choices displayData={getAllParts} /> 
     
-<MapView />
+
     
     </>
   );
