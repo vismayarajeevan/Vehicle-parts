@@ -1,23 +1,32 @@
 
-import React, { useEffect } from 'react';
+
+
+import React from 'react';
 import { Badge, Button, Col, Container, Row } from "react-bootstrap";
 import whatsapp_icon from "../assets/whatsapp.png";
 import { useLocation } from 'react-router-dom';
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const CardOverview = () => {
   const location = useLocation();
-  // const { part } = location.state; // Access the passed data
   const part = location.state?.part || {};
 
-  
-    console.log("part",part);
-    
-  
-  // const images = Array.isArray(part.image) ? part.image : [part.image]; // Handle both single and multiple images
+  console.log("part", part);
 
-  const images = Array.isArray(part?.images) ? part.images : [part?.images].filter(Boolean); // Handle images properly
+  const images = Array.isArray(part?.images) ? part.images : [part?.images].filter(Boolean);
 
-
+  // Slider settings
+  const sliderSettings = {
+    dots: true, // Show dot indicators
+    infinite: true, // Infinite looping
+    speed: 500, // Transition speed
+    slidesToShow: 1, // Number of slides to show at once
+    slidesToScroll: 1, // Number of slides to scroll
+    autoplay: true, // Auto-play the slider
+    autoplaySpeed: 3000, // Auto-play interval
+  };
 
   return (
     <Container
@@ -25,62 +34,53 @@ const CardOverview = () => {
       className="p-5"
       style={{
         overflowX: "hidden",
-        height: "100vh", // Ensure container height is constrained
-        overflow: "hidden", // Prevent content overflow
       }}
     >
       <Row className="g-4">
-        {/* Image Section */}
+        {/* Image Section with Slider */}
         <Col
           md={6}
-          style={{
-            maxHeight: "100vh",
-            overflowY: "auto", // Enable vertical scrolling
-          }}
+          className="order-md-1 order-1" // Always display images first on small screens
         >
           <div className="d-flex flex-column gap-4">
-
-
-          {images.length > 0 ? (
-  images.map((img, index) => (
-    <div key={index} className="position-relative overflow-hidden rounded" style={{ height: "400px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <img 
-        src={img} 
-        alt={`Slide ${index + 1}`} 
-        className="w-100 h-100"
-        style={{ 
-          objectFit: "contain",  // Ensures full image is visible without cropping
-          maxWidth: "100%", 
-          maxHeight: "100%",
-          aspectRatio: "16/9" // Maintains image proportions
-        }} 
-      />
-    </div>
-  ))
-) : (
-  <p>No Image Available</p>
-)}
-
-
-
-
-
-
-
+            {images.length > 0 ? (
+              <Slider {...sliderSettings}>
+                {images.map((img, index) => (
+                  <div key={index} className="position-relative overflow-hidden rounded" style={{ height: "400px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <img 
+                      src={img} 
+                      alt={`Slide ${index + 1}`} 
+                      className="w-100 h-100"
+                      style={{ 
+                        objectFit: "contain",  // Ensures full image is visible without cropping
+                        maxWidth: "100%", 
+                        maxHeight: "100%",
+                        aspectRatio: "16/9" // Maintains image proportions
+                      }} 
+                    />
+                  </div>
+                ))}
+              </Slider>
+            ) : (
+              <p>No Image Available</p>
+            )}
           </div>
         </Col>
 
         {/* Details Section */}
-        <Col md={6}>
+        <Col
+          md={6}
+          className="order-md-2 order-2" // Always display details below images on small screens
+        >
           <div
             style={{
               position: "sticky",
-              top: "20px", // Fixes the details section in place
+              top: "20px", // Fixes the details section in place on larger screens
             }}
           >
             <h1 className="mb-5">{part.partName || "No Name Available"}</h1>
             <p className="text-muted mb-5">
-            {part.description || "No description provided."}
+              {part.description || "No description provided."}
             </p>
 
             <div className="mb-4">

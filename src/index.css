@@ -23,3 +23,18 @@
 .inactive-tab:hover {
   background-color: #F3F4F6 !important; /* Tailwind's hover:bg-gray-100 */
 }
+
+
+
+/* Adjust carousel height for smaller screens */
+@media (max-width: 768px) {
+  .carousel-item img {
+    height: 300px !important; /* Adjust height for small screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .carousel-item img {
+    height: 200px !important; /* Adjust height for extra small screens */
+  }
+}
