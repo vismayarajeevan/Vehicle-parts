@@ -107,7 +107,7 @@ const Navbarcomp = () => {
           <Nav className="me-auto gap-lg-4 gap-3">
             <Nav.Link as={Link} to="/" className={activeLink === "home" ? "active" : "text-secondary"}>Home</Nav.Link>
             <Nav.Link onClick={handleMyPostsClick} className={activeLink === "posts" ? "active" : "text-secondary"}>My Posts</Nav.Link>
-            <Nav.Link as={Link} to="/designs" className={activeLink === "designs" ? "active" : "text-secondary"}>Designs</Nav.Link>
+            {/* <Nav.Link as={Link} to="/designs" className={activeLink === "designs" ? "active" : "text-secondary"}>Designs</Nav.Link> */}
             <hr className="d-lg-none" />
           </Nav>
 
