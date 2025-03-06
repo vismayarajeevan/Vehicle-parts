@@ -209,6 +209,13 @@ const AuthenticationModal = ({
 
         sessionStorage.setItem("isAdmin", result.data.isAdmin);
 
+        sessionStorage.setItem("userId", result.data.userId);
+
+        const userId = sessionStorage.getItem("userId");
+       console.log("userId",userId);
+       
+        
+
 
         
         

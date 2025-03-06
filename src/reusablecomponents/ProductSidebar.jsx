@@ -208,6 +208,9 @@ const handleSubmit = async () => {
   const { partName, category, condition, brand, price, stockAvailability, description, contactNumber, latitude, longitude } = productDetails;
 
   const reqBody = new FormData();
+  const userId = sessionStorage.getItem("userId");
+
+
   reqBody.append("partName", partName);
   reqBody.append("category", category);
   reqBody.append("condition", condition);
@@ -218,6 +221,8 @@ const handleSubmit = async () => {
   reqBody.append("contactNumber", contactNumber);
   reqBody.append("latitude", latitude);
   reqBody.append("longitude", longitude);
+  reqBody.append("userId", userId);
+
 
   // Append File objects instead of base64 strings
   imageFiles.forEach((file) => {
@@ -225,7 +230,9 @@ const handleSubmit = async () => {
     reqBody.append("images", file);
   });
 
+  
   const token = sessionStorage.getItem("token");
+
   const reqHeaders = { Authorization: `Bearer ${token}` };
 
   console.log("FormData:", reqBody); // Debugging: Check FormData contents

@@ -28,6 +28,11 @@ const GoogleButton = ({onClick}) => {
 
       if(authUID.status == 200){
         sessionStorage.setItem("token", authUID.data.token);
+        sessionStorage.setItem("isAdmin", authUID.data.isAdmin);
+
+
+        sessionStorage.setItem("userId", authUID.data.userId);
+
         setAuthenticationModal(false);
 
          showToast(`${authUID.data.message}`, "success");

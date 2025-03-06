@@ -30,6 +30,11 @@ function MyPost() {
     console.log("inside userproducts");
 
     const token= sessionStorage.getItem('token')
+    const userId= sessionStorage.getItem('userId')
+
+    console.log("userId",userId);
+    
+
     console.log("token",token)
     if(token){
       const reqHeader ={
@@ -37,7 +42,7 @@ function MyPost() {
      }
 
      try {
-      const result = await displayuserPartsApi(reqHeader)
+      const result = await displayuserPartsApi(userId,reqHeader)
       console.log(result);
       if(result.status == 200){
         console.log(result.data);
