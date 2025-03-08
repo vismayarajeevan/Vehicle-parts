@@ -10,6 +10,7 @@ import CardOverview from './Pages/CardOverview'
 import { ToastContainer } from 'react-toastify'
 import MyPost from './Pages/MyPost'
 import Admin from './AdminFiles/Admin'
+import Header from './Components/Header'
 
 function App() {
   const navigate = useNavigate();
@@ -28,6 +29,8 @@ function App() {
   return (
     <>
     <ToastContainer/>
+    <Header />
+
       <Routes>
         
         <Route path='/' element={<Home />} />

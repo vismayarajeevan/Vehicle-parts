@@ -71,6 +71,11 @@ const Navbarcomp = () => {
     }
   };
 
+   // Fetch location on component mount
+   useEffect(() => {
+    requestLocation(); // Call the function to fetch location when the component mounts
+  }, []); // Empty dependency array ensures this runs only once on mount
+
   useEffect(() => {
     if (currentPage.pathname === "/myposts") {
       setActiveLink("posts");
