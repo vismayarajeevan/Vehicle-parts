@@ -41,6 +41,7 @@ const Home = () => {
   
   return (
     <>
+    <Header/>
       <ImageSlider />
       <AddButton displayAllParts={displayAllParts}/>
       <CategorySlider displayData={getAllParts}/>

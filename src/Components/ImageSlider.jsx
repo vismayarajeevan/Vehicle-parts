@@ -93,7 +93,7 @@ const ImageSlider = () => {
               <img
                 src={images[0].images}
                 alt=""
-                className="w-100 h-100"
+                className="w-100 h-100 img-fluid"
                 style={{ objectFit: "cover" }}
               />
             </div>
@@ -132,6 +132,8 @@ const ImageSlider = () => {
                 </Carousel.Item>
               ))}
             </Carousel>
+
+            
           )}
 
           {/* Bottom round slide bars */}

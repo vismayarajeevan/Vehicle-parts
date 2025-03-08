@@ -4,7 +4,6 @@ import { Container, Row, Col, Card, Dropdown, Form ,Carousel} from 'react-bootst
 import { BsThreeDotsVertical, BsPencilSquare, BsTrash } from 'react-icons/bs';
 import 'bootstrap/dist/css/bootstrap.min.css';
  import './Mypost.css'
-import Navbarcomp from '../Components/NavbarComp';
 import { useContext, useEffect, useState } from 'react';
 import { deleteuserPartsApi, displayuserPartsApi } from '../services/allAPI';
 import { debounce } from 'lodash';
@@ -12,6 +11,7 @@ import { showToast } from '../reusablecomponents/Toast';
 import { SidebarContext } from '../context/SidebarProvider';
 import ProductSidebar from '../reusablecomponents/ProductSidebar';
 import { Link } from 'react-router-dom';
+import Header from '../Components/Header';
 
 
 
@@ -156,7 +156,7 @@ function MyPost() {
 
   return (
 <>
-{/* <Navbarcomp /> */}
+<Header/>
       <Container className="py-5">
         {userProduct?.length > 0 ? (
           <Row xs={1} sm={2} md={3} lg={4} className="g-4 mt-4">
