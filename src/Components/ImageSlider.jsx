@@ -250,33 +250,51 @@ const ImageSlider = () => {
   return (
     <main className="pt-5 pb-5" style={{ backgroundColor: "#DCEDEF" }}>
       <div className="container">
-        {loading ? (
-          <div className="w-100 rounded shimmer d-flex flex-column align-items-center justify-content-center" style={{ height: "500px", backgroundColor: "#f6f7f8", position: "relative", overflow: "hidden" }}>
-            <div className="shimmer-effect" style={{ position: "absolute", width: "100%", height: "100%", background: "linear-gradient(to right, #eee 8%, #ddd 18%, #eee 33%)", backgroundSize: "1000px 100%", animation: "shimmer 1.5s infinite" }}></div>
-            <Spinner animation="border" variant="primary" className="mb-3" />
-            <p style={{color:'#008E8E'}}>Data is fetching, please wait... Server is slow.</p>
-          </div>
-        ) : images.length === 1 ? (
-          <div className="w-100 rounded" style={{ height: "500px", overflow: "hidden" }}>
-            <img src={images[0].images} alt="" className="w-100 h-100 img-fluid" style={{ objectFit: "cover" }} />
-          </div>
-        ) : (
-          <Carousel activeIndex={currentIndex} onSelect={(selectedIndex) => setCurrentIndex(selectedIndex)} controls={false} indicators={false}>
-            {images.map((image, index) => (
-              <Carousel.Item key={index}>
-                <img src={image.images} alt="" className="d-block w-100 rounded" style={{ height: "500px", objectFit: "cover" }} />
-                <button onClick={prevSlide} className="position-absolute top-50 start-0 translate-middle-y bg-dark bg-opacity-50 text-white p-3 rounded-circle" aria-label="Previous slide">
-                  <ChevronLeft size={24} />
-                </button>
-                <button onClick={nextSlide} className="position-absolute top-50 end-0 translate-middle-y bg-dark bg-opacity-50 text-white p-3 rounded-circle" aria-label="Next slide">
-                  <ChevronRight size={24} />
-                </button>
-              </Carousel.Item>
-            ))}
-          </Carousel>
-        )}
+      {loading ? (
+  <div className="w-100 rounded d-flex flex-column align-items-center justify-content-center" style={{ height: "500px", backgroundColor: "#f6f7f8", position: "relative", overflow: "hidden" }}>
+    {/* Shimmer Effect */}
+    <div className="shimmer-effect" style={{ 
+      position: "absolute", 
+      width: "100%", 
+      height: "100%", 
+      zIndex: 1, // Ensure shimmer is behind the content
+    }}></div>
 
-        {images.length > 1 && (
+    {/* Spinner and Text */}
+    <div style={{ 
+      position: "relative", 
+      zIndex: 2, // Ensure content is above shimmer
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      textAlign: "center",
+    }}>
+      <Spinner animation="border" variant="primary" className="mb-3" />
+      <p style={{ color: 'black', marginTop: '10px' }}>
+        Data is fetching, please wait... Server is slow.
+      </p>
+    </div>
+  </div>
+) : images.length === 1 ? (
+  <div className="w-100 rounded" style={{ height: "500px", overflow: "hidden" }}>
+    <img src={images[0].images} alt="" className="w-100 h-100 img-fluid" style={{ objectFit: "cover" }} />
+  </div>
+) : (
+  <Carousel activeIndex={currentIndex} onSelect={(selectedIndex) => setCurrentIndex(selectedIndex)} controls={false} indicators={false}>
+    {images.map((image, index) => (
+      <Carousel.Item key={index}>
+        <img src={image.images} alt="" className="d-block w-100 rounded" style={{ height: "500px", objectFit: "cover" }} />
+        <button onClick={prevSlide} className="position-absolute top-50 start-0 translate-middle-y bg-dark bg-opacity-50 text-white p-3 rounded-circle" aria-label="Previous slide">
+          <ChevronLeft size={24} />
+        </button>
+        <button onClick={nextSlide} className="position-absolute top-50 end-0 translate-middle-y bg-dark bg-opacity-50 text-white p-3 rounded-circle" aria-label="Next slide">
+          <ChevronRight size={24} />
+        </button>
+      </Carousel.Item>
+    ))}
+  </Carousel>
+)}        {images.length > 1 && (
           <div className="d-flex justify-content-center gap-2 mt-4">
             {images.map((_, index) => (
               <Button
